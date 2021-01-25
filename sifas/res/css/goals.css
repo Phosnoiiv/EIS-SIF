@@ -1,0 +1,74 @@
+h3 {
+    padding: 5px 10px;
+    background: linear-gradient(90deg, #e0ccb3, #f2ebe1); border-left: 5px solid #a04d0c;
+    color: #8e2901;
+}
+header img {
+    width: 250px; float: right;
+}
+#servers {
+    width: 200px; margin: 0 auto;
+}
+.server-select {
+    width: 150px; height: 30px;
+    box-shadow: 3px 3px 5px #999;
+    cursor: pointer;
+}
+#events {
+    max-width: 1100px; margin: 0 auto;
+}
+#events img {
+    width: 250px;
+    border: 1px solid #8e2901;
+    cursor: pointer;
+}
+.subevent {
+    width: 170px; height: 30px;
+    background: #e0ccb3; box-shadow: 3px 3px 5px #999;
+    cursor: pointer;
+}
+.other {
+    width: 280px; height: 30px; padding: 2px 10px;
+    background: #e0ccb3; box-shadow: 3px 3px 5px #999;
+    cursor: pointer;
+}
+.other span {
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.goal-group {
+    display: flex; flex-wrap: wrap; clear: right;
+}
+.goal {
+    position: relative; width: 300px; margin: 0 -1px -1px 0; padding: 5px 5px 5px 60px;
+    background: #f5f5f5; border: 1px solid #777;
+}
+.goal.item-type-15 {
+    width: 278px; padding: 5px 5px 5px 82px;
+}
+.goal-pack, .goal-reward {
+    position: absolute; left: 10px;
+}
+.goal-pack {
+    height: 40px;
+    cursor: pointer;
+}
+.goal-reward img {
+    height: 40px;
+}
+.goal-desc {
+    margin-bottom: 2px;
+}
+.goal-note {
+    margin-left: 20px;
+    color: #666; font-size: 13px;
+}
+.goal-time {
+    color: #666; font-size: 13px;
+}
+
+.server-select.server-1 { background: #b39ddb; color: #4527a0; }
+.server-select.server-2 { background: #80cbc4; color: #00695c; }
+.server-select.server-3 { background: #f48fb1; color: #ad1457; }
+.server-select.server-1:hover { background: #d1c4e9; }
+.server-select.server-2:hover { background: #b2dfdb; }
+.server-select.server-3:hover { background: #f8bbd0; }

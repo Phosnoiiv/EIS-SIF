@@ -1,0 +1,56 @@
+@charset "utf-8";
+body {
+    background: #d9f2fa;
+}
+h4 {
+    margin: 20px 0 0; padding: 2px 5px;
+    background: #59c5ea; border: 1px solid #004084; border-left-width: 5px;
+    color: #004084; font-size: 18px;
+}
+h4 span+span {
+    display: inline-block;
+    color: #004084; font-weight: normal; font-size: 14px;
+}
+h4 span+span:before {
+    content: "（";
+}
+h4 span+span:after {
+    content: "）";
+}
+h4+div {
+    margin: 0 10px 10px 20px; padding: 5px;
+    background: #9edcf3; border: 1px solid #004084; border-top: none; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;
+}
+.story {
+    margin: 5px auto; padding: 5px 15px; max-width: 500px;
+    background: #f1fafd; border: 1px solid #008dd6; border-radius: 10px;
+}
+.name {
+    color: #008dd6; font-size: 18px; text-align: center;
+}
+.name p {
+    margin: 0;
+}
+.name p+p {
+    color: #666; font-size: 14px;
+}
+.get {
+    font-size: 14px;
+}
+.get p {
+    margin: 5px 0;
+}
+@media (min-width: 1000px) {
+    .story {
+        max-width: none; width: 800px;
+    }
+    .story>div {
+        display: table; width: 100%;
+    }
+    .name {
+        display: table-cell; width: 300px; vertical-align: middle;
+    }
+    .get {
+        display: table-cell;
+    }
+}

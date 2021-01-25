@@ -1,0 +1,136 @@
+@charset "utf-8";
+h2 {
+    color: #3f3cb5; text-align: center;
+}
+h2+p {
+    color: #666; text-align: center;
+}
+h3 {
+    margin: 0 0 15px;
+    color: #3f3cb5; text-align: center;
+}
+h4 {
+    clear: left;
+}
+tr {
+    border: 1px solid #a5a9e9;
+}
+aside {
+    position: relative; z-index: 10;
+}
+aside.positioned {
+    opacity: 0.75;
+    transition: opacity 0.5s;
+}
+aside.positioned:hover {
+    opacity: 0.95;
+}
+.eis-sif-countdown {
+    display: inline-block; margin-left: 10px; padding: 1px 3px;
+    background: #e9b4ec; border: 1px solid #8100a8; border-radius: 3px;
+    color: #8100a8; font-size: 13px;
+}
+.eis-sif-countdown.nearend {
+    background: #fbd2d9; border-color: #d3444a;
+    color: #d3444a; font-weight: bold;
+}
+.eis-sif-countdown.ended {
+    background: #eee; border-color: #666;
+    color: #666;
+}
+.currency {
+    display: inline-block; margin-right: 20px; clear: left;
+}
+.currency .eis-sif-item {
+    float: left;
+}
+.currency .eis-sif-item img {
+    height: 32px;
+}
+.currency>div {
+    padding-left: 40px;
+}
+#categories table {
+    margin: 10px auto;
+}
+#categories th>div, #categories td>div {
+    display: flex; justify-content: center;
+}
+#categories th img {
+    height: 24px;
+}
+#categories td img {
+    height: 40px;
+}
+#categories input[type="number"] {
+    width: 40px;
+    font-family: "Century Gothic", sans-serif; text-align: center;
+}
+td.limit {
+    text-align: right;
+}
+td.unlimited {
+    color: #999;
+}
+td.cost {
+    padding: 0 5px 0 10px;
+    color: #4d4fcc; font-family: "Century Gothic", sans-serif; font-weight: bold; text-align: right;
+}
+td:last-child {
+    width: 85px;
+}
+.goods button {
+    padding: 1px;
+    font-size: 12px;
+}
+.need {
+    color: #d3444a; font-family: "Century Gothic", sans-serif; font-weight: bold;
+}
+.plan {
+    margin-right: 20px;
+    font-size: 14px;
+}
+.plan img {
+    height: 16px;
+}
+.plan button {
+    padding: 1px 3px;
+    font-size: 13px;
+}
+@media (min-width: 900px) {
+    aside {
+        float: right; width: 200px;
+    }
+    aside.positioned, aside.positioned:hover {
+        opacity: 1;
+    }
+    #categories {
+        margin-right: 210px;
+    }
+    #categories .ui-helper-clearfix::after {
+        clear: left;
+    }
+    .currency {
+        display: block;
+    }
+    .plan {
+        display: block;
+    }
+}
+
+.eis-sif-gallery-item {
+    width: 252px; height: 100px;
+    font-size: 18px; cursor: pointer;
+}
+.eis-sif-gallery-item.text {
+    background: #c9caf2; box-shadow: 3px 3px 5px #999;
+}
+.eis-sif-gallery-item.text span {
+    margin: 5px 20px;
+}
+.eis-sif-gallery-item img {
+    width: 252px;
+}
+#trade-detail>.eis-sif-timetip {
+    width: 600px;
+}

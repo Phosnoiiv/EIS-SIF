@@ -1,0 +1,158 @@
+@charset "utf-8";
+body {
+    margin: 0;
+    background: #ebeef7;
+    font-family: "Microsoft Yahei", sans-serif; font-size: 16px;
+}
+p, ul, ol {
+    margin: 10px 0;
+}
+table {
+    border: 3px solid #4b6eca; border-collapse: collapse;
+}
+th {
+    color: #4b6eca;
+}
+article {
+    padding: 5px 15px;
+    background: #f8f9fc; border: 3px solid #4b6eca; border-radius: 15px; box-shadow: 2px 2px 5px #999;
+}
+article h3 {
+    margin: 20px 0 10px;
+    border-bottom: 1px solid #4b6eca;
+    color: #4b6eca; font-size: 22px;
+}
+article h4 {
+    margin: 20px 0 10px;
+    color: #4b6eca; font-size: 18px;
+}
+#eis-sif-header {
+    color: #4b6eca;
+}
+#eis-sif-header a {
+    display: inline-block; margin: 0 10px 10px 0; padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 14px; text-decoration: none;
+}
+#eis-sif-container {
+}
+#eis-sif-footer {
+    width: 250px; margin: 20px auto; padding: 5px; clear: both;
+    background: #cbd4ed; border: 1px solid #4b6eca; border-radius: 5px;
+    font-size: 12px; text-align: center;
+}
+#eis-sif-footer p {
+    margin: 0;
+}
+#eis-sif-footer a {
+    color: #007cb3; text-decoration: none;
+}
+#eis-sif-footer a:hover {
+    color: #259fc1; text-decoration: underline;
+}
+@media (max-width:500px) {
+    #eis-sif-header, #eis-sif-container {
+        padding: 0 25px;
+    }
+}
+@media (min-width:500px) {
+    #eis-sif-header, #eis-sif-container {
+        padding: 0 5%;
+    }
+}
+@media (min-width: 700px) {
+    #eis-sif-panel-left {
+        width: 300px; float: left;
+    }
+    #eis-sif-panel-right {
+        margin-left: 320px;
+    }
+}
+#eis-sif-nav-home {
+    background: #ddeef3; border: 1px solid #007cb3;
+    color: #007cb3;
+}
+#eis-sif-nav-sifas {
+    background: #f2feed; border: 1px solid #289038;
+    color: #289038;
+}
+.eis-sif-message {
+    margin: 10px 0; padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+.eis-sif-message p, .eis-sif-message ul {
+    margin: 5px 0 0;
+}
+.eis-sif-message p:first-child {
+    display: inline;
+}
+.eis-sif-message a:hover {
+    text-decoration: none;
+}
+.eis-sif-message-error {
+    background: #e1aab9; border: 1px solid #a10029;
+    color: #a10029;
+}
+.eis-sif-message-error:before {
+    content: "重要说明：";
+    font-weight: bold;
+}
+.eis-sif-message-warning {
+    background: #e1d2aa; border: 1px solid #ab7400;
+}
+.eis-sif-message-warning:before {
+    content: "说明：";
+    font-weight: bold; color: #ab7400;
+}
+.eis-sif-message-notice {
+    background: #ddeef3; border: 1px solid #007cb3;
+}
+.eis-sif-message-notice:before {
+    content: "提示：";
+    font-weight: bold; color: #007cb3;
+}
+.eis-sif-message-notice a {
+    color: #007cb3;
+}
+.eis-sif-message-notice a:hover {
+    color: #259fc1;
+}
+.eis-sif-mourning-half {
+    filter: grayscale(70%);
+}
+.eis-sif-tag {
+    display: inline-block; margin-right: 5px; padding: 2px 5px;
+    border-radius: 5px;
+    color: #fff; font-size: 13px;
+}
+.eis-sif-tag.server-1 {
+    background: #673ab7;
+}
+.eis-sif-tag.server-2 {
+    background: #009688;
+}
+.eis-sif-tag.server-3 {
+    background: #e91e63;
+}
+.eis-sif-tag.series-0 {
+    background: #999;
+}
+.eis-sif-tag.series-1 {
+    background: #00bcd4;
+}
+.eis-sif-tag.series-2 {
+    background: #4caf50;
+}
+.eis-sif-tag.series-6 {
+    background: #f44336;
+}
+.eis-sif-track.attribute-1 {
+    color: #e07;
+}
+.eis-sif-track.attribute-2 {
+    color: #2a5;
+}
+.eis-sif-track.attribute-3 {
+    color: #09e;
+}

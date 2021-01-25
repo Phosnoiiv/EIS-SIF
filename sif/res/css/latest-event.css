@@ -1,0 +1,60 @@
+@charset "utf-8";
+h2 {
+    color: #3f3cb5; text-align: center;
+}
+#cheers {
+    margin: 10px auto;
+    background: #fff;
+    font-size: 14px;
+}
+#cheers td>div {
+    display: flex; justify-content: center;
+}
+#cheers td:nth-child(2) img, #cheers td:nth-child(7) img {
+    height: 20px;
+}
+#cheers td:nth-child(7), #cheers td:nth-child(9) {
+    color: #ba0; font-weight: bold; text-align: center;
+}
+#cheers td:nth-child(7).zero {
+    color: #999; font-weight: normal;
+}
+#cheers .eis-sif-item img {
+    height: 50px;
+}
+.reward-unit {
+    background: #c8e6c9;
+}
+#lives {
+    margin: 10px auto;
+    background: #fff;
+}
+#lives td:nth-child(3), #lives td:nth-child(4) {
+    text-align: right;
+}
+.live-difficulty:not(:first-of-type)::before {
+    content: "，";
+}
+.weight {
+    font-size: 13px;
+}
+.weight::before {
+    content: "（";
+}
+.weight::after {
+    content: "）";
+}
+.swing {
+    background: #ffcce3;
+}
+
+.arena-cheer-extra {
+    background: #ffccbc;
+}
+.arena-cheer-extra td:nth-child(7), .arena-cheer-extra td:nth-child(9) {
+    color: #e64a19 !important;
+}
+
+.eis-sif-timetip {
+    width: 300px;
+}

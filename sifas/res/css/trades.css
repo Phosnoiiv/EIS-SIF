@@ -1,0 +1,114 @@
+@charset "utf-8";
+h2 {
+    color: #a04d0c; text-align: center;
+}
+h2+p {
+    color: #666; text-align: center;
+}
+h3 {
+    margin: 15px 0;
+    color: #a04d0c; text-align: center;
+}
+aside {
+    position: relative; z-index: 10;
+}
+aside.positioned {
+    opacity: 0.75;
+    transition: opacity 0.5s;
+}
+aside.positioned:hover {
+    opacity: 0.95;
+}
+.eis-sif-countdown {
+    display: inline-block; margin-left: 10px; padding: 1px 3px;
+    background: #c2d0fb; border: 1px solid #004dc8; border-radius: 3px;
+    color: #004dc8; font-size: 13px;
+}
+.eis-sif-countdown.nearend {
+    background: #fbcec0; border-color: #e25023;
+    color: #e25023; font-weight: bold;
+}
+.eis-sif-countdown.ended {
+    background: #eee; border-color: #666;
+    color: #666;
+}
+.currency {
+    clear: left;
+}
+.currency>img {
+    height: 32px; float: left;
+}
+.currency>div {
+    padding-left: 40px;
+}
+#categories table {
+    margin: 0 auto;
+}
+#categories th img {
+    height: 24px;
+}
+#categories td img {
+    height: 40px;
+}
+#categories input[type="number"] {
+    width: 50px;
+    font-family: "Century Gothic", sans-serif; text-align: center;
+}
+td.limit {
+    text-align: right;
+}
+td.unlimited {
+    color: #999;
+}
+td.cost {
+    padding: 0 5px 0 10px;
+    color: #f07528; font-family: "Century Gothic", sans-serif; font-weight: bold; text-align: right;
+}
+.goods button {
+    padding: 1px;
+    font-size: 12px;
+}
+.need {
+    color: #e25023; font-family: "Century Gothic", sans-serif; font-weight: bold;
+}
+.plan {
+    margin-right: 20px;
+    font-size: 14px;
+}
+.plan img {
+    height: 16px;
+}
+.plan button {
+    padding: 1px 3px;
+    font-size: 13px;
+}
+@media (min-width: 900px) {
+    aside {
+        float: right; width: 200px;
+    }
+    aside.positioned, aside.positioned:hover {
+        opacity: 1;
+    }
+    #categories {
+        margin-right: 210px;
+    }
+    .currency {
+        display: block;
+    }
+    .plan {
+        display: block;
+    }
+}
+
+.eis-sif-gallery-item {
+    background: #f2ebe1; border: 1px dashed #a04d0c; border-radius: 15px;
+}
+.eis-sif-gallery-item:hover {
+    background: #fff;
+}
+.eis-sif-gallery-item img {
+    height: 70px;
+}
+#trade-detail>.eis-sif-timetip {
+    width: 600px;
+}

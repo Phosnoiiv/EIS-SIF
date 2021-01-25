@@ -1,0 +1,89 @@
+@charset "utf-8";
+.sif-goal-title {
+    position: relative; padding-left: 82px;
+    background: #e6e1e3; border-radius: 10px;
+}
+.sif-goal-category {
+    display: inline-block; position: absolute; width: 64px; top: 4px; left: 4px;
+    background: #ec6b98; border-radius: 10px;
+    color: #fff; font-size: 8px; text-align: center;
+}
+.sif-goal-date {
+    display: inline-block; margin-right: 3px; padding: 0 5px;
+    background: #faf5f7; border-radius: 10px;
+    color: #f37; font-size: 11px;
+}
+.sif-goal-tag-new {
+    display: inline-block; width: 80px; height: 38px;
+    background: #faf5f7; border: 1px solid #ec6b98; border-radius: 5px;
+}
+.sif-goal-tag-new>div {
+    width: 48px; height: 37px; margin: auto;
+    background: #ed3d7b;
+}
+.sif-goal-tag.tag-4 {
+    mask: url("/vio/sif/tag/g4.png") center/48px;
+    -webkit-mask: url("/vio/sif/tag/g4.png") center/48px;
+}
+.sif-goal-tag.tag-5 {
+    mask: url("/vio/sif/tag/g5.png") center/48px;
+    -webkit-mask: url("/vio/sif/tag/g5.png") center/48px;
+}
+.sif-goal-tag.tag-6 {
+    mask: url("/vio/sif/tag/g8.png") center/48px;
+    -webkit-mask: url("/vio/sif/tag/g8.png") center/48px;
+}
+
+.sif-box-button {
+    display: inline-block; position: relative;
+    cursor: pointer;
+}
+.sif-box-button>img:first-child {
+    height: 60px;
+}
+.sif-box-button .number {
+    position: absolute; right: 97px; top: 28px;
+    color: #fff; font-weight: bold; text-align: right;
+}
+.sif-box-button .item {
+    height: 22px;
+}
+.sif-box-button .cost {
+    display: flex; position: absolute; width: 100%; top: 0; justify-content: center;
+    color: #e40; font-weight: bold;
+}
+
+.sif-album-collection {
+    display: inline-block; position: relative; width: 236px; height: 179px;
+}
+.sif-album-collection[data-category="1"] {
+    color: #f9478a;
+}
+.sif-album-collection[data-category="2"] {
+    color: #0068b7;
+}
+.sif-album-collection[data-category="1"][data-direction="1"] {
+    background: url("/vio/sif/ui/album/f1.png");
+}
+.sif-album-collection[data-category="1"][data-direction="2"] {
+    background: url("/vio/sif/ui/album/f2.png");
+}
+.sif-album-collection[data-category="2"][data-direction="1"] {
+    background: url("/vio/sif/ui/album/f3.png");
+}
+.sif-album-collection[data-category="2"][data-direction="2"] {
+    background: url("/vio/sif/ui/album/f4.png");
+}
+.sif-album-collection img {
+    position: absolute; left: 16px; top: 33px;
+}
+.sif-album-collection[data-category="1"] img {
+    background: repeating-linear-gradient(90deg, #fcd 0px, #fcd 5px, #fac 5px, #fac 10px);
+}
+.sif-album-collection[data-category="2"] img {
+    background: repeating-linear-gradient(90deg, #9ef 0px, #9ef 5px, #7df 5px, #7df 10px);
+}
+.sif-album-collection span {
+    display: flex; position: absolute; width: 212px; height: 40px; left: 11px; top: 131px; justify-content: center; align-items: center;
+    font-size: 14px; text-align: center;
+}

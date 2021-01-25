@@ -1,0 +1,670 @@
+@charset "utf-8";
+body {
+    margin: 0;
+    background: #eaeafa;
+    font-family: "Microsoft Yahei", sans-serif; font-size: 16px;
+}
+h1 {
+    color: #3f3cb5;
+}
+p {
+    margin: 10px 0;
+}
+p.eis-sif-text {
+    font-size: 14px;
+}
+p.eis-sif-note {
+    margin: 5px 0;
+    color: #666; font-size: 13px;
+}
+#eis-sif-header {
+    padding: 10px 5%;
+    background: #fbfbfe; box-shadow: 0 0 10px #999;
+}
+#eis-sif-name {
+    display: inline-block; margin-right: 20px;
+    font-size: 28px;
+}
+#eis-sif-nav-home {
+    display: inline-block; padding: 2px 10px;
+    background: #c9caf2; border: 1px solid #3f3cb5; border-radius: 5px;
+    color: #2c1c92; text-decoration: none;
+}
+#eis-sif-nav-home:hover {
+    background: #f0f4c3; border-color: #afb42b;
+    color: #827717;
+}
+#eis-sif-nav-related {
+    display: inline-block; padding: 2px 10px;
+    background: #e0ccb3; border: 1px solid #a04d0c; border-radius: 5px;
+    color: #8e2901; text-decoration: none;
+}
+#eis-sif-nav-related:hover {
+    background: #b2dfdb; border-color: #00796b;
+    color: #004D40;
+}
+#eis-sif-container {
+    padding: 10px 5%;
+}
+#eis-sif-footer {
+    width: 250px; margin: 20px auto; padding: 5px; clear: both;
+    background: #c9caf2; border: 1px solid #4d4fcc; border-radius: 5px;
+    font-size: 12px; text-align: center;
+}
+#eis-sif-footer p {
+    margin: 0;
+}
+#eis-sif-footer a {
+    color: #3f51b5; text-decoration: none;
+}
+#eis-sif-footer a:hover {
+    color: #9e9d24; text-decoration: underline;
+}
+@media (max-width:500px) {
+    #eis-sif-header, #eis-sif-container {
+        padding: 10px 25px;
+    }
+}
+#eis-sif-loading-tip {
+    display: flex; position: fixed; width: 300px; height: 50px; justify-content: center; align-items: center;
+    background: #fbfbfe; border-radius: 25px;
+    font-size: 20px;
+}
+#eis-sif-side-top {
+    position: fixed; width: 25px; right: 0px; bottom: 100px; padding: 3px;
+    background: #666;
+    color: #eee; font-size: 14px; cursor: pointer;
+}
+.eis-sif-page-button {
+    position: fixed; z-index: 1; padding: 10px 30px 10px 20px; right: -2px; top: 80px;
+    border: 1px solid; border-radius: 20px 0 0 20px; opacity: 0.85;
+    font-size: 20px; cursor: pointer;
+}
+.eis-sif-content {
+    margin: 20px 0; padding: 10px;
+    background: #fff; border: 2px solid #2c1c92; border-radius: 10px;
+}
+.eis-sif-section {
+    margin: 20px 0; padding: 0 15px 10px;
+    background: #fbfbfe; border: 2px solid #3f3cb5; border-radius: 15px;
+}
+.eis-sif-section h4 {
+    margin: 15px 0;
+    border-bottom: 1px solid #3f3cb5;
+    color: #4746c1; font-size: 18px; font-weight: normal;
+}
+.eis-sif-section.disabled {
+    background: #ccc; border-color: #666;
+    color: #666;
+}
+.eis-sif-section.disabled h4 {
+    border-bottom-color: #666;
+    color: #666;
+}
+.eis-sif-section-noborder h4 {
+    margin: 15px 0;
+    border-bottom: 1px solid #3f3cb5;
+    color: #3f3cb5; font-size: 18px;
+}
+.eis-sif-subsection {
+    padding: 10px;
+    border: 1px solid; border-radius: 10px;
+}
+.eis-sif-subsection h4 {
+    margin: -11px -11px 0 -11px; padding: 1px 10px;
+    color: #fff; font-size: 17px;
+}
+.eis-sif-doc h6 {
+    margin: 10px 0;
+    color: #4d4fcc; font-size: 17px;
+}
+.eis-sif-notice {
+    margin: 5px 0; padding: 0 3px;
+    background: #f2eec6; border: 1px solid #d3cb4d; border-radius: 5px;
+    font-size: 14px;
+}
+.eis-sif-notice p {
+    margin: 5px 0;
+}
+.eis-sif-notice a {
+    color: #7d6b2e;
+}
+.eis-sif-notice a:hover {
+    color: #b1a541; text-decoration: none;
+}
+.eis-sif-notice svg {
+    color: #7d6b2e;
+}
+.eis-sif-bar {
+    padding: 1px 0 1px 3px;
+    background: #c9caf2; border: 1px solid #4d4fcc; border-radius: 5px;
+    font-size: 14px;
+}
+.eis-sif-bar>span {
+    display: inline-block; margin-right: 30px;
+}
+.eis-sif-bar a:hover {
+    text-decoration: none;
+}
+.eis-sif-bar svg {
+    color: #2c1c92;
+}
+.eis-sif-pagebar {
+    text-align: center;
+}
+.eis-sif-pagebar .pages {
+    margin: 0 10px;
+}
+.eis-sif-pagebar .pages .ui-state-disabled {
+    background: #ffe082; border: 2px solid #ffa000; opacity: 1;
+    color: #ff6f00; font-weight: bold;
+}
+.eis-sif-pagebar .ui-button {
+    padding: 3px; width: 18px;
+    font-size: 14px;
+}
+.eis-sif-button-group .ui-button {
+    padding: 1px 5px;
+    font-size: 13px;
+}
+.eis-sif-button-group .active {
+    background: #ffe082; border-color: #ffa000; opacity: 1;
+    color: #ff6f00; font-weight: bold;
+}
+img.eis-sif-switch {
+    height: 16px;
+}
+img.eis-sif-switch[data-switch="0"] {
+    filter: grayscale(100%);
+}
+.eis-sif-table {
+    border: 3px solid #3f3cb5; border-collapse: collapse;
+}
+.eis-sif-table tr {
+    border: 1px solid #8086e0;
+}
+.eis-sif-table th {
+    padding: 1px 5px;
+    background: #a5a9e9; border: 1px solid #2c1c92;
+    color: #2c1c92;
+}
+.eis-sif-table td {
+    padding: 1px 5px;
+}
+.eis-sif-table-section-header {
+    background: #c9caf2;
+    color: #3f3cb5; font-weight: bold; text-align: left;
+}
+.eis-sif-form {
+    margin: 20px auto; columns: 500px;
+}
+.eis-sif-form p {
+    margin: 0; padding: 5px 0;
+}
+.eis-sif-form label {
+    display: inline-block; width: 200px; margin-right: 20px;
+    color: #333; font-weight: bold; text-align: right;
+}
+.eis-sif-form label img {
+    height: 20px;
+}
+.eis-sif-form input[type=number] {
+    width: 100px;
+    text-align: center;
+}
+.eis-sif-form .eis-sif-note {
+    margin-left: 220px;
+}
+.eis-sif-form .ui-button {
+    padding: 2px 5px;
+    font-size: 14px;
+}
+@media (max-width:500px) {
+    .eis-sif-form label {
+        display: block; width: auto; margin: 0;
+        text-align: left;
+    }
+    .eis-sif-form .eis-sif-note {
+        margin-left: 0;
+    }
+}
+.eis-sif-calendar {
+    border: 3px solid #3f3cb5; border-collapse: collapse;
+}
+.eis-sif-calendar th {
+    background: #3f3cb5;
+    color: #fff;
+}
+.eis-sif-calendar tbody {
+    background: #fbfbfe;
+}
+.eis-sif-caption {
+    padding-bottom: 5px;
+    border: 3px solid #eaeafa;
+    color: #3f3cb5; font-size: 22px; text-align: center;
+}
+.eis-sif-gallery {
+    display: flex; flex-wrap: wrap; justify-content: center;
+}
+.eis-sif-gallery-item {
+    display: flex; margin: 5px 10px; justify-content: center; align-items: center;
+}
+.eis-sif-info-gallery {
+    display: flex; flex-wrap: wrap;
+}
+.eis-sif-info-gallery>div {
+    margin: 5px; width: 140px;
+}
+.eis-sif-info-gallery>div>div:first-child {
+    color: #666; font-size: 14px;
+}
+.eis-sif-info-gallery>div>div:last-child {
+    color: #2c1c92; font-family: "Century Gothic", "Segoe UI", sans-serif; font-weight: bold; font-size: 18px;
+}
+.eis-sif-item {
+    position: relative;
+}
+.eis-sif-item-amount {
+    position: absolute; width: 100%; left: 0; bottom: -4px;
+    color: #3831a8; font-weight: bold; font-size: 13px; text-align: center;
+}
+.eis-sif-item-amount::before, .eis-sif-item-block-amount::before {
+    content: "×";
+}
+.eis-sif-item-block {
+    clear: both; position: relative; margin: 5px 0;
+}
+.eis-sif-item-block img {
+    float: left; margin-right: 10px; height: 40px;
+}
+.eis-sif-item-block.with-desc {
+    margin: 10px 0;
+}
+.eis-sif-item-block.with-desc img {
+    height: 50px;
+}
+.eis-sif-item-block-name {
+    margin-bottom: 5px;
+    border-bottom: 1px dashed #aaa;
+    color: #3f3cb5;
+}
+.with-desc .eis-sif-item-block-name {
+    font-size: 17px;
+}
+.eis-sif-item-block-amount {
+    float: right;
+    font-size: 15px;
+}
+.eis-sif-item-block-desc {
+    margin: 0;
+    font-size: 14px;
+}
+.eis-sif-simple-container {
+    max-width: 500px; margin: 0 auto;
+}
+.eis-sif-simple-icon {
+    color: #3f3cb5; font-size: 128px; text-align: center;
+}
+.eis-sif-simple-title {
+    color: #3f3cb5; text-align: center;
+}
+.eis-sif-simple-text {
+    margin-top: 20px; padding: 10px;
+    background: #e6f2f9; border: 1px solid #4c8ccc; border-radius: 10px;
+}
+.eis-sif-timetip {
+    width: 500px; max-width: 100%; margin: 0 auto; padding: 2px 0;
+    background: linear-gradient(90deg, #fff 0%, #444 20%, #444 80%, #fff 100%);
+    color: #eee; font-size: 14px; text-align: center;
+}
+.eis-sif-timetip.on-background {
+    background: linear-gradient(90deg, #eaeafa 0%, #444 20%, #444 80%, #eaeafa 100%);
+}
+.eis-sif-button-line {
+    text-align: center;
+}
+@keyframes highlight-flag {
+    0%   { background: #ffcdd2; color: #b71c1c; }
+    20%  { background: #ffcdd2; color: #b71c1c; }
+    40%  { background: #e57373; color: #fff;    }
+    60%  { background: #ffcdd2; color: #b71c1c; }
+    100% { background: #ffcdd2; color: #b71c1c; }
+}
+.eis-sif-flag {
+    display: inline-block; position: absolute; right: -5px; top: -10px; padding: 1px 5px 1px 3px;
+    background: #ffcdd2; border: 1px solid #d32f2f; border-radius: 0 10px 10px 0;
+    color: #b71c1c; font-size: 12px;
+    animation: 5s ease infinite highlight-flag;
+}
+.eis-sif-flag.static {
+    background: #e57373; color: #fff;
+    animation: none;
+}
+.eis-sif-dialog a {
+    color: #4746c1;
+}
+.eis-sif-dialog-head {
+    border-bottom: 1px solid;
+    color: #2c1c92; font-size: 18px;
+}
+.eis-sif-dialog-logo {
+    height: 45px; float: left;
+}
+.eis-sif-dialog-tag {
+    display: flex; float: right; align-items: center;
+}
+.eis-sif-dialog-tag img {
+    height: 22px;
+}
+.eis-sif-dialog-info {
+    margin-bottom: 10px;
+    color: #666; font-size: 13px;
+}
+.eis-sif-dialog-info p {
+    margin: 0;
+}
+.eis-sif-dialog-section-header {
+    margin: 10px 0 0; clear: both;
+    border-bottom: 1px solid #3f3cb5;
+    color: #4746c1;
+}
+.eis-sif-notice-content h4 {
+    border-bottom: 1px solid #3f3cb5;
+    color: #4746c1;
+}
+.eis-sif-notice-content em {
+    color: #f57c00; font-weight: bold; font-style: normal;
+}
+.eis-sif-notice-content s {
+    color: #bbb;
+}
+.eis-sif-notice-content u {
+    color: #1976d2; text-decoration: none;
+}
+.eis-sif-post {
+    margin: 5px 0; padding: 5px 10px;
+    background: #e6f2f9; border: 1px solid #5399d9; border-radius: 10px;
+}
+.eis-sif-post-info {
+    margin: 0 0 5px;
+    color: #333; font-size: 13px;
+}
+.eis-sif-post-content p {
+    margin: 3px 0;
+}
+.eis-sif-hidden {
+    display: none;
+}
+.eis-sif-map .level {
+    color: #ff5722; font-weight: bold;
+}
+.eis-sif-map .level::after {
+    content: "★";
+}
+.eis-sif-map .note {
+    font-size: 13px;
+}
+.eis-sif-mourning {
+    filter: grayscale(100%);
+}
+
+.eis-sif-tag {
+    display: inline-block; margin-right: 5px; padding: 2px 5px;
+    border-radius: 5px;
+    color: #fff; font-size: 13px;
+}
+.eis-sif-tag.default { background: #9e9e9e; }
+.eis-sif-tag.swing { background: #f49; }
+.eis-sif-tag.server-1 { background: #673ab7; }
+.eis-sif-tag.server-2 { background: #009688; }
+.eis-sif-tag.server-3 { background: #e91e63; }
+.eis-sif-tag.series-1, .eis-sif-tag.unit-1 { background: #00bcd4; }
+.eis-sif-tag.series-3, .eis-sif-tag.unit-2 { background: #4caf50; }
+.eis-sif-tag.series-7, .eis-sif-tag.unit-6 { background: #f44336; }
+.eis-sif-tag.article-1 { background: #8086e0; }
+.eis-sif-tag.article-2 { background: #ba68c8; }
+.eis-sif-tag.article-3 { background: #4fc3f7; }
+.eis-sif-tag.article-4 { background: #e57373; }
+.eis-sif-tag.article-5 { background: #ffcc80; color: #000; }
+
+.eis-sif-text.category-0 { color: #4d4fcc; }
+.eis-sif-text.category-1 { color: #f0446a; }
+.eis-sif-text.category-2 { color: #008dd6; }
+.eis-sif-text.category-3 { color: #f4a135; }
+.eis-sif-text.attribute-1 { color: #e07; }
+.eis-sif-text.attribute-2 { color: #2a5; }
+.eis-sif-text.attribute-3 { color: #09e; }
+.eis-sif-text.attribute-5 { color: #95c; }
+
+.eis-sif-bg-0.member-1 { background: #fff0dd; }
+.eis-sif-bg-0.member-2 { background: #e4fbff; }
+.eis-sif-bg-0.member-3 { background: #ede5e5; }
+.eis-sif-bg-0.member-4 { background: #e5f3ff; }
+.eis-sif-bg-0.member-5 { background: #feffea; }
+.eis-sif-bg-0.member-6 { background: #fae8e8; }
+.eis-sif-bg-0.member-7 { background: #f6e3fd; }
+.eis-sif-bg-0.member-8 { background: #e9fceb; }
+.eis-sif-bg-0.member-9 { background: #ffe5ef; }
+.eis-sif-bg-0.member-10 { background: #ffeedf; }
+.eis-sif-bg-0.member-11 { background: #ffe8ec; }
+.eis-sif-bg-0.member-12 { background: #def6f5; }
+.eis-sif-bg-0.member-13 { background: #fee6ec; }
+.eis-sif-bg-0.member-14 { background: #dbf1ff; }
+.eis-sif-bg-0.member-15 { background: #e3e7ed; }
+.eis-sif-bg-0.member-16 { background: #fff9de; }
+.eis-sif-bg-0.member-17 { background: #fbe2fb; }
+.eis-sif-bg-0.member-18 { background: #fee8f5; }
+.eis-sif-bg-0.member-19 { background: #ffe3f2; }
+.eis-sif-bg-0.member-20 { background: #fdffe9; }
+.eis-sif-bg-0.member-21 { background: #def6ff; }
+.eis-sif-bg-0.member-22 { background: #eee7ff; }
+.eis-sif-bg-0.member-23 { background: #fceae6; }
+.eis-sif-bg-0.member-24 { background: #f6edff; }
+.eis-sif-bg-0.member-25 { background: #ffeaee; }
+.eis-sif-bg-0.member-26 { background: #eefee9; }
+.eis-sif-bg-0.member-27 { background: #ebe9f4; }
+.eis-sif-bg-0.member-28 { background: #e5f8f3; }
+.eis-sif-bg-1.member-1 { background: #ffd9aa; }
+.eis-sif-bg-1.member-2 { background: #bbf6ff; }
+.eis-sif-bg-1.member-3 { background: #cebfc0; }
+.eis-sif-bg-1.member-4 { background: #c1e0ff; }
+.eis-sif-bg-1.member-5 { background: #fcfbca; }
+.eis-sif-bg-1.member-6 { background: #fec9c1; }
+.eis-sif-bg-1.member-7 { background: #e6b8f9; }
+.eis-sif-bg-1.member-8 { background: #caf7cd; }
+.eis-sif-bg-1.member-9 { background: #febdd7; }
+.eis-sif-bg-1.member-10 { background: #ffd4b1; }
+.eis-sif-bg-1.member-11 { background: #ffc5cd; }
+.eis-sif-bg-1.member-12 { background: #ace8e4; }
+.eis-sif-bg-1.member-13 { background: #fdbfd0; }
+.eis-sif-bg-1.member-14 { background: #a7daff; }
+.eis-sif-bg-1.member-15 { background: #bbc4cd; }
+.eis-sif-bg-1.member-16 { background: #ffeeab; }
+.eis-sif-bg-1.member-17 { background: #f3b6f5; }
+.eis-sif-bg-1.member-18 { background: #fdc6e6; }
+.eis-sif-bg-1.member-19 { background: #fabbdd; }
+.eis-sif-bg-1.member-20 { background: #faffc7; }
+.eis-sif-bg-1.member-21 { background: #aee7fd; }
+.eis-sif-bg-1.member-22 { background: #d1c4fd; }
+.eis-sif-bg-1.member-23 { background: #ffceb8; }
+.eis-sif-bg-1.member-24 { background: #e7d2fe; }
+.eis-sif-bg-1.member-25 { background: #ffcbd1; }
+.eis-sif-bg-1.member-26 { background: #d3fcc7; }
+.eis-sif-bg-1.member-27 { background: #cdc7e5; }
+.eis-sif-bg-1.member-28 { background: #beefdf; }
+.eis-sif-bg-2.member-1 { background: #ffc073; }
+.eis-sif-bg-2.member-2 { background: #90f0ff; }
+.eis-sif-bg-2.member-3 { background: #ab9498; }
+.eis-sif-bg-2.member-4 { background: #9aceff; }
+.eis-sif-bg-2.member-5 { background: #faf8a6; }
+.eis-sif-bg-2.member-6 { background: #fea599; }
+.eis-sif-bg-2.member-7 { background: #d587f6; }
+.eis-sif-bg-2.member-8 { background: #a6f2ac; }
+.eis-sif-bg-2.member-9 { background: #ff92bc; }
+.eis-sif-bg-2.member-10 { background: #ffb780; }
+.eis-sif-bg-2.member-11 { background: #ec8d91; }
+.eis-sif-bg-2.member-12 { background: #6edad3; }
+.eis-sif-bg-2.member-13 { background: #fb96b2; }
+.eis-sif-bg-2.member-14 { background: #6dc3fb; }
+.eis-sif-bg-2.member-15 { background: #919daa; }
+.eis-sif-bg-2.member-16 { background: #ffe372; }
+.eis-sif-bg-2.member-17 { background: #eb81ef; }
+.eis-sif-bg-2.member-18 { background: #ffa1d5; }
+.eis-sif-bg-2.member-19 { background: #f48fc4; }
+.eis-sif-bg-2.member-20 { background: #f4fda1; }
+.eis-sif-bg-2.member-21 { background: #79d7fb; }
+.eis-sif-bg-2.member-22 { background: #b09dfe; }
+.eis-sif-bg-2.member-23 { background: #ffaf8a; }
+.eis-sif-bg-2.member-24 { background: #d8b4ff; }
+.eis-sif-bg-2.member-25 { background: #f79696; }
+.eis-sif-bg-2.member-26 { background: #baf8a9; }
+.eis-sif-bg-2.member-27 { background: #ada3d4; }
+.eis-sif-bg-2.member-28 { background: #95e5cc; }
+
+.category-1 a { color: #df3f66; }
+.category-2 a { color: #0081c9; }
+.category-3 a { color: #f29230; }
+.category-1 a:hover { color: #f2587f; }
+.category-2 a:hover { color: #009edc; }
+.category-3 a:hover { color: #f8c94e; }
+.category-1 .eis-sif-table { border-color: #c93a61; }
+.category-2 .eis-sif-table { border-color: #006fb7; }
+.category-1 .eis-sif-table tr { border-color: #f47496; }
+.category-2 .eis-sif-table tr { border-color: #00aee0; }
+.category-1 .eis-sif-table th { background: #f39cb4; border-color: #c93a61; color: #8f2b55; }
+.category-2 .eis-sif-table th { background: #59c5ea; border-color: #006fb7; color: #004084; }
+.category-1 .eis-sif-table-section-header { background: #f5c3d1; color: #c93a61; }
+.category-2 .eis-sif-table-section-header { background: #9edcf3; color: #006fb7; }
+.category-1 .eis-sif-dialog-section-header { border-bottom-color: #c93a61; color: #df3f66; }
+.category-2 .eis-sif-dialog-section-header { border-bottom-color: #006fb7; color: #0081c9; }
+.category-3 .eis-sif-dialog-section-header { border-bottom-color: #f4a135; color: #f4a135; }
+
+.ui-widget-content {
+    background: #fff; border: 1px solid #2c1c92;
+}
+.ui-widget-header {
+    background: #a5a9e9;
+    color: #3831a8; font-weight: bold;
+}
+.ui-widget-overlay {
+    background: #333;
+    opacity: 0.5;
+}
+.ui-widget-shadow {
+    box-shadow: 0 0 5px #666;
+}
+.ui-button, .ui-state-default {
+    background: #c9caf2; border: 1px solid #3f3cb5;
+    color: #2c1c92;
+}
+.ui-state-default a {
+    color: #2c1c92;
+}
+.ui-state-active {
+    background: #ffe082; border: 1px solid #ffa000;
+    color: #ff6f00;
+}
+.ui-state-active a {
+    color: #ff6f00;
+}
+.ui-state-disabled {
+    opacity: .35;
+}
+.ui-icon {
+    width: 16px; height: 16px;
+    background-image: url("../common/jquery/icons/2c1c92.png");
+}
+
+.ui-icon-caret-1-s { background-position: -65px 0; }
+.ui-icon-triangle-1-e { background-position: -32px -16px; }
+.ui-icon-triangle-1-s { background-position: -65px -16px; }
+.ui-icon-arrowrefresh-1-n { background-position: -144px -64px; }
+.ui-icon-shuffle { background-position: -80px -80px; }
+.ui-icon-comment { background-position: -128px -96px; }
+.ui-icon-person { background-position: -144px -96px; }
+.ui-icon-print { background-position: -160px -96px; }
+.ui-icon-tag { background-position: -240px -96px; }
+.ui-icon-calendar { background-position: -32px -112px; }
+.ui-icon-clock { background-position: -80px -112px; }
+.ui-icon-search { background-position: -160px -112px; }
+.ui-icon-closethick { background-position: -96px -128px; }
+.ui-icon-image { background-position: -208px -128px; }
+.ui-icon-alert { background-position: 0 -144px; }
+.ui-icon-info { background-position: -16px -144px; }
+.ui-icon-help { background-position: -48px -144px; }
+.ui-icon-play { background-position: 0 -160px; }
+
+.ui-corner-all, .ui-corner-top {
+    border-top-left-radius: 5px;
+}
+.ui-corner-all, .ui-corner-top {
+    border-top-right-radius: 5px;
+}
+.ui-corner-all, .ui-corner-bottom {
+    border-bottom-left-radius: 5px;
+}
+.ui-corner-all, .ui-corner-bottom {
+    border-bottom-right-radius: 5px;
+}
+
+.ui-dialog {
+    position: fixed; padding: 0;
+    border: 3px solid #2c1c92;
+}
+.ui-dialog-titlebar {
+    border-bottom: 1px solid #2c1c92; border-radius: 0;
+}
+.ui-dialog-titlebar .ui-button {
+    background: transparent !important; border: none;
+}
+.eis-sif-init .ui-dialog-titlebar-close {
+    display: none;
+}
+
+.ui-dialog.category-1 { border-color: #8f2b55; }
+.ui-dialog.category-2 { border-color: #004084; }
+.ui-dialog.category-1 .ui-dialog-titlebar { background: #f39cb4; border-bottom-color: #8f2b55; color: #b4345d; }
+.ui-dialog.category-2 .ui-dialog-titlebar { background: #59c5ea; border-bottom-color: #004084; color: #005fa4; }
+.ui-dialog.category-3 .ui-dialog-titlebar { background: #f9df97; border-bottom-color: #f07528; color: #f29230; }
+.ui-dialog.category-1 .ui-button { background: #f5c3d1; border-color: #c93a61; }
+.ui-dialog.category-2 .ui-button { background: #9edcf3; border-color: #006fb7; }
+.ui-dialog.category-3 .ui-button { background: #fbebbe; border-color: #f4a135; }
+.ui-dialog.category-1 .ui-icon { background-image: url("../common/jquery/icons/8f2b55.png"); }
+.ui-dialog.category-2 .ui-icon { background-image: url("../common/jquery/icons/004084.png"); }
+
+.ui-tabs {
+    background: none; border: none;
+}
+.ui-tabs[data-scroll] {
+    margin-bottom: -5px;
+}
+.ui-tabs-nav {
+    background: none !important;
+}
+.ui-tabs .ui-tabs-nav li.ui-state-active {
+    margin-bottom: -3px;
+    border-width: 3px; border-bottom: none;
+}
+.ui-tabs .ui-tabs-panel {
+    background: #fff; border: 2px solid #2c1c92;
+}
+
+.ui-tooltip {
+    background: #d6d6f5;
+    font-size: 13px;
+}
+.ui-tooltip h5 {
+    margin: 3px 0;
+    color: #2c1c92; font-size: 16px;
+}
+.ui-tooltip h6 {
+    margin: 3px 0;
+    color: #2c1c92; font-size: 14px;
+}
+.ui-tooltip p {
+    margin: 3px 0;
+}
+.ui-tooltip .eis-sif-note {
+    margin: 0 0 0 20px;
+    font-size: 11px;
+}

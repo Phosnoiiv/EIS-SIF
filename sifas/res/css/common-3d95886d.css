@@ -1,0 +1,44 @@
+@charset "utf-8";
+body {
+    margin: 0;
+    background: #fdf8e6;
+    font-family: "Microsoft Yahei", sans-serif; font-size: 16px;
+}
+p, ul, ol {
+    margin: 10px 0;
+}
+table {
+    border: 3px solid #f07528; border-collapse: collapse;
+}
+#eis-sif-header {
+    color: #f07528;
+}
+#eis-sif-header a {
+    display: inline-block; margin: 0 10px 10px 0; padding: 5px 15px;
+    background: #ddeef3; border: 1px solid #007cb3; border-radius: 5px;
+    color: #007cb3; font-size: 14px; text-decoration: none;
+}
+#eis-sif-footer {
+    width: 250px; margin: 20px auto; padding: 5px; clear: both;
+    background: #cbd4ed; border: 1px solid #4b6eca; border-radius: 5px;
+    font-size: 12px; text-align: center;
+}
+#eis-sif-footer p {
+    margin: 0;
+}
+#eis-sif-footer a {
+    color: #007cb3; text-decoration: none;
+}
+#eis-sif-footer a:hover {
+    color: #259fc1; text-decoration: underline;
+}
+@media (max-width:500px) {
+    #eis-sif-header, #eis-sif-container {
+        padding: 0 25px;
+    }
+}
+@media (min-width:500px) {
+    #eis-sif-header, #eis-sif-container {
+        padding: 0 5%;
+    }
+}

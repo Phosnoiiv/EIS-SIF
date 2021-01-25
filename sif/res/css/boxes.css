@@ -1,0 +1,48 @@
+@charset "utf-8";
+.clickable:hover {
+    color: #008dd6; cursor: pointer; text-decoration: underline;
+}
+.dialog-box table img {
+    height: 18px;
+}
+.dialog-box p {
+    margin: 5px 0;
+    color: #666; font-size: 14px;
+}
+.dialog-box td {
+    padding: 0 5px;
+    text-align: right;
+}
+#dialog-box-title {
+    border-bottom: 1px solid #004084;
+    color: #008dd6; font-size: 18px;
+}
+#dialog-box-title>span:first-child {
+    margin-right: 10px; padding: 1px 3px;
+    background: #9edcf3; border: 1px solid #004084; border-radius: 5px;
+    color: #005fa4; font-size: 15px;
+}
+#dialog-box-highlight p {
+    padding: 5px 10px;
+    background: #fff59d; border: 1px solid #fbc02d; border-radius: 10px;
+    color: #000;
+}
+#dialog-stepup-intro {
+    font-size: 15px;
+}
+#dialog-stepup-intro img {
+    height: 20px;
+}
+#dialog-stepup-intro img.unit {
+    height: 35px;
+}
+#dialog-stepup-intro em {
+    color: #f66c33; font-weight: bold; font-style: normal;
+}
+#dialog-stepup-intro>span {
+    display: inline-block; margin-right: 20px;
+}
+#dialog-stepup-intro>span>span:first-child {
+    margin-right: 10px;
+    color: #008dd6; font-weight: bold;
+}

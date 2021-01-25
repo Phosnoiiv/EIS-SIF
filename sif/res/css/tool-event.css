@@ -1,0 +1,48 @@
+@charset "utf-8";
+#result td {
+    color: #3f3cb5; text-align: right;
+}
+#result tr>*:nth-child(3) { display: none; }
+#result .enough {
+    background: #a5d6a7;
+    color: #2e7d32;
+}
+#result .cost {
+    background: #f48fb1;
+    color: #ad1457;
+}
+.result-note {
+    color: #666; font-size: 12px;
+}
+.event-clickable:hover {
+    cursor: pointer; text-decoration: underline;
+}
+.event-date-end {
+    color: #666; font-size: 13px;
+}
+.event-date-end::before {
+    content: "（～";
+}
+.event-date-end::after {
+    content: "）";
+}
+.log {
+    margin: 20px 0; padding: 10px;
+    background: #ddd; border: 1px solid #999;
+    font-size: 12px;
+}
+.log p {
+    margin: 0;
+}
+
+#yell-choices .eis-sif-gallery-item, #yell-chosen .eis-sif-gallery-item {
+    width: 70px; height: 30px;
+    box-shadow: 3px 3px 5px #999;
+    cursor: pointer;
+}
+#yell-choices .eis-sif-gallery-item {
+    background: #c9caf2;
+}
+#yell-chosen .eis-sif-gallery-item {
+    background: #c8e6c9;
+}

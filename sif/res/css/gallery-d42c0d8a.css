@@ -1,0 +1,49 @@
+@charset "utf-8";
+.gallery-item-title {
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    color: #666; font-size: 14px;
+}
+.gallery-item-thumb {
+    cursor: pointer;
+}
+.gallery-item-note {
+    color: #666; font-size: 12px;
+}
+#dialog-gallery-thumb {
+    float: left;
+}
+#dialog-gallery-panel {
+    padding-left: 226px;
+}
+#dialog-gallery-limit {
+    color: #2c1c92; font-weight: bold; text-align: center;
+}
+#dialog-gallery-free {
+    position: relative; margin-top: 15px;
+}
+#dialog-gallery-flag {
+    display: inline-block; position: absolute; padding: 1px 3px; right: 10px; top: -15px;
+    background: #ffcdd2; border: 1px solid #d32f2f; border-radius: 5px;
+    color: #b71c1c; font-size: 12px;
+    animation: 5s ease infinite highlight-flag;
+}
+#dialog-gallery-notes {
+    clear: left;
+}
+
+.eis-sif-gallery-item {
+    display: block; position: relative; padding: 2px 5px; width: 216px;
+    background: #eaeafa; border: 1px solid #3f3cb5; border-radius: 5px;
+}
+.eis-sif-gallery-item img {
+    display: block; margin: 2px auto;
+}
+
+.eis-sif-tag.cover-type-1 { background: #9e9e9e; }
+.eis-sif-tag.cover-type-2 { background: #4caf50; }
+.eis-sif-tag.cover-type-3 { background: #00bcd4; }
+.eis-sif-tag.cover-type-4 { background: #cddc39; }
+.eis-sif-tag.cover-type-5 { background: #f44336; }
+.eis-sif-gallery-item.category-1 { background: #fae7ec; border-color: #c93a61; }
+.eis-sif-gallery-item.category-2 { background: #d9f2fa; border-color: #006fb7; }
+.eis-sif-gallery-item.category-3 { background: #fdf8e6; border-color: #f4a135; }

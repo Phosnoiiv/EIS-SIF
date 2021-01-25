@@ -1,0 +1,43 @@
+@charset "utf-8";
+.ui-widget-content {
+    background: #fff; border: 1px solid #004084;
+}
+.ui-widget-header {
+    background: #59c5ea;
+    color: #005fa4; font-weight: bold;
+}
+.ui-widget-overlay {
+    background: #333;
+    opacity: 0.5;
+}
+
+.ui-button {
+    background: #9edcf3; border: 1px solid #006fb7; border-radius: 5px;
+}
+.ui-button:hover {
+    background: #f7d1c4; border-color: #de5f2b;
+}
+
+.ui-icon {
+    width: 16px; height: 16px;
+}
+
+.ui-icon-closethick { background-position: -96px -128px; }
+
+.ui-dialog {
+    position: fixed; padding: 0;
+    border: 3px solid #004084;
+}
+.ui-dialog-titlebar {
+    border-bottom: 1px solid #004084;
+}
+.ui-dialog-titlebar .ui-button {
+    background: transparent; border: none;
+}
+.ui-dialog-titlebar .ui-icon {
+    background-image: url("../common/jquery/icons/004084.png");
+}
+.ui-dialog-buttonpane {
+    margin-top: 0 !important;
+    background: #ddd;
+}

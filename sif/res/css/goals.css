@@ -1,0 +1,33 @@
+@charset "utf-8";
+.goal {
+    font-size: 14px;
+}
+.goal.expired {
+    filter: grayscale(100%);
+}
+.goal-desc {
+    margin-left: 90px;
+}
+.goal-new {
+    position: absolute; height: 12px; top: -6px; left: -1px; z-index: 2;
+}
+.goal-clear {
+    position: absolute; height: 17px; top: -6px; left: -2px; z-index: 2;
+}
+.goal-time {
+    float: right;
+}
+
+.eis-sif-track {
+    font-weight: bold;
+}
+.sif-goal-tag-new {
+    float: left;
+}
+.sif-goal-title {
+    margin-left: 85px;
+}
+.sif-goal-date.nearend {
+    background: #f37;
+    color: #fff;
+}

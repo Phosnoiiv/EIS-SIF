@@ -1,0 +1,73 @@
+@charset "utf-8";
+@keyframes highlight1 {
+    from { background: #ffcc80; }
+    to   { background: #fff;    }
+}
+tr.highlight {
+    background: #ffcc80;
+    animation: 1s ease infinite alternate highlight1;
+}
+#carnivals {
+    columns: 350px;
+}
+.carnival-clickable:hover {
+    cursor: pointer; text-decoration: underline;
+}
+.carnival-date-open {
+    color: #666; font-size: 13px;
+}
+.carnival-date-open::before {
+    content: "（";
+}
+.carnival-date-open::after {
+    content: "～）";
+}
+#tracks {
+    columns: 350px;
+}
+.track-clickable:hover {
+    cursor: pointer; text-decoration: underline;
+}
+.dialog-title {
+    border-bottom: 1px solid #2c1c92;
+    font-size: 18px;
+}
+.dialog-title>img:not(.eis-sif-dialog-logo) {
+    margin-right: 5px; height: 24px; float: left;
+}
+.dialog-title-tags {
+    float: right;
+}
+.dialog-title-tags img {
+    height: 20px;
+}
+.dialog-info {
+    margin: 0 !important; clear: right;
+}
+.dialog-info+*:not(.dialog-info) {
+    margin-top: 5px;
+}
+.eis-sif-table {
+    margin: 0 auto;
+}
+.carnival-table td:nth-child(1) {
+    text-align: right;
+}
+.carnival-table td:nth-child(3) {
+    text-align: right;
+}
+.carnival-table td:nth-child(4) {
+    text-align: right;
+}
+.track-table tr:not(.eis-sif-table-section-header) td:nth-child(1) {
+    text-align: right;
+}
+.track-table td:nth-child(3) {
+    color: #666; font-size: 14px; text-align: right;
+}
+.track-table td:nth-child(3)::after {
+    content: "～";
+}
+.swing {
+    background: #ffcce3;
+}

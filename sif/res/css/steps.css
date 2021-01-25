@@ -1,0 +1,74 @@
+@charset "utf-8";
+table {
+    margin: 20px auto;
+    text-align: center;
+}
+th {
+    background: #cbd4ed; border: 1px solid
+}
+tr {
+    border: 1px solid #879cd6;
+}
+.default {
+    color: #999;
+}
+.special {
+    background: #f9e5e8;
+    color: #c94d53; font-weight: bold;
+}
+.expect, .value {
+    font-family: "Lucida Console", "Consolas", monospace; text-align: right;
+}
+.expect {
+    background: #badcf1; border-left: 1px solid #4982a2;
+    color: #4982a2;
+}
+.value {
+    background: #cdc4df; border-left: 1px solid #614196;
+    color: #614196;
+}
+.guarantee, .gift {
+    text-align: left;
+}
+.guarantee img, .gift img {
+    height: 20px;
+}
+.gift {
+    font-size: 14px;
+}
+.unit-1 {
+    color: #e07;
+}
+.unit-2 {
+    color: #2a5;
+}
+.unit-3 {
+    color: #09e;
+}
+.unit-5 {
+    color: #95c;
+}
+.count {
+    color: #61008c; cursor: pointer;
+}
+.count:hover {
+    background: #d2aae1;
+}
+.count-zero {
+    color: #999; cursor: not-allowed;
+}
+.count-open {
+    background: #b273c9;
+    color: #540087; font-weight: bold; cursor: default;
+}
+#detail ul {
+    margin: 10px; padding: 5px 5px 5px 20px;
+    background: #edddf3; border: 1px solid #61008c; border-radius: 5px;
+    font-size: 12px; text-align: left;
+}
+.date {
+    color: #61008c;
+}
+.date::after {
+    content: "：";
+}

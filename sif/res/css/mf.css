@@ -1,0 +1,75 @@
+@charset "utf-8";
+h3 {
+    margin: 0 auto; padding-bottom: 3px; width: 150px;
+    background: #4b6eca; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;
+    color: #fff; font-size: 18px; text-align: center;
+}
+.level {
+    margin: 10px 0;
+    border-top: 3px solid #4b6eca;
+}
+.level p {
+    color: #4b6eca;
+}
+.mission-container {
+    margin: 0 auto; max-width: 500px;
+}
+.mission {
+    margin-bottom: 20px; padding: 5px 15px;
+    background: #f8f9fc; border: 2px solid #3a5ab3; border-radius: 15px; box-shadow: 2px 2px 5px #999;
+    color: #3a5ab3;
+}
+.mission p {
+    margin: 5px 0;
+}
+.mission span {
+    font-size: 14px;
+}
+.mission span+span {
+    margin-left: 50px;
+}
+.mission .rate {
+    float: right; margin: -7px -17px 5px 5px; padding: 5px 15px 5px 10px;
+    background: #f3dde2; border-top: 2px solid #3a5ab3; border-right: 2px solid #3a5ab3; border-bottom: 1px solid #a10029; border-left: 1px solid #a10029; border-top-right-radius: 15px; border-bottom-left-radius: 10px;
+    color: #bc3961; font-family: "Century Gothic", sans-serif; font-size: 24px; font-weight: bold;
+}
+.limited {
+    background: #f2eddd; border-color: #a65e00;
+    color: #a65e00;
+}
+.limited .rate {
+    border-top-color: #a65e00; border-right-color: #a65e00;
+}
+.time {
+    color: #a65e00; font-weight: bold;
+}
+.unlimited {
+    color: #999;
+}
+.reward {
+    position: relative;
+}
+.reward img {
+    margin-right: 5px; height: 40px; vertical-align: middle;
+}
+.reward .rate {
+    position: absolute; top: 7px; right: 0;
+    color: #bc3961; font-family: "Century Gothic", sans-serif; font-weight: bold;
+}
+.name {
+    color: #3a5ab3;
+}
+.amount {
+    font-size: 13px;
+}
+@media (min-width: 850px) {
+    .panel-container {
+        display: table; width: 100%;
+    }
+    .panel-main {
+        display: table-cell;
+    }
+    .panel-side {
+        display: table-cell; width: 250px;
+    }
+}

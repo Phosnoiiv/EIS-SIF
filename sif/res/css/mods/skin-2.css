@@ -1,0 +1,11 @@
+.skin-2-home-anniv {
+    position: absolute; top: 50px; right: 5%; height: 100px;
+}
+@media (max-width:500px) {
+    .skin-2-home-anniv {
+        height: 50px;
+    }
+}
+.skin-2-header-anniv {
+    position: absolute; top: 5px; right: 5%; height: 50px;
+}

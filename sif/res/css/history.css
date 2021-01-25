@@ -1,0 +1,26 @@
+p.eis-sif-note {
+    margin: 2px 0;
+}
+.version-date {
+    margin-left: 20px;
+    font-weight: normal; font-size: 13px;
+}
+.version-minor {
+    margin: 10px 0 10px 50px; padding: 0 20px;
+    background: #eee; border: 1px solid #aaa; border-radius: 10px;
+}
+.version-minor h4 {
+    margin: 5px 0;
+}
+.version-minor ul {
+    margin: 5px 0;
+}
+.major::before {
+    content: "重要";
+    display: inline-block; margin-right: 5px; padding: 1px 3px;
+    background: #f6f9cc; border: 1px solid #aeaa48; border-radius: 5px;
+    color: #aeaa48; font-size: 14px;
+}
+.minor {
+    color: #999;
+}

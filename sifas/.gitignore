@@ -1,0 +1,5 @@
+*.min.css
+*.min.js
+
+/config-*/*.php
+!/config-*/*.default.php

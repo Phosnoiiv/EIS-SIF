@@ -1,0 +1,31 @@
+@charset "utf-8";
+.voice {
+    margin: 10px 0; padding: 2px 10px;
+    border: 1px solid #a04d0c; border-radius: 10px; box-shadow: 2px 1px 3px #999;
+    transition: background-color 0.5s;
+}
+.voice-note {
+    float: right; margin: 0 0 1px 10px;
+    color: #999; font-size: 14px;
+    transition: color 0.5s;
+}
+.voice:hover .voice-note {
+    color: #333;
+}
+
+.eis-sif-gallery-item {
+    box-shadow: 3px 3px 5px #999;
+    cursor: pointer;
+}
+#tab-member .eis-sif-gallery-item {
+    width: 150px; height: 40px;
+    font-size: 18px;
+}
+#tab-category .eis-sif-gallery-item {
+    width: 250px; height: 30px;
+    background: #e0ccb3;
+}
+#tab-category .eis-sif-gallery-item.category-highlight {
+    background: #dca7a5;
+    color: #a24536; font-weight: bold;
+}

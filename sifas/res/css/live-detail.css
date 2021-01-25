@@ -1,0 +1,278 @@
+@charset "utf-8";
+h2 {
+    text-align: center;
+}
+h3 {
+    border-bottom: 1px solid #a04d0c;
+    color: #a04d0c; font-size: 20px;
+}
+.song-link{
+    position: relative; width: 250px; height: 35px; margin: 10px;
+}
+.song-link.category-1 {
+    background: #fae7ec;
+    color: #df3f66;
+}
+.song-link.category-2 {
+    background: #d9f2fa;
+    color: #0081c9;
+}
+.song-link.category-3 {
+    background: #fdf8e6;
+    color: #f29230;
+}
+.song-link.category-1:hover {
+    background: #f5c3d1;
+    color: #b4345d;
+}
+.song-link.category-2:hover {
+    background: #9edcf3;
+    color: #005fa4;
+}
+.song-link.category-3:hover {
+    background: #fbebbe;
+    color: #f07528;
+}
+.song-link-attribute {
+    position: absolute; height: 20px; left: 2px; top: -8px;
+}
+.song-link-attribute-2 {
+    position: absolute; height: 20px; left: 22px; top: -8px;
+}
+.song-link-info {
+    position: absolute; left: 45px; top: -8px; padding: 1px 5px;
+    font-size: 12px;
+}
+#titles {
+    font-size: 18px; text-align: center;
+}
+#titles>span+span::before {
+    content: "／";
+}
+#writers {
+    width: 250px; margin: 20px auto; padding: 5px; clear: both;
+    border: 1px solid; border-radius: 5px;
+    font-size: 12px; text-align: center;
+}
+#writers p {
+    margin: 0;
+}
+#missions, #missions-focus {
+    justify-content: normal;
+}
+#missions-focus .mission {
+    background: #fff59d;
+}
+.mission {
+    width: 270px; margin: 5px; padding: 5px;
+    border: 1px solid #aaa;
+}
+.mission p {
+    margin: 5px 0;
+}
+.mission img {
+    height: 40px;
+}
+.mission .item, .mission-pack {
+    float: left; margin-right: 10px;
+}
+.mission .item {
+    display: inline-block; position: relative;
+}
+.mission .item-amount {
+    position: absolute; width: 100%; bottom: -3px;
+    color: #a04d0c; font-weight: bold; font-size: 13px; text-align: center;
+}
+.mission .item-amount::before {
+    content: "×";
+}
+.mission-campaign {
+    border-bottom: 1px dashed #aaa;
+    color: #a65a0f; font-weight: bold; font-size: 14px;
+}
+.mission-time {
+    clear: left; margin: 0;
+    color: #666; font-size: 13px;
+}
+#events {
+    justify-content: normal;
+}
+.event {
+    width: 270px; margin: 5px; padding: 5px;
+    background: #b5c8e1; border: 1px solid #4c82ba; border-radius: 5px;
+}
+.event h6 {
+    margin: 3px 0;
+    color: #003f92; font-size: 15px;
+}
+.event p {
+    margin: 0;
+    color: #666; font-size: 13px;
+}
+.event-emblem {
+    float: left; height: 50px;
+}
+.event-time::after {
+    content: "～";
+}
+.map-link {
+    position: relative; width: 100px; height: 30px; margin: 10px;
+    background: linear-gradient(135deg, #fff 25px, #f6f6f6 25px); border: 1px solid #ddd;
+}
+.map-link.active {
+    color: #fff;
+}
+.map-link.story-normal.active {
+    background: linear-gradient(135deg, #ffaecd 25px, #f998b3 25px);
+}
+.map-link.story-hard.active {
+    background: linear-gradient(135deg, #bfa0f9 25px, #b38aff 25px);
+}
+.map-link.difficulty-1.active {
+    background: linear-gradient(135deg, #3f8fff 25px, #277dfe 25px);
+}
+.map-link.difficulty-2.active {
+    background: linear-gradient(135deg, #30d27b 25px, #1ec26e 25px);
+}
+.map-link.difficulty-3.active {
+    background: linear-gradient(135deg, #f7bd33 25px, #e8a523 25px);
+}
+.map-link.difficulty-4.active {
+    background: linear-gradient(135deg, #fe3636 25px, #f53436 25px);
+}
+.map-link-attribute {
+    position: absolute; height: 20px; left: 2px; top: -8px;
+}
+.map-detail-type .eis-sif-item img {
+    height: 50px;
+}
+.map-detail-info {
+    width: 100%;
+}
+.map-detail-info th {
+    color: #a65a0f;
+}
+.map-detail-info td {
+    text-align: center; vertical-align: top;
+}
+.map-detail-info-jump tr>:first-child {
+    text-align: left;
+}
+.map-detail-info-jump tr>:last-child {
+    text-align: right;
+}
+.map-detail-info-icon {
+    height: 18px;
+}
+.map-detail-jump {
+    position: relative;
+}
+.map-detail-jump img {
+    position: absolute; height: 20px; left: 2px; top: -8px;
+}
+.map-detail-jump svg {
+    margin: 0 5px;
+}
+.map-chart-container {
+    position: relative; height: 100px;
+}
+#map-notes, #map-waves {
+    padding: 0 20px; justify-content: normal;
+}
+.map-note, .map-wave {
+    position: relative; width: 270px; margin: 10px 10px 20px; padding: 5px;
+    border: 1px solid #aaa;
+}
+.map-note.buff, .map-wave.buff {
+    background: #e8f5e9;
+}
+.map-note.debuff, .map-wave.debuff {
+    background: #ffebee;
+}
+.map-note {
+    margin-bottom: 5px;
+}
+.map-note h6, .map-wave h6 {
+    margin: 0 0 5px;
+    font-weight: normal; font-size: 15px;
+}
+.map-note p, .map-wave p {
+    margin: 0; padding: 3px 0;
+    border-top: 1px dashed #aaa;
+    font-size: 13px;
+}
+.map-note img {
+    position: relative; height: 18px; margin-right: 5px; bottom: -3px;
+}
+.map-note-tag, .map-wave-tag {
+    position: absolute; padding: 1px 5px; top: -12px;
+    border-radius: 5px;
+    color: #fff; font-size: 12px;
+}
+.map-note-tag.count {
+    right: 5px;
+    background: #bc8c52;
+}
+.map-note-tag.count::before {
+    content: "×";
+}
+.map-wave-tag.range {
+    left: 5px;
+    background: #bc8c52;
+}
+.map-wave-tag.voltage {
+    left: 5px; top: auto; bottom: -12px;
+    background: #81c784;
+}
+.map-wave-tag.voltage::before {
+    content: "成功时张力 ";
+}
+.map-wave-tag.damage {
+    right: 5px; top: auto; bottom: -12px;
+    background: #e57373;
+}
+.map-wave-tag.damage::before {
+    content: "失败时体力 ";
+}
+.map-note-icons, .map-wave-icons {
+    position: absolute; width: 100%; left: 0; top: -14px;
+    text-align: center;
+}
+.map-note-icons img, .map-wave-icons img {
+    height: 20px;
+}
+#map-drops th img {
+    width: 50px;
+}
+#map-drops .item {
+    display: inline-block; position: relative;
+}
+#map-drops .item img {
+    height: 40px;
+}
+#map-drops .item-amount {
+    position: absolute; width: 100%; bottom: -3px;
+    color: #a04d0c; font-weight: bold; font-size: 13px; text-align: center;
+}
+#map-drops .item-amount::before {
+    content: "×";
+}
+
+.eis-sif-gallery-item {
+    box-shadow: 3px 3px 5px #999;
+    font-size: 15px; cursor: pointer;
+}
+
+.eis-sif-tag.route-1 { background: #0288d1; }
+.eis-sif-tag.route-3 { background: #c2185b; }
+.eis-sif-tag.event-1 { background: #ab47bc; }
+.eis-sif-tag.event-2 { background: #26a69a; }
+.eis-sif-tag.event-3 { background: #d4e157; color: #000; }
+.eis-sif-tag.event-song-1 { background: #8d6e63; }
+.eis-sif-tag.event-song-2 { background: #ef5350; }
+.category-1 #titles { color: #c93a61; }
+.category-2 #titles { color: #006fb7; }
+.category-3 #titles { color: #f29230; }
+.category-1 #writers { background: #f5c3d1; border-color: #f0446a; }
+.category-2 #writers { background: #9edcf3; border-color: #008dd6; }
+.category-3 #writers { background: #fbebbe; border-color: #f7c03e; }
