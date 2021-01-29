@@ -21,6 +21,18 @@ if (!defined('EIS_ENV'))
 </div>
 <div id="eis-sif-dialog-notice-contents" class="eis-sif-notice-content"></div>
 </div>
+<div class="eis-sif-hidden">
+<div id="settings-dialog" title="设置" data-width=700 data-full=1>
+<div id="settings-tabs" class="eis-jq-tabs" data-scroll=1>
+<ul>
+<li id="settings-card-page"><a href="#settings-page">本页面设置</a></li>
+</ul>
+<div id="settings-page">
+<div id="settings-list-page"></div>
+</div>
+</div>
+</div>
+</div>
 <?php
 if ($trackEnabled) {
     echo '<script>var _paq=window._paq||[];';

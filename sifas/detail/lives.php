@@ -101,6 +101,7 @@ require ROOT_SIFAS_WEB . '/common-b63adcdf/head2.php';
 <p class="map-data-string" data-index=21></p>
 <p class="map-data-string" data-index=22></p>
 <p class="map-data-string" data-index=23></p>
+<p class="eis-sif-note">※ 以下部分内容支持自动翻译成多种语言，详见页面顶部右上方设置。</p>
 <h4>节奏图示特效</h4>
 <div id="map-notes" class="eis-sif-gallery"></div>
 <p id="map-notes-none">此 LIVE 没有节奏图示特效。</p>

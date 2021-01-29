@@ -91,7 +91,7 @@ function aNoteDesc(lang, type, value, finishType, finishValue, target, gimmickTy
 }
 function aWaveDesc(lang, type, value, finishType, finishValue, target, waveType) {
     if (waveType == 255)
-        return aDescWavePrefixes[lang-1] + aEffect(3, 3, 1, 0);
+        return aDescWavePrefixes[lang-1] + aEffect(3, lang, 1, 0);
     var r = aDescWavePrefixes[lang-1] + aEffect(3, lang, type, value);
     r += "<br>" + aDescTimePrefixes[lang-1] + wordFinishes[finishType][waveType][lang-1].replace("#", finishValue);
     if (target != 58) r += "<br>" + aDescTargetPrefixes[lang-1] + wordTargets[target][lang-1];

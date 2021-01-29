@@ -20,6 +20,9 @@ if (isset($relatedPage)) {
     echo '<a id="eis-sif-nav-related" href="/sifas/' . $relatedPage['href'] . '">' . $relatedPage['name'] . '</a>';
 }
 ?>
+<div id="eis-sif-header-buttons">
+<span class="eis-sif-header-button" onclick="openSettings()" title="设置"><i class="fas fa-cog"></i></span>
+</div>
 </div>
 <div id="eis-sif-container">
 <?php

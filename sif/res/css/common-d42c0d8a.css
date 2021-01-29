@@ -43,6 +43,14 @@ p.eis-sif-note {
     background: #b2dfdb; border-color: #00796b;
     color: #004D40;
 }
+#eis-sif-header-buttons {
+    float: right;
+}
+.eis-sif-header-button {
+    display: inline-flex; width: 50px; height: 30px; justify-content: center; align-items: center;
+    background: #eaeafa; border: 1px solid #3f3cb5; border-radius: 5px;
+    color: #3f3cb5; cursor: pointer;
+}
 #eis-sif-container {
     padding: 10px 5%;
 }

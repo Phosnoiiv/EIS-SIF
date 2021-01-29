@@ -178,6 +178,7 @@ function showEvents() {
 function showMap(songID, mapType, mapIndex) {
     currentMapType = mapType; currentMapIndex = mapIndex;
     var song = songs[songID], data = songStorage[songID], map = data.maps[mapType][mapIndex], strings = data.strings;
+    var settingLang = parseInt(readSetting(1,"k4"));
     var hasLinkedMap = map[38].d, linkedMap = hasLinkedMap ? data.maps[1][map[38].d-1] : [], untrusted = map[38].u;
     if (!linkedMap) hasLinkedMap = false;
     $(".map-detail-type").hide();
@@ -248,9 +249,9 @@ function showMap(songID, mapType, mapIndex) {
                 qASImg("gimmick/" + gimmicks[r2.exec(strings[note[2]])[1]]),
                 strings[note[2]].replace(r2, ""),
             ),
-            $("<h6>").html(aNoteName(3, note[6], note[7])),
+            $("<h6>").html(aNoteName(settingLang, note[6], note[7])),
             $("<p>").html(strings[note[4]].replace(/\n/g, "<br>")),
-            $("<p>").html(aNoteDesc(3, note[6], note[7], note[8], note[9], note[5], note[3])),
+            $("<p>").html(aNoteDesc(settingLang, note[6], note[7], note[8], note[9], note[5], note[3])),
             $("<div>").addClass("map-note-tag count").text(note[1].length),
             targets[note[5]] ? $("<div>").addClass("map-note-icons").html(targets[note[5]][effects[note[6]][0]].replace(/\[(.+?)\]/g, function(match, p1) {
                 return $("<div>").append(qASImg(p1)).html();
@@ -272,7 +273,7 @@ function showMap(songID, mapType, mapIndex) {
         $("<div>").addClass("map-wave" + ([3,255].indexOf(wave[1]) >= 0 ? "" : effects[wave[8]][0] ? " buff" : " debuff")).append(
             $("<h6>").html(strings[wave[0]]),
             $("<p>").html(strings[wave[2]].replace(/\n+$/, "").replace(/\n/g, "<br>")),
-            $("<p>").html(aWaveDesc(3, wave[8], wave[9], wave[10], wave[11], wave[3], wave[1])),
+            $("<p>").html(aWaveDesc(settingLang, wave[8], wave[9], wave[10], wave[11], wave[3], wave[1])),
             waveData[0] ? $("<div>").addClass("map-wave-tag range").text(waveData[0] + "～" + waveData[1] + questionable) : "",
             waveData[2] ? $("<div>").addClass("map-wave-tag voltage").text(waveData[2] + questionable) : "",
             waveData[3] ? $("<div>").addClass("map-wave-tag damage").text(waveData[3] + questionable) : "",
@@ -384,3 +385,15 @@ var gConfig = $.extend({}, gConfigDefault, {
     itemNames:[null,1,2,3], itemImages:[null,0,null,null],
     emblemNames:[null,1,null,null], emblemImages:[null,0,null,null],
 });
+var sConfig = {
+    r:1,
+    s:{
+        "k4":{t:1,l:[[3,"简体中文"],[2,"英语"],[4,"繁体中文"]],d:3},
+    },
+    l:[
+        {g:"语言设置",l:[{k:"k4",n:"演唱会信息翻译语言"}]},
+    ],
+    f:function() {
+        $(".map-link.active").click();
+    },
+};

@@ -24,6 +24,10 @@ h1 {
     background: #f0f4c3; border-color: #afb42b;
     color: #827717;
 }
+.eis-sif-header-button {
+    background: #f2ebe1; border-color: #a04d0c;
+    color: #a04d0c;
+}
 #eis-sif-footer {
     background: #e0ccb3; border-color: #aa6210;
 }
@@ -46,6 +50,10 @@ h1 {
 .eis-sif-section>h4 {
     border-bottom-color: #a04d0c;
     color: #a65a0f;
+}
+.eis-sif-section-noborder h4 {
+    border-bottom-color: #a04d0c;
+    color: #a04d0c;
 }
 .eis-sif-subsection {
     border-color: #a65a0f;

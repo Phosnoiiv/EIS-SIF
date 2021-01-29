@@ -298,6 +298,78 @@ function readNotice(noticeID) {
     _paq.push(["trackEvent", "Notices", "Read"]);
 }
 
+function sConfigByRangeID(rangeID) {
+    if (rangeID > 0) return sConfig;
+}
+function openSettings() {
+    $("#settings-list-page, #settings-list-global").empty();
+    if (typeof sConfig == "undefined") {
+        $("<p>").addClass("eis-sif-note").text("本页面没有设置选项。").appendTo("#settings-list-page");
+    } else {
+        initSettings("#settings-list-page", sConfig);
+    }
+    showDialogConfirm("#settings-dialog", saveSettings);
+    $("#settings-tabs").tabs("refresh");
+}
+function initSettings(container, config) {
+    var inputTemplate = function(rangeID, key, configDefinition) {
+        switch (configDefinition.t) {
+            case 1:
+                var options = [], current = readSetting(rangeID, key);
+                $.each(configDefinition.l, function(listIndex, listItem) {
+                    options.push({v:listItem[0], t:listItem[1], s:listItem[0]==current});
+                });
+                return qSelect(options);
+        }
+    };
+    $.each(config.l, function(sectionIndex, configSection) {
+        var $form = $('<div class="eis-sif-form">');
+        $.each(configSection.l, function(configIndex, configItem) {
+            $("<p>").append(
+                $("<label>").attr("for","settings-"+configItem.k).text(configItem.n),
+                inputTemplate(config.r, configItem.k, config.s[configItem.k]).attr("id","settings-"+configItem.k),
+            ).appendTo($form);
+        });
+        $('<section class="eis-sif-section-noborder">').append(
+            $("<h4>").text(configSection.g),
+            $form,
+        ).appendTo(container);
+    });
+}
+function saveSettings() {
+    var saveIter = function(config) {
+        var data = store.get("sif.settings"+config.r, {});
+        $.each(config.s, function(key, configDefinition) {
+            var input = $("#settings-"+key), value;
+            switch (configDefinition.t) {
+                case 1:
+                    value = $("#settings-"+key).val();
+                    var found = false;
+                    $.each(configDefinition.l, function(listIndex, listItem) {
+                        if (listItem[0] == value) {
+                            found = true;
+                            return false;
+                        }
+                    });
+                    if (!found) value = undefined;
+            }
+            if (value !== undefined) {
+                data[key] = value;
+            }
+        });
+        store("sif.settings"+config.r, data);
+        if (config.f) config.f();
+    };
+    if (typeof sConfig != "undefined") saveIter(sConfig);
+}
+function readSetting(rangeID, key) {
+    var setting = store.get("sif.settings"+rangeID, {})[key];
+    return setting !== undefined ? setting : readDefaultSetting(rangeID, key);
+}
+function readDefaultSetting(rangeID, key) {
+    return sConfigByRangeID(rangeID).s[key].d;
+}
+
 function refreshLimit(limitType) {
     $.getJSON("/sif/interface/limit.php", {l:limitType}, function(data) {
         $(".limit-capacity-amount[data-limit=" + limitType + "]").text(data.current + "/" + data.max);
@@ -425,5 +497,8 @@ $(document).ready(function() {
             showPosts(flowID, data.posts);
         });
     });
+    if (!$("#settings-dialog").length) {
+        $(".eis-sif-header-button[title='设置']").remove();
+    }
     lazyload();
 });
