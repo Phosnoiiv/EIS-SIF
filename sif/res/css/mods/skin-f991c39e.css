@@ -4,6 +4,7 @@ h1 {color:#db2036;}
 #eis-sif-nav-home:hover {background:#9bf4ea;border-color:#00a98a;color:#007959;}
 #eis-sif-nav-related {background:#f2ced3;border-color:#b93f3d;color:#9f2e2b;}
 #eis-sif-nav-related:hover {background:#afdfdf;border-color:#007971;color:#004d44;}
+.eis-sif-header-button {background:#ffebef;border-color:#db2036;color:#db2036;}
 #eis-sif-footer {background:#ffcdd5;border-color:#fc363d;}
 #eis-sif-footer a {color:#fc363d;}
 #eis-sif-footer a:hover {color:#00987a;}
@@ -11,6 +12,8 @@ h1 {color:#db2036;}
 .eis-sif-section {border-color:#db2036;}
 .eis-sif-section>h4 {border-bottom-color:#db2036;color:#ed2c3c;}
 .eis-sif-section-noborder h4 {border-bottom-color:#db2036;color:#db2036;}
+.eis-sif-subsection {border-color:#ed2c3c;}
+.eis-sif-subsection h4 {background:#ed2c3c;}
 .eis-sif-doc h6 {color:#fc363d;}
 .eis-sif-notice {background:#9bf4ea;border-color:#00caad;}
 .eis-sif-notice a {color:#007959;}
@@ -30,6 +33,8 @@ h1 {color:#db2036;}
 .eis-sif-info-gallery>div>div:last-child {color:#bf0022;}
 .eis-sif-item-amount {color:#ce172e;}
 .eis-sif-item-block-name {color:#db2036;}
+.eis-sif-item-diff {border-color:#f2999e;}
+.eis-sif-item-diff svg {color:#ed2c3c;}
 .eis-sif-simple-icon {color:#db2036;}
 .eis-sif-simple-title {color:#db2036;}
 .eis-sif-simple-text {background:#fae4f2;border-color:#dd0082;}
@@ -47,6 +52,7 @@ body.eis-sifas {background:#f9ebee;}
 .eis-sifas #eis-sif-nav-home:hover {background:#afdfdf;border-color:#007971;color:#004d44;}
 .eis-sifas #eis-sif-nav-related {background:#ffcdd5;border-color:#db2036;color:#bf0022;}
 .eis-sifas #eis-sif-nav-related:hover {background:#9bf4ea;border-color:#00a98a;color:#007959;}
+.eis-sifas .eis-sif-header-button {background:#f9ebee;border-color:#b93f3d;color:#b93f3d;}
 .eis-sifas #eis-sif-footer {background:#f2ced3;border-color:#da4f46;}
 .eis-sifas #eis-sif-footer a {color:#da4f46;}
 .eis-sifas #eis-sif-footer a:hover {color:#006961;}
@@ -127,6 +133,8 @@ body[data-id="16"] #dialog-gallery-limit, body[data-id="19"] #dialog-gallery-lim
 
 body[data-id="7"] #dialog-gallery-limit {color:#9f2e2b;}
 
+#play-dialog-exchange-img svg {color:#ed2c3c;}
+
 body[data-id="2"] .unit .calendar-amount {background:#ffcdd5aa;color:#fc363d;}
 body[data-id="2"] .item3 .calendar-amount {color:#fc363d;}
 body[data-id="2"] .count-amount {color:#fc363d;}
@@ -170,3 +178,6 @@ body[data-id="23"] h3 {background:linear-gradient(90deg,#f2ced3,#f9ebee);border-
 body[data-id="23"] #events img {border-color:#9f2e2b;}
 body[data-id="23"] .subevent {background:#f2ced3;}
 body[data-id="23"] .other {background:#f2ced3;}
+
+body[data-id="26"] .stamp.selected {border-color:#c6007b;}
+body[data-id="26"] .stamp-reward {background:#f64c57;}
