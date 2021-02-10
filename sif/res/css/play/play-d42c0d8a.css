@@ -1,0 +1,56 @@
+.play-mode-desc {
+    color: #555; font-size: 14px; text-align: center;
+}
+#play-customize {
+    margin-bottom: 10px;
+}
+.play-section-flag {
+    position: relative; margin-left: 5px; bottom: -5px; padding: 1px 5px;
+    background: #ffcdd2; border: 1px solid #d32f2f; border-radius: 5px;
+    color: #b71c1c; font-size: 12px;
+}
+#play-dialog-end-score {
+    text-align: center;
+}
+#play-dialog-add-info {
+    text-align: center;
+}
+#play-dialog-add-score-details {
+    padding: 0 60px;
+    font-size: 14px; list-style-type: none;
+}
+.play-dialog-add-score-detail-score {
+    float: right;
+}
+#play-dialog-exchange-img {
+    display: flex; justify-content: center; align-items: center;
+}
+#play-dialog-exchange-img img {
+    height: 50px;
+}
+#play-dialog-exchange-img svg {
+    margin: 0 30px;
+    color: #4746c1; font-size: 30px;
+}
+#play-dialog-exchange-amount {
+    width: 150px;
+    font-size: 24px; text-align: center;
+}
+
+.eis-sif-info-gallery>div {
+    width: 90px;
+}
+.eis-sif-flag {
+    top: -13px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.eis-sif-flag.static {
+    background: #ffcdd2;
+    color: #b71c1c;
+}
+.eis-sif-flag.disabled {
+    background: #f5f5f5; border-color: #616161;
+    color: #212121; font-weight: normal;
+    animation: none;
+}

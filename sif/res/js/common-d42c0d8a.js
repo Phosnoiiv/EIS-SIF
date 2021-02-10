@@ -200,6 +200,15 @@ function gItemTooltip(type, key, server, config) {
     }
     return t;
 }
+function gItemDiff(type, key, server, config, before, rate, amount, addClass) {
+    return $('<div class="eis-sif-item-diff '+(rate>0?"obtain":"consume")+'">').append(
+        gItem(type, key, server, 0, {s:true}, config),
+        '<span class="eis-sif-item-diff-before">'+before,
+        '<i class="fas fa-arrow-right">',
+        addClass ? '<span class="eis-sif-item-diff-after '+addClass+'" data-before='+before+' data-rate='+Math.abs(rate)+'>'
+            : '<span class="eis-sif-item-diff-after">'+(before+rate*amount)+' ('+(rate>0?'+':'')+(rate*amount)+')',
+    );
+}
 
 function showDialogMessage(content, callbackOK, buttonText) {
     $(content).addClass("eis-sif-dialog").dialog({modal:true, position:{of:window}, resizable:false, draggable:false, closeText:buttonText || "确定", buttons:[

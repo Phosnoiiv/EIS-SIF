@@ -26,4 +26,5 @@ $pages = [
       22 => ['key'=>'event/arena', 'title'=>'Live ♪ Arena 活动资讯', 'game'=>1, 'path'=>'latest/arena'],
       23 => ['key'=>'list/goals', 'title'=>'SIFAS 活动课题', 'game'=>2, 'path'=>'list/goals'],
       24 => ['key'=>'archive/notices', 'title'=>'过去的告知', 'game'=>0, 'path'=>'archive/notices'],
+      26 => ['key'=>'play/aquarium', 'game'=>1, 'path'=>'sim/aquarium'],
 ];

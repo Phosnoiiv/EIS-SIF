@@ -91,7 +91,7 @@ foreach (Basic::getAvailableMods() as $mod) {
 <section class="eis-sif-section section-paged">
 <h4><i class="fas fa-file"></i> 文章</h4>
 <div class="section-toolbar">
-<div class="eis-sif-button-group"><span data-default onclick="listArticles(0)">A</span><span onclick="listArticles(1)">B</span></div>
+<div class="eis-sif-button-group tiny"><span data-default onclick="listArticles(0)">A</span><span onclick="listArticles(1)">B</span></div>
 </div>
 <ul id="articles"></ul>
 <div class="eis-sif-pagebar" data-control="#articles" data-size=5></div>

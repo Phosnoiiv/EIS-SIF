@@ -1,0 +1,69 @@
+#board {
+    display: flex; position: relative; width: 100%; max-width: 420px; flex-wrap: wrap;
+}
+@media (min-width:900px) {
+    #board {
+        float: left;
+    }
+    #panel {
+        margin-left: 430px;
+    }
+}
+.stamp {
+    display: flex; flex-direction: column; width: 80px; padding: 2px 0;
+    background: #fff; border: 1px solid #999;
+    cursor: pointer; user-select: none;
+}
+.stamp.selected {
+    margin: -4px; z-index: 1;
+    border: 5px solid #ffa000;
+}
+.stamp.unselected {
+    opacity: 0.5;
+}
+.stamp-reward {
+    padding: 1px 5px; align-self: center;
+    background: #656ad8; border-radius: 5px;
+    color: #fff; font-size: 13px;
+}
+.stamp-img {
+    flex-grow: 1; display: flex; justify-content: center; align-items: center;
+}
+.stamp-img img {
+    max-width: 100%;
+}
+.stamp-record {
+    position: relative; margin: 1px 3px; padding-right: 3px;
+    border: 1px solid #999; border-radius: 5px;
+    font-size: 13px; text-align: right;
+}
+.stamp-record img {
+    position: absolute; height: 15px; left: 3px; top: 1px;
+}
+.stamp-result {
+    height: 40px;
+}
+.stamp-unpopular {
+    filter: brightness(0);
+}
+#panel h4 {
+    margin-bottom: 0;
+}
+#panel .ui-button {
+    margin-top: 15px;
+}
+#actions {
+    position: relative;
+}
+#actions-disabled {
+    position: absolute; width: 100%; height: 100%; left: 0; top: 0; display: flex; justify-content: center; align-items: center;
+    background: #3339;
+    color: #fff; cursor: not-allowed;
+}
+.button-item-icon {
+    position: relative; margin: -6px 0 0 2px; bottom: -6px;
+    height: 20px;
+}
+#button-history-popularity-reward {
+    margin: 0 0 0 10px !important;
+}

@@ -116,10 +116,11 @@ p.eis-sif-note {
 }
 .eis-sif-subsection {
     padding: 10px;
-    border: 1px solid; border-radius: 10px;
+    border: 1px solid #4746c1; border-radius: 10px;
 }
 .eis-sif-subsection h4 {
     margin: -11px -11px 0 -11px; padding: 1px 10px;
+    background: #4746c1;
     color: #fff; font-size: 17px;
 }
 .eis-sif-doc h6 {
@@ -171,7 +172,7 @@ p.eis-sif-note {
     padding: 3px; width: 18px;
     font-size: 14px;
 }
-.eis-sif-button-group .ui-button {
+.eis-sif-button-group.tiny .ui-button {
     padding: 1px 5px;
     font-size: 13px;
 }
@@ -306,6 +307,38 @@ img.eis-sif-switch[data-switch="0"] {
 .eis-sif-item-block-desc {
     margin: 0;
     font-size: 14px;
+}
+.eis-sif-item-diff-container {
+    display: flex; flex-direction: column; align-items: center;
+}
+.eis-sif-item-diff {
+    display: flex; align-items: center; padding: 0 10px 0 3px;
+    border: 1px solid #a5a9e9; border-radius: 10px;
+    font-size: 14px;
+}
+.eis-sif-item-diff img {
+    height: 20px;
+}
+.eis-sif-item-diff svg {
+    margin: 0 10px;
+    color: #4746c1;
+}
+.eis-sif-item-diff .eis-sif-item {
+    display: flex;
+}
+.eis-sif-item-diff-before {
+    width: 80px;
+    text-align: right;
+}
+.eis-sif-item-diff-after {
+    width: 100px;
+    text-align: right;
+}
+.eis-sif-item-diff.consume .eis-sif-item-diff-after {
+    color: #e53935;
+}
+.eis-sif-item-diff.obtain .eis-sif-item-diff-after {
+    color: #43a047;
 }
 .eis-sif-simple-container {
     max-width: 500px; margin: 0 auto;
