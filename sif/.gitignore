@@ -6,3 +6,5 @@
 !/config-*/*.default.php
 !/config-*/pages.php
 !/config-*/version.php
+
+/res/img/u/

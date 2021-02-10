@@ -105,6 +105,18 @@ foreach (Basic::getAvailableMods() as $mod) {
 <section class="eis-sif-section buttons">
 <h4><i class="fas fa-gamepad"></i> 玩法</h4>
 <?=createButton(17, [], '', '', ['title'=>'招募模拟'])?>
+<?php
+$banners = Basic::getBanners(1);
+if (!empty($banners)) {
+    foreach ($banners as $banner) {
+        switch ($banner[1]) {
+            case 1:
+                echo '<a class="banner" href="'.Basic::getPageURL($banner[2]).'" target="_blank"><img src="/sif/res/img/u/banner/'.$banner[0].'"/></a>'."\n";
+                break;
+        }
+    }
+}
+?>
 </section>
 <section class="eis-sif-section buttons">
 <h4><i class="fas fa-tools"></i> 工具</h4>

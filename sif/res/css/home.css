@@ -239,6 +239,12 @@ section.disabled p {
 .notice.new .notice-clickable {
     color: #fb8c00; font-weight: bold;
 }
+.banner {
+    background: none !important; border: none !important;
+}
+.banner img {
+    width: 100%;
+}
 .live-container {
     display: table; margin-bottom: 10px; padding-right: 20px;
     background: #cbd4ed; border: 1px solid #4b6eca; border-top-right-radius: 20px; border-bottom-right-radius: 20px;

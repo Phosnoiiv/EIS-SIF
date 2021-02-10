@@ -78,4 +78,13 @@ class Basic {
             return $time >= $mod['start'] && $time <= $mod['end'];
         }), 'name');
     }
+
+    private static $banners = [];
+    static function getBanners($location) {
+        if (isset(self::$banner[$location])) return self::$banner[$location];
+        $sql = "SELECT * FROM s_banner WHERE `location`=$location AND time_open<=datetime('now','localtime') AND time_close>=datetime('now','localtime')";
+        $columns = [['s','img'],['i','type'],['i','target']];
+        self::$banners[$location] = DB::ltSelect('eis.s3db', $sql, $columns, '');
+        return self::$banners[$location];
+    }
 }

@@ -7,12 +7,12 @@ if (!defined('EIS_ENV'))
 
 trait DBTrait {
     protected static $myCon;
+    protected static $ltCon;
 }
 
 abstract class DBBase {
     protected abstract static function getConfigSheet();
 
-    private static $lt_con = [];
     private static $ltWritableDBs = [];
 
     private static function myConnect() {
@@ -102,17 +102,17 @@ abstract class DBBase {
         global $config;
         $con = new SQLite3($config[static::getConfigSheet()]['sqlite_dir'] . '/' . $db, $writable ? SQLITE3_OPEN_READWRITE : SQLITE3_OPEN_READONLY);
         $con->busyTimeout(10000);
-        self::$lt_con[$db] = $con;
+        static::$ltCon[$db] = $con;
     }
     private static function lt_check($db, $writable = false) {
         if ($writable && !in_array($db, self::$ltWritableDBs)) {
-            if (!empty(self::$lt_con[$db])) {
-                self::$lt_con[$db]->close();
-                self::$lt_con[$db] = null;
+            if (!empty(static::$ltCon[$db])) {
+                static::$ltCon[$db]->close();
+                static::$ltCon[$db] = null;
             }
             self::$ltWritableDBs[] = $db;
         }
-        if (!empty(self::$lt_con[$db]))
+        if (!empty(static::$ltCon[$db]))
             return;
         self::ltConnect($db, $writable);
     }
@@ -120,11 +120,11 @@ abstract class DBBase {
         global $config;
         self::lt_check($main);
         $db = $config[static::getConfigSheet()]['sqlite_dir'] . '/' . $attach;
-        return self::$lt_con[$main]->exec("ATTACH DATABASE '$db' AS '$name'");
+        return static::$ltCon[$main]->exec("ATTACH DATABASE '$db' AS '$name'");
     }
     static function lt_query($db, $query) {
         self::lt_check($db);
-        return self::$lt_con[$db]->query($query);
+        return static::$ltCon[$db]->query($query);
     }
     static function ltSelect($db, $query, $columns, $key, $options = []) {
         $dbResult = self::lt_query($db, $query);
@@ -156,12 +156,12 @@ abstract class DBBase {
                 $result[$dbRow[$key]] = $row;
             }
         }
-        return $result;
+        return $result ?? [];
     }
     static function ltParamQuery($db, $query, $params) {
         $writable = preg_match('/^(INSERT|UPDATE|DELETE)/', $query);
         self::lt_check($db, $writable);
-        $stmt = self::$lt_con[$db]->prepare($query);
+        $stmt = static::$ltCon[$db]->prepare($query);
         foreach ($params as $param => $config) {
             if (is_array($config)) {
                 $stmt->bindValue($param, $config[0], $config[1]);
