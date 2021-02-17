@@ -265,6 +265,7 @@ while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
     $refMaps[$dbMap['live_difficulty_id']] = [$songID, $mapType, count($detailSongs[$songID]['maps'][$mapType]) - 1];
     $allSongs[$songID][0][$attribute]++;
     if ($mapType == 1 && $difficulty == 3) {
+        $clientSongs[$songID][3] = $dbMap['default_attribute'];
         $clientSongs[$songID][4] = $dbMap['evaluation_s_score'];
         $clientSongs[$songID][5] = $dbMap['recommended_score'];
         $clientSongs[$songID][6] = $dbMap['recommended_stamina'];
@@ -419,9 +420,6 @@ while ($dbEmblem = $dbEmblems->fetch_assoc()) {
     ];
 }
 
-foreach (array_keys($clientSongs) as $songID) {
-    $clientSongs[$songID][3] = array_search(max($allSongs[$songID][0]), $allSongs[$songID][0]);
-}
 Cache::writeMultiJson('live-detail.js', [
     'songs' => $clientSongs,
     'effects' => $clientEffects,

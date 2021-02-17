@@ -3,7 +3,7 @@ function init() {
     $.each(songs, function(songID, song) {
         $("<div>").addClass("eis-sif-gallery-item song-link category-" + getSongCategory(songID)).attr("data-song", songID).append(
             $("<span>").html(song[11]),
-            qASImg("icon/a" + song[3]).addClass("song-link-attribute"),
+            song[3] ? qASImg("icon/a" + song[3]).addClass("song-link-attribute") : null,
             song[15] ? qASImg("icon/a" + song[15]).addClass("song-link-attribute-2") : null,
             $("<span>").addClass("eis-sif-tag song-link-info " + (song[0] ? "default" : "route-" + song[9])),
         ).attr("onclick", "produce(" + songID + ")").appendTo("#songs");
@@ -126,12 +126,12 @@ function sortSong() {
                 value = songID;
                 break;
             case 1:
-                info = [1,3,4].indexOf(song[9]) >= 0 ? songRouteStrings[song[9]].replace("#", song[10]) : null;
+                info = [1,3,4,8,9].indexOf(song[9]) >= 0 ? songRouteStrings[song[9]].replace("#", song[10]) : null;
                 value = song[2];
                 break;
             case 2:
                 info = songRouteStrings[song[9]].replace("#", song[9] == 2 ? songDailyNames[song[10]] : song[10]);
-                value = song[9] * 1000 + song[8];
+                value = songRouteOrders[song[9]] * 1000 + song[8];
                 break;
             default:
                 info = song[sortMethod];
@@ -347,7 +347,7 @@ function getMapName(mapType, difficulty) {
         case 3:
             return difficulty[0] + "-" + difficulty[1] + ["（原）", " (N)", " (H)"][difficulty[2]];
         case 5:
-            return towers[difficulty[0]][1] + (difficulty[1] ? " " + difficulty[1] + " 层" : difficulty[2]);
+            return towers[difficulty[0]][1] + (difficulty[1] ? " " + difficulty[1] : difficulty[2]);
         default:
             return [null, "", "活动", null, "SBL "][mapType] + [null, "初级", "中级", "上级", "上级＋"][difficulty];
     }

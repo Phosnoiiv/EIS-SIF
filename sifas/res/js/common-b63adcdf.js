@@ -6,8 +6,10 @@ var memberGroupNamesCT = [null, " μ's ", " Aqours ", "虹咲学园学园偶像�
 
 var eventTypeNames = [null, "剧情", "交换所", "SBL", "DLP"];
 var missionTermNames = [null, "每日", "每周"];
-var songRouteStrings = [null, "# 章", "每周#", "绊 # 级", "长期限时", "限时", "活动限定"];
+var songRouteStrings = [null, "# 章", "每周#", "绊 # 级", "长期限时", "限时", "仅剧情", "仅活动", "仅高难度", "常驻"];
 var songDailyNames = [null, "一", "二", "三", "四", "五", "六", "日", "一四六", "二五日", "三六日"];
+
+var songRouteOrders = [null, 1, 5, 6, 3, 7, 9, 8, 4, 2];
 
 function qASImg(path, desc, lazy) {
     path = "/vio/" + (path.substring(0, 4) == "sif/" ? "" : "sifas/") + path;
