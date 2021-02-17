@@ -15,7 +15,7 @@ foreach ([1 => 'jp', 3 => 'cn'] as $server => $serverName) {
         $timeClose = strtotime($dbGoal['end_date'] . SIF::getServerTimezone($server));
         $yearClose = date('Y', $timeClose);
         $type = $dbGoal['achievement_type'];
-        if (empty($dbGoal['description']) && !empty($dbGoal['end_date']) && $timeClose >= $now && $yearClose < 2021) {
+        if (empty($dbGoal['description']) && !empty($dbGoal['end_date']) && $timeClose >= $now && $yearClose < 2022) {
             for ($maxParam = 11; $maxParam > 0 && empty($dbGoal['params' . $maxParam]); $maxParam--);
             $clientGoals[$server][++$clientIndex] = [
                 $dbGoal['title'],
@@ -53,6 +53,7 @@ foreach ([1 => 'jp', 3 => 'cn'] as $server => $serverName) {
                         $listMemberGroups[] = $params[2];
                     }
                     break;
+                case 32:
                 case 37:
                     if (!in_array($params[1], $listTracks)) {
                         $listTracks[] = $params[1];
@@ -97,8 +98,6 @@ foreach ([1 => 'jp', 3 => 'cn'] as $server => $serverName) {
             continue;
         $clientMemberGroups[$server][$id] = $dbMemberGroup['name'];
     }
-    if (!in_array($server, [1]))
-        continue;
     $sql = 'SELECT * FROM achievement_filter_type_m';
     $dbCategories = DB::lt_query($serverName . '/achievement.db_', $sql);
     while ($dbCategory = $dbCategories->fetchArray(SQLITE3_ASSOC)) {
@@ -122,6 +121,10 @@ while ($dbTrack = $dbTracks->fetch_assoc()) {
     ];
 }
 
+$sql = 'SELECT * FROM mission_tag';
+$columns = [['s','jp_tag'],['s','cn_tag']];
+$serverTags = DB::ltSelect('cache.s3db', $sql, $columns, 'id');
+
 Cache::writeMultiJson('goals.js', [
     'categories' => $clientCategories,
     'goals' => $clientGoals,
@@ -129,4 +132,7 @@ Cache::writeMultiJson('goals.js', [
     'unitGroups' => $clientUnitGroups,
     'memberGroups' => $clientMemberGroups,
     'tracks' => $clientTracks,
+]);
+Cache::writePhp('goals.php', [
+    'cacheTags' => $serverTags,
 ]);

@@ -2,17 +2,28 @@
 namespace EIS\Lab\SIF;
 $pageID = 14;
 require_once dirname(__DIR__) . '/core/init.php';
+include ROOT_SIF_CACHE . '/goals.php';
 
 $useSIFStyle = true;
 $latestFile = ROOT_SIF_CACHE . '/goals.js';
 $barContentsAppend = [
-    '<span class="ui-icon ui-icon-comment"></span>服务器：<select id="server" onchange="produce()"><option value="1" selected>日语版</option><option value="3">简体字版</option></select>',
+    '<i class="fas fa-server"></i> 服务器：<select id="server" onchange="produce()"><option value="1" selected>日语版</option><option value="3">简体字版</option></select>',
 ];
 
 require ROOT_SIF_WEB . '/common-d42c0d8a/head1.php';
 echo HTML::css('goals');
 echo HTML::js('goals');
 ?>
+<style>
+.sif-goal-tag.tag-6.server-1 {
+    mask: url("/vio/sif/<?=$cacheTags[6][0]?>.png") center/48px;
+    -webkit-mask: url("/vio/sif/<?=$cacheTags[6][0]?>.png") center/48px;
+}
+.sif-goal-tag.tag-6.server-3 {
+    mask: url("/vio/sif/<?=$cacheTags[6][1]?>.png") center/48px;
+    -webkit-mask: url("/vio/sif/<?=$cacheTags[6][1]?>.png") center/48px;
+}
+</style>
 <script>
 <?=Cache::read('goals.js')?>
 </script>
@@ -35,31 +46,6 @@ require ROOT_SIF_WEB . '/common-d42c0d8a/head2.php';
 <p>虽然本页面可以自动分析课题数据，但是数据源是手动提取的，时效性不及查卡器。</p>
 <p>国际版的限时课题一般都可在查卡器中查询文本，本页面仅提供日语版和简体字版的数据。</p>
 </div>
-</div>
-<div id="dialog-carnival" class="eis-sif-hidden" title="活动详情" data-width=550>
-<div class="dialog-title"></div>
-<p class="eis-sif-note dialog-info"></p>
-<table class="carnival-table eis-sif-table">
-<thead>
-<tr><th>#</th><th>歌曲</th><th>EXPERT</th></tr>
-</thead>
-<tbody></tbody>
-</table>
-<p class="eis-sif-note">※ 本窗口内的各歌名也可点击。</p>
-<p class="eis-sif-note">※ 本页面所示数据可能有误，欢迎反馈，反馈方式见本站主页告知。</p>
-</div>
-<div id="dialog-track" class="eis-sif-hidden" title="歌曲详情" data-width=450>
-<div class="dialog-title">
-<div class="dialog-title-tags"></div>
-</div>
-<table class="track-table eis-sif-table">
-<thead>
-<tr><th>#</th><th>活动</th><th>日期</th></tr>
-</thead>
-<tbody></tbody>
-</table>
-<p class="eis-sif-note">※ 本窗口内的各活动名也可点击。</p>
-<p class="eis-sif-note">※ 本页面所示数据可能有误，欢迎反馈，反馈方式见本站主页告知。</p>
 </div>
 <?php
 require ROOT_SIF_WEB . '/common-4fcb29e1/foot.php';

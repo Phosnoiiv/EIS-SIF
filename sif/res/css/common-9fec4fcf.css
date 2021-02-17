@@ -29,10 +29,6 @@
     mask: url("/vio/sif/tag/g5.png") center/48px;
     -webkit-mask: url("/vio/sif/tag/g5.png") center/48px;
 }
-.sif-goal-tag.tag-6 {
-    mask: url("/vio/sif/tag/g8.png") center/48px;
-    -webkit-mask: url("/vio/sif/tag/g8.png") center/48px;
-}
 
 .sif-box-button {
     display: inline-block; position: relative;

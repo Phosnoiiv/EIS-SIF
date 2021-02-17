@@ -11,7 +11,7 @@ function produce(ignoreRecord) {
         var isNew = !isExpired && goal[1] && goal[1] < Date.now() / 1000;
         $("<div>").addClass("goal").append(
             $("<span>").addClass("sif-goal-tag-new").append(
-                $("<div>").addClass("sif-goal-tag tag-" + (goal[4] || (goal[3] == 1 ? 4 : 5))),
+                $("<div>").addClass("sif-goal-tag tag-" + (goal[4] || (goal[3] == 1 ? 4 : 5)) + " server-" + server),
             ),
             $("<div>").addClass("sif-goal-title").append(
                 isNew ? qImg("icon/s/new").addClass("goal-new") : "",
@@ -71,6 +71,8 @@ function sifGoalDesc(server, type, param1, param2, param3, param4, param5, param
             return strs[1].replace("%s", strs[param1 == 1000 ? (param2 == 5 ? 5 : 3) : param1 + 1]).replace("%d", param3);
         case 11:
             return strs[1].replace("%d", param1);
+        case 32:
+            return strs[1].replace("%s", $("<span>").append(qTrack(param1, server)).html());
         case 37:
             return strs[1].replace("%s", $("<span>").append(qTrack(param1, server)).html()).replace("%d", param2);
         case 50:
