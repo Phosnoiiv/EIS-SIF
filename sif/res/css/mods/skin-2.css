@@ -7,5 +7,5 @@
     }
 }
 .skin-2-header-anniv {
-    position: absolute; top: 5px; right: 5%; height: 50px;
+    position: absolute; top: 5px; right: calc(5% + 50px); height: 50px;
 }
