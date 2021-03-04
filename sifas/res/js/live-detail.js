@@ -241,9 +241,26 @@ function showMap(songID, mapType, mapIndex) {
         return strings[map[$(this).attr("data-index")]].replace(/\n/g, "");
     });
     $("#map-notes, #map-waves, #map-drops").empty();
+    var waveEnds = [], waveEndsLinked = false;
+    $.each(map[25], function(waveIndex, wave) {
+        if (wave[4]) {
+            waveEnds.push(wave[4], wave[5]);
+        } else if (hasLinkedMap) {
+            var linkedWave = linkedMap[25][waveIndex];
+            waveEnds.push(linkedWave[4], linkedWave[5]);
+            waveEndsLinked = true;
+        }
+    });
     var r = /<:icon_gimmick_([0-9]+)\/>/;
     var r2 = /<img src="Common\/InlineImage\/Icon\/tex_inlineimage_gimmick_([0-9]+)".*\/>/;
     $.each(map[24], function(noteIndex, note) {
+        var noteIDs = [];
+        if (waveEnds.length) {
+            $.each(note[1], function(noteIDIndex, noteID) {
+                for (var i=noteID, j=0; j<waveEnds.length && i>waveEnds[j]; i--,j++);
+                noteIDs.push(i);
+            });
+        }
         $("<div>").addClass("map-note" + (note[3] != 2 ? (effects[note[6]][0] ? " buff" : " debuff") : "")).append(
             $("<h6>").append(
                 qASImg("gimmick/" + gimmicks[r2.exec(strings[note[2]])[1]]),
@@ -252,6 +269,7 @@ function showMap(songID, mapType, mapIndex) {
             $("<h6>").html(aNoteName(settingLang, note[6], note[7])),
             $("<p>").html(strings[note[4]].replace(/\n/g, "<br>")),
             $("<p>").html(aNoteDesc(settingLang, note[6], note[7], note[8], note[9], note[5], note[3])),
+            noteIDs.length ? $("<p>").text(noteIDs.join(", ") + (untrusted||waveEndsLinked?" (?)":"")) : "",
             $("<div>").addClass("map-note-tag count").text(note[1].length),
             targets[note[5]] ? $("<div>").addClass("map-note-icons").html(targets[note[5]][effects[note[6]][0]].replace(/\[(.+?)\]/g, function(match, p1) {
                 return $("<div>").append(qASImg(p1)).html();
