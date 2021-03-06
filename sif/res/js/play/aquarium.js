@@ -220,5 +220,6 @@ var pConfig = {
     ],
     fStart:p2Start, fStartDisp:p2StartDisp,
     fIntervalNext:p2IntervalNext, fIntervalDisp:p2IntervalDisp,
+    fEnd:$.noop,
     fExchangeFinish:p2ExchangeFinish,
 };

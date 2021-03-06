@@ -1,0 +1,40 @@
+#map {
+    position: relative; width: 100%; max-width: 600px;
+}
+#map-bg {
+    width: 100%;
+}
+#map-player {
+    position: absolute; width: 20%; margin: -15% 0 0 -4%; z-index: 2;
+}
+#map-seal {
+    position: absolute; width: 6%; margin: -5% 0 0 3%; z-index: 1;
+}
+.cell {
+    position: absolute; width: 12%;
+}
+@media (min-width:900px) {
+    #map {
+        float: left;
+    }
+    #panel {
+        margin-left: 610px;
+    }
+}
+.button-item-icon {
+    position: relative; margin: -6px 0 0 2px; bottom: -6px;
+    height: 22px;
+}
+
+#map[data-size="12"] [data-index="0"]  {top:25%;left: 5%;}
+#map[data-size="12"] [data-index="1"]  {top:25%;left:20%;}
+#map[data-size="12"] [data-index="2"]  {top:25%;left:35%;}
+#map[data-size="12"] [data-index="3"]  {top:25%;left:50%;}
+#map[data-size="12"] [data-index="4"]  {top:35%;left:60%;}
+#map[data-size="12"] [data-index="5"]  {top:45%;left:70%;}
+#map[data-size="12"] [data-index="6"]  {top:55%;left:80%;}
+#map[data-size="12"] [data-index="7"]  {top:55%;left:65%;}
+#map[data-size="12"] [data-index="8"]  {top:55%;left:50%;}
+#map[data-size="12"] [data-index="9"]  {top:45%;left:40%;}
+#map[data-size="12"] [data-index="10"] {top:45%;left:25%;}
+#map[data-size="12"] [data-index="11"] {top:35%;left:15%;}

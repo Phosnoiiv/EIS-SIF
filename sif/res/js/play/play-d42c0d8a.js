@@ -1,8 +1,8 @@
 var playModeNames = {s:"标准模式", f:"自由模式", c:"自定义模式"};
-var playData;
+var playData, playState;
 
 function playReadI(code) {
-    return CI[pConfig.m[playData.m][code]] || (playData.m=="c"?parseInt($("#play-customize-code-"+code).val()):0);
+    return CI[pConfig.m[playData.m][code]] || (playData.m=="c"?parseInt($("#play-customize-code-"+code).val())||0:0);
 }
 function playReadJ(code) {
     return CJ[pConfig.m[playData.m][code]] || [];
@@ -55,6 +55,7 @@ function playStart() {
     playReadBatch({tpl:"Ctpl",tsl:"Ctsl"}, {}, {});
     playInitZero(["s","tp","ts"]);
     playAddItemsSilent(CT[pConfig.m[playData.m].CTi]);
+    playState = {};
     pConfig.fStart();
     $("#play-mode").hide();
     $("#play-main").show();
@@ -77,7 +78,7 @@ function playIntervalNext() {
     pConfig.fIntervalNext();
     if (playData.tp>playData.tpl) {
         playEnd();
-        if ($("#play-dialog-add").dialog("isOpen")) {
+        if ($("#play-dialog-add").hasClass("ui-dialog-content")) {
             $("#play-dialog-add").dialog("moveToTop");
         }
     }
@@ -95,6 +96,7 @@ function playQuitConfirm() {
 }
 function playEnd() {
     $("#play-dialog-end-score").text("最终活动点数："+playData.s);
+    pConfig.fEnd();
     showDialogMessage("#play-dialog-end", $.noop);
     $("#play-main").hide();
     $("#play-mode").show();
@@ -107,6 +109,13 @@ function playAddScore(score, text) {
 }
 function playGetPocketItem(type, key) {
     return playData.i[type+"-"+key] || 0;
+}
+function playRandom(list, count) {
+    var r = [];
+    for (var i=count; i>0; i--) {
+        r.push(list[Math.floor(Math.random()*list.length)]);
+    }
+    return r;
 }
 function playSubtractItems(list) {
     $.each(list, function(itemIndex, itemArray) {
@@ -188,6 +197,22 @@ function playExchangeFinish() {
     playAddItems(addList, "交换获得");
     pConfig.fExchangeFinish();
     playAddDisp("已完成交换。");
+}
+function playFlagChange(flag, value, pattern, buttonOption) {
+    if (value) {
+        $(flag).removeClass("disabled");
+    } else {
+        $(flag).addClass("disabled");
+    }
+    $(flag).text(pattern.replace("#", value));
+    if (buttonOption.p) {
+        $(flag).parent().button("option", "disabled", !value);
+    }
+    if (buttonOption.c) {
+        $(buttonOption.c).children().each(function() {
+            $(this).button("option", "disabled", !value);
+        });
+    }
 }
 
 $(document).ready(function() {
