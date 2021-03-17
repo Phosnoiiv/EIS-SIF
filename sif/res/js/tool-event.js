@@ -208,7 +208,7 @@ function calculate() {
         var exp = parseInt($("#exp").val());
         var icon = parseInt($("#collected").val());
         var pt = parseInt($("#gained").val());
-        var flagFree = true, liveCount = 0;
+        var flagFree = true, minL = 1, liveCount = 0;
         while (flagFree || pt < goal) {
             $.each(eventConfig.l, function(lIndex, l) {
                 if (l.l == false)
@@ -239,6 +239,7 @@ function calculate() {
                 });
                 ptGet = Math.round(ptGet * (eventConfig.g && eventConfig.g.p && $("#g-p:checked").length ? eventConfig.g.p : 1) * (getLuckyBonus(type, "p", situation) || 1) * yellEffect) * multiple;
                 lp -= lpConsume; exp += expGet; icon += iconGet; pt += ptGet; liveCount++;
+                minL = Math.min(minL, Math.floor(lp));
                 if (exp >= sifEXP(rank)) {
                     exp -= sifEXP(rank); rank++; lp += sifLP(rank);
                 }
@@ -270,15 +271,15 @@ function calculate() {
                 }
             });
         }
-        if (lp >= 0) {
+        if (minL >= 0) {
             recordResult("lp", situationIndex, "平刷即可", "enough");
             recordResult("loveca", situationIndex, "");
             recordResult("pt", situationIndex, "");
             recordResult("rank", situationIndex, "");
             recordResult("count", situationIndex, "");
         } else {
-            recordResult("lp", situationIndex, Math.ceil(-lp));
-            recordResult("loveca", situationIndex, Math.ceil(-lp / sifLP(rank)), "cost");
+            recordResult("lp", situationIndex, -minL);
+            recordResult("loveca", situationIndex, Math.ceil(-minL / sifLP(rank)), "cost");
             recordResult("pt", situationIndex, pt);
             recordResult("rank", situationIndex, "+" + (rank - $("#rank").val()) + '<span class="result-note">→' + rank + "</span>");
             recordResult("count", situationIndex, liveCount);
