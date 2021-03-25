@@ -1,12 +1,8 @@
 var currentSongID, currentMapType, currentMapIndex, songStorage = {}, charts = {};
 function init() {
     $.each(songs, function(songID, song) {
-        $("<div>").addClass("eis-sif-gallery-item song-link category-" + getSongCategory(songID)).attr("data-song", songID).append(
-            $("<span>").html(song[11]),
-            song[3] ? qASImg("icon/a" + song[3]).addClass("song-link-attribute") : null,
-            song[15] ? qASImg("icon/a" + song[15]).addClass("song-link-attribute-2") : null,
-            $("<span>").addClass("eis-sif-tag song-link-info " + (song[0] ? "default" : "route-" + song[9])),
-        ).attr("onclick", "produce(" + songID + ")").appendTo("#songs");
+        var group = getSongGroup(songID);
+        qSongLink(songID, group ? "songGroupConfirm("+songID+")" : "produce("+songID+")").appendTo("#songs");
     });
     $.each(currentEvents, function(eventIndex, currentEvent) {
         if (currentEvent[2] < (new Date).getTime() / 1000)
@@ -24,8 +20,19 @@ function init() {
     sortSong();
     enableCountdown();
 }
+function songGroupConfirm(songID) {
+    var group = getSongGroup(songID);
+    $("#dialog-song-group-songs").empty();
+    qSongLink(songID, "produce("+songID+")", true, "继续选择【"+group[songID]+"】").appendTo("#dialog-song-group-songs");
+    $.each(group, function(groupSongID, text) {
+        if (groupSongID==songID) return;
+        qSongLink(groupSongID, "produce("+groupSongID+")", true, "改选【"+text+"】").appendTo("#dialog-song-group-songs");
+    });
+    showDialogMessage("#dialog-song-group-select", $.noop, "取消");
+}
 function produce(songID, target) {
     $("#dialog-songs").dialog("close");
+    $("#dialog-song-group-select.ui-dialog-content").dialog("close");
     $("body").removeClass("eis-sif-init");
     currentSongID = songID;
     if (songID in songStorage) {
@@ -360,6 +367,12 @@ function showDrops() {
 function getSongCategory(songID) {
     return Math.ceil(songID / 1000);
 }
+function getSongGroup(songID) {
+    for (var i=1; i<songGroups.length; i++) {
+        if (songGroups[i][songID]) return songGroups[i];
+    }
+    return false;
+}
 function getMapName(mapType, difficulty) {
     switch (mapType) {
         case 3:
@@ -382,6 +395,15 @@ function qItem(type, key, amount) {
     return $("<div>").addClass("item").append(
         img ? qASImg(img) : qImg("0"),
         [15,23,26].indexOf(type) < 0 ? $("<div>").addClass("item-amount").text(amount) : "",
+    );
+}
+function qSongLink(songID, onclick, noTag, text) {
+    var song = songs[songID];
+    return $('<div class="eis-sif-gallery-item song-link category-'+getSongCategory(songID)+'" data-song='+songID+' onclick="'+onclick+'">').append(
+        $("<span>").html(text||song[11]),
+        song[3] ? qASImg("icon/a"+song[3]).addClass("song-link-attribute") : null,
+        song[15] ? qASImg("icon/a"+song[15]).addClass("song-link-attribute-2") : null,
+        noTag ? null : $('<span class="eis-sif-tag song-link-info '+(song[0]?'default':'route-'+song[9])+'">'),
     );
 }
 

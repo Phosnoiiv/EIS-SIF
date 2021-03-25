@@ -73,6 +73,8 @@ abstract class DBBase {
             }
             if (empty($key)) {
                 $result[] = $row;
+            } else if (!empty($options['k'])) {
+                $result[$dbRow[$key]][$dbRow[$options['k']]] = $row;
             } else if (!empty($options['m'])) {
                 $result[$dbRow[$key]][] = $row;
             } else {
@@ -150,6 +152,8 @@ abstract class DBBase {
             }
             if (empty($key)) {
                 $result[] = $row;
+            } else if (!empty($options['k'])) {
+                $result[$dbRow[$key]][$dbRow[$options['k']]] = $row;
             } else if (!empty($options['m'])) {
                 $result[$dbRow[$key]][] = $row;
             } else {

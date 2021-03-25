@@ -56,6 +56,10 @@ while ($dbSong = $dbSongs->fetch_assoc()) {
     if (empty($clientSongs[$id][13])) $clientSongs[$id][13] = $dbSong['sif_cn_name'] ?? '';
 }
 
+$sql = 'SELECT * FROM live_song_group';
+$columns = [['s','caption']];
+$clientSongGroups = DB::mySelect($sql, $columns, 'group_id', ['z'=>true,'s'=>true,'k'=>'song']);
+
 $sql = 'SELECT * FROM m_tower_clear_reward';
 $columns = [['i','tower_clear_reward_id'],['i','content_type'],['i','content_id'],['i','content_amount']];
 $dbRewards = DB::ltSelect('jp/masterdata.db', $sql, $columns, '');
@@ -422,6 +426,7 @@ while ($dbEmblem = $dbEmblems->fetch_assoc()) {
 
 Cache::writeMultiJson('live-detail.js', [
     'songs' => $clientSongs,
+    'songGroups' => $clientSongGroups,
     'effects' => $clientEffects,
     'targets' => $clientTargets,
     'gimmicks' => $clientGimmicks,

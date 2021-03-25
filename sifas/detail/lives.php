@@ -116,5 +116,11 @@ require ROOT_SIFAS_WEB . '/common-b63adcdf/head2.php';
 <table id="map-drops" class="eis-sif-table"></table>
 </section>
 </div>
+<div class="eis-sif-hidden">
+<div id="dialog-song-group-select" title="多版本歌曲选择提示" data-width=400>
+<p>您选择了一首多版本歌曲。请您确认：</p>
+<div id="dialog-song-group-songs" class="eis-sif-gallery"></div>
+</div>
+</div>
 <?php
 require ROOT_SIF_WEB . '/common-d42c0d8a/foot.php';
