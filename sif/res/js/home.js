@@ -1,4 +1,13 @@
 var noticeIDs = [];
+var preInited = false, articleHotValues = [];
+function preInit() {
+    if (preInited) return;
+    $.each(articleHots, function(articleID, hot) {
+        articleHotValues.push(hot);
+    });
+    articleHotValues.sort(function(h1,h2){return h2-h1;});
+    preInited = true;
+}
 function init() {
     $.each(reminders, function(reminderIndex, reminder) {
         $("<li>").addClass("reminder").append(
@@ -17,12 +26,19 @@ function init() {
     enableCountdown();
 }
 function listArticles(panelID) {
+    preInit();
     $("#articles").empty();
+    var faHot = function(value) {
+        return $('<i class="fas fa-fire" title="热度值 '+value+'">');
+    }
     $.each(articles[panelID], function(articleIndex, article) {
         $("<li>").addClass("article-item").append(
             article[4] ? '<i class="fas fa-thumbtack" data-fa-transform="rotate--30" title="置顶文章"></i>' : "",
             $("<span>").addClass("eis-sif-tag article-" + article[3]).text(articleTagNames[article[3]]),
-            $("<span>").addClass("article-date").text(new Date(article[2] * 86400000).getUTCDateMedium()),
+            $("<span>").addClass("article-date").append(
+                new Date(article[2].fromDatestamp(0)).getUTCDateMedium(),
+                articleHots[article[0]]>=articleHotValues[4] ? faHot(articleHots[article[0]]) : null,
+            ),
             $("<a>").addClass("article-link").attr("href", "article/?" + article[0]).attr("target", "_blank").text(article[1]),
         ).appendTo("#articles");
     });

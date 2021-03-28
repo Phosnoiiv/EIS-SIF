@@ -11,7 +11,10 @@ $config['sqlite_running_prefix'] = '';
 $config[CONFIG_SHEET_SIF]['sqlite_dir'] = dirname(dirname(ROOT_SIF_SRC)) . '/db/sif';
 
 $config['matomo_host'] = '';
+$config['matomo_scheme'] = 'https';
 $config['resource_host_1'] = '';
+
+$config['matomo_token'] = '';
 
 $config['maintenances'] = [];
 $config['pages'] = [];

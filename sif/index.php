@@ -62,6 +62,7 @@ echo HTML::js('home');
     return $carry;
 }, []))?>
 <?=Cache::read('articles.js')?>
+<?=Cache::read('matomo/articles.js')?>
 </script>
 <?php
 foreach (Basic::getAvailableMods() as $mod) {
