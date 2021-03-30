@@ -472,6 +472,7 @@ img.eis-sif-switch[data-switch="0"] {
 .eis-sif-text.category-1 { color: #f0446a; }
 .eis-sif-text.category-2 { color: #008dd6; }
 .eis-sif-text.category-3 { color: #f4a135; }
+.eis-sif-text.category-4 { color: #bf0eb5; }
 .eis-sif-text.attribute-1 { color: #e07; }
 .eis-sif-text.attribute-2 { color: #2a5; }
 .eis-sif-text.attribute-3 { color: #09e; }
@@ -570,10 +571,13 @@ img.eis-sif-switch[data-switch="0"] {
 .category-3 a:hover { color: #f8c94e; }
 .category-1 .eis-sif-table { border-color: #c93a61; }
 .category-2 .eis-sif-table { border-color: #006fb7; }
+.category-4 .eis-sif-table { border-color: #9d01a9; }
 .category-1 .eis-sif-table tr { border-color: #f47496; }
 .category-2 .eis-sif-table tr { border-color: #00aee0; }
+.category-4 .eis-sif-table tr { border-color: #d865ce; }
 .category-1 .eis-sif-table th { background: #f39cb4; border-color: #c93a61; color: #8f2b55; }
 .category-2 .eis-sif-table th { background: #59c5ea; border-color: #006fb7; color: #004084; }
+.category-4 .eis-sif-table th { background: #e791df; border-color: #9d01a9; color: #6d0096; }
 .category-1 .eis-sif-table-section-header { background: #f5c3d1; color: #c93a61; }
 .category-2 .eis-sif-table-section-header { background: #9edcf3; color: #006fb7; }
 .category-1 .eis-sif-dialog-section-header { border-bottom-color: #c93a61; color: #df3f66; }

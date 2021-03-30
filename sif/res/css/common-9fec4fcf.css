@@ -58,6 +58,9 @@
 .sif-album-collection[data-category="2"] {
     color: #0068b7;
 }
+.sif-album-collection[data-category="3"] {
+    color: #f4680b;
+}
 .sif-album-collection[data-category="1"][data-direction="1"] {
     background: url("/vio/sif/ui/album/f1.png");
 }
@@ -70,6 +73,12 @@
 .sif-album-collection[data-category="2"][data-direction="2"] {
     background: url("/vio/sif/ui/album/f4.png");
 }
+.sif-album-collection[data-category="3"][data-direction="1"] {
+    background: url("/vio/sif/ui/album/f5.png");
+}
+.sif-album-collection[data-category="3"][data-direction="2"] {
+    background: url("/vio/sif/ui/album/f6.png");
+}
 .sif-album-collection img {
     position: absolute; left: 16px; top: 33px;
 }
@@ -78,6 +87,9 @@
 }
 .sif-album-collection[data-category="2"] img {
     background: repeating-linear-gradient(90deg, #9ef 0px, #9ef 5px, #7df 5px, #7df 10px);
+}
+.sif-album-collection[data-category="3"] img {
+    background: repeating-linear-gradient(90deg, #fe6 0px, #fe6 5px, #fd2 5px, #fd2 10px);
 }
 .sif-album-collection span {
     display: flex; position: absolute; width: 212px; height: 40px; left: 11px; top: 131px; justify-content: center; align-items: center;

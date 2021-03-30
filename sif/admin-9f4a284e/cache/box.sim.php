@@ -201,6 +201,10 @@ while ($dbString = $dbStrings->fetch_assoc()) {
     $replaceIntroTo[] = $dbString['string'];
 }
 
+$sql = 'SELECT * FROM box2';
+$columns = [['s','name'],['s','display_name']];
+$boxes2 = DB::mySelect($sql, $columns, 'key');
+
 $clientNormalBoxes = $clientStepups = $clientKnapsacks = $clientBags = [null, [], [], []];
 $serverBoxes = [];
 $sql = 'SELECT * FROM box WHERE disable_sim=0';
@@ -210,9 +214,10 @@ while ($dbBox = $dbBoxes->fetch_assoc()) {
     $server = $dbBox['box_server'];
     $timezone = SIF::getServerTimezone($server);
     $runid = intval($dbBox['box_runid']);
+    $box2 = empty($dbBox['box2']) ? [] : $boxes2[$dbBox['box2']];
     $box = [
         $runid ? [$id, $runid] : $id,
-        $dbBox['display_name'],
+        $dbBox['display_name'] ?? $box2[1],
         intval($dbBox['virtual']),
         empty($dbBox['time_open']) ? 0 : strtotime($dbBox['time_open'] . $timezone),
         empty($dbBox['time_close']) ? 0 : strtotime($dbBox['time_close'] . $timezone),
@@ -347,7 +352,7 @@ while ($dbContent = $dbContents->fetch_assoc()) {
             continue;
         if (empty($type = $dbContent['filter_type']) && empty($dbContent['filter_series']) && $unit[4] > 2)
             continue;
-        if (!empty($type) && $unit[4] != $type && !($unit[2] == 5 && $unit[4] == 2 && $type == 1))
+        if (!empty($type) && $unit[4] != $type && !($type==10 && ($unit[4]==1 || $unit[2]==5)))
             continue;
         if (!empty($series = $dbContent['filter_series']) && $unit[5] != $series) continue;
         if (!empty($memberGroup = $dbContent['filter_member_group']) && !in_array($unit[1], $allMemberGroups[$memberGroup][0]))

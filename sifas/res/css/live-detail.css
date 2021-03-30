@@ -21,6 +21,10 @@ h3 {
     background: #fdf8e6;
     color: #f29230;
 }
+.song-link.category-4 {
+    background: #fae5f7;
+    color: #b109b0;
+}
 .song-link.category-1:hover {
     background: #f5c3d1;
     color: #b4345d;
@@ -32,6 +36,10 @@ h3 {
 .song-link.category-3:hover {
     background: #fbebbe;
     color: #f07528;
+}
+.song-link.category-4:hover {
+    background: #f2bded;
+    color: #8c00a2;
 }
 .song-link-attribute {
     position: absolute; height: 20px; left: 2px; top: -8px;
@@ -273,6 +281,8 @@ h3 {
 .category-1 #titles { color: #c93a61; }
 .category-2 #titles { color: #006fb7; }
 .category-3 #titles { color: #f29230; }
+.category-4 #titles { color: #9d01a9; }
 .category-1 #writers { background: #f5c3d1; border-color: #f0446a; }
 .category-2 #writers { background: #9edcf3; border-color: #008dd6; }
 .category-3 #writers { background: #fbebbe; border-color: #f7c03e; }
+.category-4 #writers { background: #f2bded; border-color: #bf0eb5; }

@@ -1,6 +1,5 @@
 var playdata, state = {}, boxStorage = {}, unitStorage = {}, skillStorage = {};
 var boxGuarantees = [null, [3, 1], [5, 1], [3, 2], [3, 3], [4, 1]];
-var eventUnitRates = [null, 2, null, 5, null, 1];
 function startConfirm() {
     showDialogConfirm($("#dialog-confirm-start"), start);
 }
@@ -429,8 +428,12 @@ function changeMember(memberID) {
 }
 function changeUnit() {
 }
+function getEventUnitRates() {
+    return state.boxType==2 ? [null,1,1,1,1,1,1,1] : [null,2,null,5,null,1];
+}
 function showLineup() {
     var contents = state.boxRemote.contents;
+    var eventUnitRates = getEventUnitRates();
     var region = $("<div>");
     var selection = playdata.selection[state.boxKey];
     var SIGroup = 0;
@@ -612,6 +615,7 @@ function scout(type, key, amount, count, guaranteeID, stampEnabled) {
     $(window).resize();
 }
 function scoutOne(guaranteeRarity, pickGroup, scoutIndex) {
+    var eventUnitRates = getEventUnitRates();
     var rarityRates, totalRates = 100, signedRate = 0, scoutRarity, scoutGroup, listUnitIDs = [], scoutUnitID;
     switch (state.boxType) {
         case 0:
