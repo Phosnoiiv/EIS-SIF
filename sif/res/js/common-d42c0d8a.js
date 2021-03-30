@@ -134,7 +134,7 @@ function gItemDesc(type, key, server, config) {
             return string[config.SIStrings[server]].replace("#", SI[config.SIValue]);
         default:
             var item = config.fItem(type, key);
-            return item[config.itemDesc[server]];
+            return (item[config.itemDesc[server]]||"").replace(/\\n/g, "<br>");
     }
 }
 function gItemIntro(type, key, config) {
@@ -155,21 +155,21 @@ function gItemImage(type, key, server, options, config) {
             return "si/" + SI[config.SIImage];
         default:
             var item = config.fItem(type, key);
-            return options.s ? item[config.itemImagesSmall[server]] || item[config.itemImagesSmall[1]] : item[config.itemImages[server]] || item[config.itemImages[1]];
+            return (options.px||"") + (options.s ? item[config.itemImagesSmall[server]] || item[config.itemImagesSmall[1]] : item[config.itemImages[server]] || item[config.itemImages[1]]);
     }
 }
 function gItem(type, key, server, amount, options, config) {
     return $(options.d ? "<div>" : "<span>").addClass("eis-sif-item").append(
         qImg(gItemImage(type, key, server, options, config)),
         amount && (amount > 1 || options.o) ? $("<span>").addClass("eis-sif-item-amount").text(amount) : "",
-    ).attr("data-type", type).attr("data-key", key).attr("data-server", server);
+    ).attr("data-type", type).attr("data-key", key).attr("data-server", server).attr("data-game", options.gx);
 }
 function gItemBlock(type, key, server, amount, options, config) {
     return $("<div>").addClass("eis-sif-item-block" + (options.d ? " with-desc" : "")).append(
         qImg(gItemImage(type, key, server, options, config)),
         $("<div>").addClass("eis-sif-item-block-name").text(gItemName(type, key, server, config)),
         amount ? $("<span>").addClass("eis-sif-item-block-amount").text(amount) : "",
-        options.d ? $("<p>").addClass("eis-sif-item-block-desc").text(gItemDesc(type, key, server, config)) : "",
+        options.d ? $("<p>").addClass("eis-sif-item-block-desc").html(gItemDesc(type, key, server, config)) : "",
     ).attr("data-type", type).attr("data-key", key).attr("data-server", server);
 }
 function gItemTooltip(type, key, server, config) {
@@ -200,9 +200,9 @@ function gItemTooltip(type, key, server, config) {
     }
     return t;
 }
-function gItemDiff(type, key, server, config, before, rate, amount, addClass) {
+function gItemDiff(type, key, server, options, config, before, rate, amount, addClass) {
     return $('<div class="eis-sif-item-diff '+(rate>0?"obtain":"consume")+'">').append(
-        gItem(type, key, server, 0, {s:true}, config),
+        gItem(type, key, server, 0, $.extend({}, options, {s:true}), config),
         '<span class="eis-sif-item-diff-before">'+before,
         '<i class="fas fa-arrow-right">',
         addClass ? '<span class="eis-sif-item-diff-after '+addClass+'" data-before='+before+' data-rate='+Math.abs(rate)+'>'

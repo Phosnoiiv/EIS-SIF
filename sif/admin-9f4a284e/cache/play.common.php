@@ -4,6 +4,7 @@ require_once dirname(dirname(__DIR__)) . '/core/init.php';
 
 $configIDs = DB::ltSelect('eis.s3db', 'SELECT DISTINCT config FROM p_common', [['i','config']], '', ['s'=>true]);
 foreach ($configIDs as $configID) {
+    $items = [];
     $ints = DB::mySelect("SELECT * FROM play_config_int WHERE config=$configID", [['i','value']], 'id', ['z'=>true,'s'=>true]);
     $strings = DB::mySelect("SELECT * FROM play_config_string WHERE config=$configID", [['s','value']], 'id', ['z'=>true,'s'=>true]);
     $jsons = DB::mySelect("SELECT * FROM play_config_json WHERE config=$configID", [['s','json']], 'id', ['z'=>true,'s'=>true]);

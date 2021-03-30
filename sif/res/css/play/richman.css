@@ -38,3 +38,27 @@
 #map[data-size="12"] [data-index="9"]  {top:45%;left:40%;}
 #map[data-size="12"] [data-index="10"] {top:45%;left:25%;}
 #map[data-size="12"] [data-index="11"] {top:35%;left:15%;}
+
+#dialog-quest-general-message {
+    color: #f00; text-align: center;
+}
+.dialog-quest-conditions {
+    text-align: center;
+}
+.dialog-quest-conditions b {
+    color: #f57c00;
+}
+.dialog-quest-limits {
+    text-align: center;
+}
+.dialog-quest-limits>span {
+    display: inline-block; margin: 2px 5px; padding: 1px 5px;
+    border: 1px solid #e65100; border-radius: 10px;
+    color: #e65100; font-size: 14px;
+}
+.dialog-quest-rewards {
+    text-align: center;
+}
+.dialog-quest-rewards img {
+    height: 60px;
+}

@@ -20,6 +20,11 @@ function playInitNull(N) {
         playData[Nkey] = [null];
     });
 }
+function playInitEmptyObject(O) {
+    $.each(O, function(Oindex, Okey) {
+        playData[Okey] = {};
+    });
+}
 function playInitZero(Z) {
     $.each(Z, function(Zindex, Zkey) {
         playData[Zkey] = 0;
@@ -120,7 +125,7 @@ function playRandom(list, count) {
 function playSubtractItems(list) {
     $.each(list, function(itemIndex, itemArray) {
         var before = playGetPocketItem(itemArray[0], itemArray[1]);
-        gItemDiff(itemArray[0], itemArray[1], 3, gConfig, before, -1, itemArray[2]).appendTo("#play-dialog-add-diff");
+        gItemDiff(itemArray[0], itemArray[1], 3, {px:itemArray[3]==2?"sifas/":""}, gConfig, before, -1, itemArray[2]).appendTo("#play-dialog-add-diff");
         playData.i[itemArray[0]+"-"+itemArray[1]] = before - itemArray[2];
     });
 }
@@ -133,7 +138,7 @@ function playAddItems(list, text) {
     var $section = $('<section><h4 class="eis-sif-dialog-section-header">'+text+'</h4></section>');
     $.each(list, function(itemIndex, itemArray) {
         playData.i[itemArray[0]+"-"+itemArray[1]] = playGetPocketItem(itemArray[0], itemArray[1]) + itemArray[2];
-        gItemBlock(itemArray[0], itemArray[1], 3, itemArray[2], {d:true}, gConfig).appendTo($section);
+        gItemBlock(itemArray[0], itemArray[1], 3, itemArray[2], {d:true, px:itemArray[3]==2?"sifas/":""}, gConfig).appendTo($section);
     });
     $("#play-dialog-add-container").append($section);
 }
@@ -147,13 +152,13 @@ function playAddDisp(info) {
 function playExchangeShow(consumeItems, obtainItems) {
     $("#play-dialog-exchange-img, #play-dialog-exchange-diff").empty();
     $.each(consumeItems, function(itemIndex, itemArray) {
-        gItem(itemArray[0], itemArray[1], 3, 0, {}, gConfig).appendTo("#play-dialog-exchange-img");
-        gItemDiff(itemArray[0], itemArray[1], 3, gConfig, playGetPocketItem(itemArray[0], itemArray[1]), -itemArray[2], 0, "play-dialog-exchange-dynamic").appendTo("#play-dialog-exchange-diff");
+        gItem(itemArray[0], itemArray[1], 3, 0, {px:itemArray[3]==2?"sifas/":""}, gConfig).appendTo("#play-dialog-exchange-img");
+        gItemDiff(itemArray[0], itemArray[1], 3, {gx:itemArray[3], px:itemArray[3]==2?"sifas/":""}, gConfig, playGetPocketItem(itemArray[0], itemArray[1]), -itemArray[2], 0, "play-dialog-exchange-dynamic").appendTo("#play-dialog-exchange-diff");
     });
     $('<i class="fas fa-long-arrow-alt-right">').appendTo("#play-dialog-exchange-img");
     $.each(obtainItems, function(itemIndex, itemArray) {
         gItem(itemArray[0], itemArray[1], 3, 0, [], gConfig).appendTo("#play-dialog-exchange-img");
-        gItemDiff(itemArray[0], itemArray[1], 3, gConfig, playGetPocketItem(itemArray[0], itemArray[1]), itemArray[2], 0, "play-dialog-exchange-dynamic").appendTo("#play-dialog-exchange-diff");
+        gItemDiff(itemArray[0], itemArray[1], 3, {px:itemArray[3]==2?"sifas/":""}, gConfig, playGetPocketItem(itemArray[0], itemArray[1]), itemArray[2], 0, "play-dialog-exchange-dynamic").appendTo("#play-dialog-exchange-diff");
     });
     $("#play-dialog-exchange-amount").val(1);
     playExchangeInput();
@@ -186,12 +191,12 @@ function playExchangeFinish() {
     }
     var addList = [];
     $("#play-dialog-exchange-diff .eis-sif-item-diff").each(function() {
-        var item = $(this).find(".eis-sif-item"), type = $(item).attr("data-type"), key = $(item).attr("data-key");
+        var item = $(this).find(".eis-sif-item"), type = $(item).attr("data-type"), key = $(item).attr("data-key"), game = $(item).attr("data-game");
         var rate = $(this).find(".eis-sif-item-diff-after").attr("data-rate");
         if ($(this).hasClass("obtain")) {
             addList.push([type, key, rate*amount]);
         } else {
-            playSubtractItems([[type, key, rate*amount]]);
+            playSubtractItems([[type, key, rate*amount, game]]);
         }
     });
     playAddItems(addList, "交换获得");
@@ -225,7 +230,7 @@ $(document).ready(function() {
             });
         }
         $.each(["s","f","c"], function(modeIndex, modeCode) {
-            if (pConfig.m[modeCode]) {
+            if (pConfig.m[modeCode] && !(pConfig.mo&&pConfig.mo[modeCode]&&!CI[pConfig.mo[modeCode]])) {
                 buttonTemplate(modeCode, playModeNames[modeCode]).appendTo("#play-mode-buttons");
             }
         });

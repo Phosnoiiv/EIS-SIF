@@ -5,6 +5,7 @@ function p1Start() {
         {p1jc:"P1Jc"},
     );
     playInitZero(["p1l","p1s"]);
+    playInitEmptyObject(["o1e","o1h"]);
     sealNext();
 }
 function p1StartDisp() {
@@ -24,6 +25,8 @@ function p1StartDisp() {
 function p1IntervalNext() {
     playData.f = playData.fl;
     playState.p1p = Math.floor(Math.random()*CJ[1].length);
+    o1QuestCheck();
+    o1QuestGen();
 }
 function p1IntervalDisp() {
     actionsDisp();
@@ -35,6 +38,13 @@ function p1ExchangeFinish() {
     actionsDisp();
 }
 
+function preIntervalNext() {
+    if (playData.o1e.dfs && playData.f) {
+        showQuickDialogMessage("今日随机前进次数尚未消费完毕，次数宝贵，不要浪费哦！", "提示", 300);
+        return;
+    }
+    playIntervalNext();
+}
 function actionsDisp() {
     $("#map-player").attr("src",CS[2]+CJ[1][playState.p1p]+".png").attr("data-index",playData.p1l);
     $("#map-seal").attr("data-index",playData.p1s);
@@ -69,10 +79,16 @@ function playerMove(steps) {
         sealNext();
     }
     playAddDisp("已前进 "+steps+" 步。");
+    o1QuestCheck();
 }
 function useFree() {
     playData.f--;
-    playerMove(Math.floor(Math.random()*(playData.p1mu-playData.p1mb+1))+playData.p1mb);
+    if (playData.f<=0 && playData.o1e.ffm) {
+        playerMove(playData.o1e.ffm);
+    } else {
+        var mu = playData.o1e.mu || playData.p1mu, mb = playData.o1e.mb || playData.p1mb;
+        playerMove(Math.floor(Math.random()*(mu-mb+1))+mb);
+    }
     actionsDisp();
 }
 function useItem(steps) {
@@ -82,6 +98,71 @@ function useItem(steps) {
 }
 function exchangeItem() {
     playExchangeShow(CT[2], CT[1]);
+}
+
+function o1QuestGen() {
+    if (playData.o1q) return;
+    availableQuests = [];
+    $.each(CJ[4], function(questKey, quest) {
+        if (playData.o1h[questKey]) return;
+        if (quest.t.p && playData.tp!=quest.t.p) return;
+        availableQuests.push(questKey);
+    });
+    if (!availableQuests.length) return;
+    playData.o1q = playRandom(availableQuests,1)[0];
+    var quest = CJ[4][playData.o1q];
+    if (quest.q.sn||quest.q.sx) playData.o1s = playData.s;
+    if (quest.q.lp) playData.o1p = playData.tp;
+    playData.o1e = quest.e;
+    o1QuestGenDisp();
+    o1QuestDialogGeneral("new");
+}
+function o1QuestGenDisp() {
+    var quest = CJ[4][playData.o1q];
+    $(".dialog-quest-conditions, .dialog-quest-limits, .dialog-quest-rewards").empty();
+    if (quest.q.sn) o1QuestConditionAdd("至少获得 # 活动点数！", quest.q.sn);
+    if (quest.q.sx) o1QuestConditionAdd("期间内不要获得多于 # 活动点数！", quest.q.sx);
+    if (quest.q.lp) o1QuestLimitAdd("天数限制", quest.q.lp);
+    $.each(quest.r, function(itemIndex, itemArray) {
+        gItem(itemArray[0], itemArray[1], 3, itemArray[2], {px:itemArray[3]==2?"sifas/":""}, gConfig).appendTo(".dialog-quest-rewards");
+    });
+}
+function o1QuestConditionAdd(pattern, number) {
+    $("<p>").html(pattern.replace("#", "<b>"+number+"</b>")).appendTo(".dialog-quest-conditions");
+}
+function o1QuestLimitAdd(prefix, number) {
+    $("<span>").html(prefix+"：<b>"+number+"</b>").appendTo(".dialog-quest-limits");
+}
+function o1QuestCheck() {
+    if (!playData.o1q) return;
+    var quest = CJ[4][playData.o1q];
+    if (quest.q.sn && playData.s>=playData.o1s+quest.q.sn) o1QuestSucceed();
+    if (quest.q.sx && playData.s>=playData.o1s+quest.q.sx) o1QuestFail("期间内获得的活动点数已超出限制。");
+    if (quest.q.lp && playData.tp>=playData.o1p+quest.q.lp) {
+        if (quest.q.sn) o1QuestFail("已超出天数限制。");
+        if (quest.q.sx) o1QuestSucceed();
+    }
+}
+function o1QuestSucceed() {
+    var quest = CJ[4][playData.o1q];
+    playAddItemsSilent(quest.r);
+    o1QuestDialogGeneral("succeed");
+    o1QuestClear();
+}
+function o1QuestFail(message) {
+    o1QuestDialogGeneral("fail", $("<p>").html(message));
+    o1QuestClear();
+}
+function o1QuestClear() {
+    playData.o1q = null;
+    playData.o1e = {};
+}
+function o1QuestDialogGeneral(category, message) {
+    $("#dialog-quest-general-message").empty().append(message);
+    $(".dialog-quest-general-text").text(function() {
+        return $(this).attr("data-"+category);
+    });
+    showDialogMessage("#dialog-quest-general", $.noop);
 }
 
 $(document).ready(function() {
@@ -94,6 +175,7 @@ var pConfig = {
         f:{Ctpl:2,CTi:7,Pfl:3,P1r:6,P1mb:4,P1mu:5,P1npb:7,P1npu:8,P1Jc:2},
         c:{P1npb:7,P1npu:8,P1Jc:2},
     },
+    mo:{f:9,c:10},
     s:{
         "Ctpl":{b:1,n:"天数"},
         "Pfl":{n:"每日随机前进次数"},
