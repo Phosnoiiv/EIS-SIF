@@ -197,7 +197,7 @@ function aGoalDesc(type, count, param1, param2) {
             return (words[type][1][2] || words[type][1][1]).replace("$", count);
         case 72: case 93:
             return (words[type][param1][2] || words[type][param1][1]).replace("$", count);
-        case 94:
+        case 9: case 94:
             if (param1) return (words[type][1][2] || words[type][1][1]).replace("$", count).replace("^", members[param1][0]);
             return (words[type][0][2] || words[type][0][1]).replace("$", count);
         default:
