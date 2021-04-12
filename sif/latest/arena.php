@@ -27,5 +27,18 @@ require ROOT_SIF_WEB . '/common-d42c0d8a/head2.php';
 <tbody></tbody>
 </table>
 </section>
+<section class="eis-sif-section-noborder">
+<h4><i class="fas fa-battery-half"></i> Special Session 消费 LP</h4>
+<p id="arena-lp"></p>
+</section>
+<section class="eis-sif-section-noborder">
+<h4><i class="fas fa-music"></i> 参考歌单</h4>
+<table id="arena-lives" class="eis-sif-table">
+<thead>
+<tr><th></th><th>歌曲</th><th>难度</th></tr>
+</thead>
+<tbody></tbody>
+</table>
+</section>
 <?php
 require ROOT_SIF_WEB . '/common-d42c0d8a/foot.php';

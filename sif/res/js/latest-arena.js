@@ -17,6 +17,24 @@ function produce() {
             $("<td>").text("+" + cheer[3] + (cheer[1] == 3 ? "" : "%")),
         ).addClass(cheer[1] == 3 ? "arena-cheer-extra" : "").appendTo("#cheers>tbody");
     });
+    $.each(lps, function(rangeIndex, range) {
+        var isLast = rangeIndex==range.length-1;
+        $("#arena-lp").append(range[1] + (isLast?" 关以后":"～"+range[2]+" 关") + "每关消费 " + range[0] + "LP" + (isLast?"。":"，"));
+    });
+    $.each(levels, function(levelIndex, level) {
+        $("<tr>").append(
+            $("<th>").text(levelIndex+1),
+            $('<td class="eis-sif-text attribute-'+level[0]+'">').text(level[1]),
+            $("<td>").append($.map(level[5], function(difficulty) {
+                return $('<span class="arena-live-difficulty">').append(
+                    difficultyShortNames[difficulty],
+                    difficulty==4 ? qMapBrief(level[6],level[7]) : null,
+                    difficulty==6 ? qMapBrief(level[8],level[10]) : null,
+                    difficulty==6 && level[9]==1 ? '<span class="eis-sif-tag swing">滑</span>' : null,
+                );
+            })),
+        ).appendTo("#arena-lives>tbody");
+    });
 }
 
 $(document).ready(function() {

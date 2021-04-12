@@ -54,6 +54,19 @@ h2 {
 .arena-cheer-extra td:nth-child(7), .arena-cheer-extra td:nth-child(9) {
     color: #e64a19 !important;
 }
+#arena-lives {
+    margin: 10px auto;
+    background: #fff;
+}
+#arena-lives .eis-sif-map::before {
+    content: "（";
+}
+#arena-lives .eis-sif-map::after {
+    content: "）";
+}
+.arena-live-difficulty:not(:first-of-type)::before {
+    content: "／";
+}
 
 .eis-sif-timetip {
     width: 300px;

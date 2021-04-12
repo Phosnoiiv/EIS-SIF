@@ -16,6 +16,7 @@ var rarityNames = [null, "N", "R", "SR", "UR", "SSR", "限定 UR", "选择 UR"];
 var rarityShortNames = [null, "n", "r", "s", "u", "ss"];
 var skillTriggerShortNames = {1:"T", 3:"N", 4:"C", 5:"爆分", 6:"P", 12:"星标", 100:"连锁"};
 var difficultyNames = [null, "EASY", "NORMAL", "HARD", "EXPERT", "TECHNICAL", "MASTER"];
+var difficultyShortNames = [null, "E", "N", "H", "EX", "TE", "MA"];
 var articleTagNames = [null, "站务", "资料", "杂谈", "追踪", "搬运"];
 
 Number.prototype.toSortedRarity = function() {
