@@ -47,5 +47,6 @@ if (!empty($instantNotices)) {
     echo SIF\HTML::json('regionNotices', $instantNotices);
 }
 echo SIF\HTML::json('inAprilFools', SIF\Basic::inAprilFools());
+echo SIF\HTML::json('SD', SIF\Basic::getAllDynamic());
 ?>
 </script>

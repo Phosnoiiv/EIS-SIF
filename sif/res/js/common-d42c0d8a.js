@@ -62,6 +62,9 @@ function getResourcePath1(path) {
     return resourceHost1 + path;
 }
 
+function qGeneralImg(path, desc) {
+    return $("<img>").attr("src",path).attr("title",desc).attr("alt",desc);
+}
 function qImg(path, desc) {
     path = "/vio/" + (path.substring(0, 6) == "sifas/" ? "" : "sif/") + path;
     if (path.substr(path.length - 4, 4) != '.jpg') {

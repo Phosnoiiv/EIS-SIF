@@ -77,5 +77,6 @@ if (!empty($instantNotices)) {
 echo HTML::json('inAprilFools', Basic::inAprilFools());
 echo HTML::json('inMourningCN', Basic::inMourningCN());
 echo HTML::json('resourceHost1', $config['resource_host_1']);
+echo HTML::json('SD', Basic::getAllDynamic());
 ?>
 </script>

@@ -79,6 +79,17 @@ class Basic {
         }), 'name');
     }
 
+    private static $dynamic = null;
+    private static function readDynamic() {
+        if (isset(self::$dynamic)) return;
+        $sql = "SELECT * FROM s_dynamic WHERE time_from<=datetime('now','localtime') AND (time_till IS NULL OR time_till>=datetime('now','localtime'))";
+        self::$dynamic = DB::ltSelect('eis.s3db', $sql, [['s','value']], 'key', ['s'=>true]);
+    }
+    static function getAllDynamic() {
+        self::readDynamic();
+        return self::$dynamic;
+    }
+
     private static $banners = [];
     static function getBanners($location) {
         if (isset(self::$banner[$location])) return self::$banner[$location];
