@@ -235,7 +235,7 @@ function showDialogConfirm(content, callbackOK) {
     $(window).resize();
 }
 
-function refreshPageBar(filter) {
+function refreshPageBar(filter, stay) {
     $(".eis-sif-pagebar").filter(filter||"*").each(function() {
         var pageCount = Math.ceil($($(this).attr("data-control")).children().length / $(this).attr("data-size"));
         $(this).empty().attr("data-pagecount", pageCount).append(
@@ -249,7 +249,7 @@ function refreshPageBar(filter) {
             $(this).find(".pages").append($("<span>").attr("data-page", 0));
         }
         $(this).find("[data-page]").attr("onclick", "pageBarButtonClick(this)").button();
-        switchPage(this, Math.min($(this).attr("data-current") || 1, pageCount));
+        switchPage(this, stay ? Math.min($(this).attr("data-current") || 1, pageCount) : 1);
     });
 }
 function pageBarButtonClick(button) {

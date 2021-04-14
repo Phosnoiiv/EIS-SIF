@@ -566,9 +566,11 @@ img.eis-sif-switch[data-switch="0"] {
 .category-1 a { color: #df3f66; }
 .category-2 a { color: #0081c9; }
 .category-3 a { color: #f29230; }
+.category-4 a { color: #b109b0; }
 .category-1 a:hover { color: #f2587f; }
 .category-2 a:hover { color: #009edc; }
 .category-3 a:hover { color: #f8c94e; }
+.category-4 a:hover { color: #cc3fc1;  }
 .category-1 .eis-sif-table { border-color: #c93a61; }
 .category-2 .eis-sif-table { border-color: #006fb7; }
 .category-4 .eis-sif-table { border-color: #9d01a9; }
@@ -583,6 +585,7 @@ img.eis-sif-switch[data-switch="0"] {
 .category-1 .eis-sif-dialog-section-header { border-bottom-color: #c93a61; color: #df3f66; }
 .category-2 .eis-sif-dialog-section-header { border-bottom-color: #006fb7; color: #0081c9; }
 .category-3 .eis-sif-dialog-section-header { border-bottom-color: #f4a135; color: #f4a135; }
+.category-4 .eis-sif-dialog-section-header { border-bottom-color: #9d01a9; color: #b109b0; }
 
 .ui-widget-content {
     background: #fff; border: 1px solid #2c1c92;
@@ -668,12 +671,15 @@ img.eis-sif-switch[data-switch="0"] {
 
 .ui-dialog.category-1 { border-color: #8f2b55; }
 .ui-dialog.category-2 { border-color: #004084; }
+.ui-dialog.category-4 { border-color: #6d0096; }
 .ui-dialog.category-1 .ui-dialog-titlebar { background: #f39cb4; border-bottom-color: #8f2b55; color: #b4345d; }
 .ui-dialog.category-2 .ui-dialog-titlebar { background: #59c5ea; border-bottom-color: #004084; color: #005fa4; }
 .ui-dialog.category-3 .ui-dialog-titlebar { background: #f9df97; border-bottom-color: #f07528; color: #f29230; }
+.ui-dialog.category-4 .ui-dialog-titlebar { background: #e791df; border-bottom-color: #6d0096; color: #8c00a2;  }
 .ui-dialog.category-1 .ui-button { background: #f5c3d1; border-color: #c93a61; }
 .ui-dialog.category-2 .ui-button { background: #9edcf3; border-color: #006fb7; }
 .ui-dialog.category-3 .ui-button { background: #fbebbe; border-color: #f4a135; }
+.ui-dialog.category-4 .ui-button { background: #f2bded; border-color: #9d01a9;  }
 .ui-dialog.category-1 .ui-icon { background-image: url("../common/jquery/icons/8f2b55.png"); }
 .ui-dialog.category-2 .ui-icon { background-image: url("../common/jquery/icons/004084.png"); }
 

@@ -60,7 +60,7 @@ function refreshNotices() {
             $("<div>").addClass(isFixed ? "" : "notice-clickable").text(notice[2]).attr("onclick", isFixed ? null : "readNotice(" + noticeID + ");refreshNotices()"),
         ).appendTo("#notices");
     }
-    refreshPageBar();
+    refreshPageBar(null, true);
 }
 
 $(document).ready(function() {
