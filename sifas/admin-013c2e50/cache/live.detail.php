@@ -1,6 +1,7 @@
 <?php
 namespace EIS\Lab\SIFAS;
 use EIS\Lab\SIF;
+use EIS\Lab\SIF\Util;
 require_once dirname(dirname(__DIR__)) . '/core/init.php';
 
 include ROOT_SIFAS_CACHE . '/drops.php';
@@ -59,6 +60,10 @@ while ($dbSong = $dbSongs->fetch_assoc()) {
 $sql = 'SELECT * FROM live_song_group';
 $columns = [['s','caption']];
 $clientSongGroups = DB::mySelect($sql, $columns, 'group_id', ['z'=>true,'s'=>true,'k'=>'song']);
+
+$sql = 'SELECT * FROM tag_song WHERE display_order>0';
+$columns = [['i','display_order'],['i','display_class'],['s','name'],['s','short_name'],['i','type'],['s','intro']];
+$cSongTags = DB::mySelect($sql, $columns, 'id');
 
 $sql = 'SELECT * FROM m_tower_clear_reward';
 $columns = [['i','tower_clear_reward_id'],['i','content_type'],['i','content_id'],['i','content_amount']];
@@ -160,14 +165,17 @@ foreach ($towerFloors as $towerFloor) {
     }
 }
 
-$clientEffects = [null];
-$dbEffects = DB::my_query('SELECT * FROM word_effect');
-while ($dbEffect = $dbEffects->fetch_assoc()) {
-    $type = $dbEffect['type'];
-    $clientEffects[$type] = [
-        intval($dbEffect['buff']),
-    ];
-}
+$sql = 'SELECT s.id,effect_type
+    FROM m_skill s
+    LEFT JOIN m_skill_effect se ON skill_effect_master_id1=se.id
+    WHERE s.id IN (SELECT DISTINCT skill_master_id FROM m_live_difficulty_gimmick)';
+$columns = [['i','effect_type']];
+$rSkills = DB::ltSelect(DB_GAME_JP_MASTER, $sql, $columns, 'id');
+
+$sql = 'SELECT * FROM word_effect';
+$columns = [['i','is_buff'],['i','is_base']];
+$rEffects = DB::mySelect($sql, $columns, 'type');
+$clientEffects = array_merge([null], array_map(fn($a)=>array_splice($a,0,1), $rEffects));
 
 $dbTargets = DB::my_query('SELECT * FROM word_target WHERE icons IS NOT NULL');
 while ($dbTarget = $dbTargets->fetch_assoc()) {
@@ -180,7 +188,7 @@ while ($dbTarget = $dbTargets->fetch_assoc()) {
 
 $refMaps = [];
 $dictCommonRewards = new SIF\Dict;
-$sql = 'SELECT rld.*,m_live_difficulty_const.*,live_difficulty.*,
+$sql = 'SELECT rld.*,m_live_difficulty_const.*,live_difficulty.*,rldg.skill_master_id,
     kg.message AS k_gimmick,kzg.message AS kz_gimmick,kh.message AS k_hint,kzh.message AS kz_hint
     FROM (SELECT * FROM m_live_difficulty UNION SELECT * FROM r.m_live_difficulty) AS rld
     LEFT JOIN m_live_difficulty_const ON difficulty_const_master_id=m_live_difficulty_const.id
@@ -274,6 +282,11 @@ while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
         $clientSongs[$songID][5] = $dbMap['recommended_score'];
         $clientSongs[$songID][6] = $dbMap['recommended_stamina'];
         $clientSongs[$songID][7] = $dbMap['note_stamina_reduce'];
+        $tEffect = $rEffects[$rSkills[$dbMap['skill_master_id']][0]];
+        if (!$tEffect[0] && !$tEffect[1]) {
+            $clientSongs[$songID][1][] = Constants::EIS_SONG_TAG_3_NEGATE;
+        }
+        $mMap3[$mapID] = $songID;
     }
     if ($mapType == 1 && $difficulty == 4 && $dbMap['note_voltage_upper_limit'] > 50000) {
         $clientSongs[$songID][15] = $dbMap['default_attribute'];
@@ -293,6 +306,7 @@ $sql = 'SELECT live_difficulty_id,note_gimmick_type,note_gimmick_icon_type,note_
 ';
 $dbNotes = DB::lt_query('jp/masterdata.db', $sql);
 while ($dbNote = $dbNotes->fetchArray(SQLITE3_ASSOC)) {
+    $mapID = $dbNote['live_difficulty_id'];
     $ref = $refMaps[$dbNote['live_difficulty_id']];
     $location = &$detailSongs[$ref[0]]['maps'][$ref[1]][$ref[2]][24];
     if (($index = array_search($dbNote['name'], $allNotes[$dbNote['live_difficulty_id']] ?? [])) !== false) {
@@ -311,6 +325,19 @@ while ($dbNote = $dbNotes->fetchArray(SQLITE3_ASSOC)) {
             $dbNote['finishv1'],
     ];
         $allNotes[$dbNote['live_difficulty_id']][] = $dbNote['name'];
+        foreach ([3] as $d) {
+            if (!array_key_exists($mapID, ${"mMap$d"})) continue;
+            $songID = ${"mMap$d"}[$mapID];
+            $tTags = &$clientSongs[$songID][1];
+            if ($dbNote['finish1'] == 8) {
+                if ($rEffects[$dbNote['type1']][0]) {
+                    Util::arrayPushUnique($tTags, constant(__NAMESPACE__.'\Constants::EIS_SONG_TAG_'.$d.'_STRATEGY_NOSWITCH'));
+                } else {
+                    Util::arrayPushUnique($tTags, constant(__NAMESPACE__.'\Constants::EIS_SONG_TAG_'.$d.'_STRATEGY_SWITCH'));
+                }
+            }
+            unset($tTags);
+        }
     }
 }
 $sql = 'SELECT t.live_difficulty_id,state,live_wave.*,skill_target_master_id1,
@@ -327,6 +354,7 @@ $sql = 'SELECT t.live_difficulty_id,state,live_wave.*,skill_target_master_id1,
 ';
 $dbWaves = DB::lt_query('jp/masterdata.db', $sql);
 while ($dbWave = $dbWaves->fetchArray(SQLITE3_ASSOC)) {
+    $mapID = $dbWave['live_difficulty_id'];
     $ref = $refMaps[$dbWave['live_difficulty_id']];
     $detailSongs[$ref[0]]['maps'][$ref[1]][$ref[2]][25][] = [
         $dictStrings[$ref[0]]->set($dbWave['k_name']),
@@ -342,6 +370,18 @@ while ($dbWave = $dbWaves->fetchArray(SQLITE3_ASSOC)) {
         $dbWave['finish1'],
         $dbWave['finishv1'],
     ];
+    foreach ([3] as $d) {
+        if (!array_key_exists($mapID, ${"mMap$d"})) continue;
+        $songID = ${"mMap$d"}[$mapID];
+        $tTags = &$clientSongs[$songID][1];
+        if (SIFAS::isWaveMissionSkill($dbWave['k_name'])) {
+            Util::arrayPushUnique($tTags, constant(__NAMESPACE__.'\Constants::EIS_SONG_TAG_'.$d.'_AC_SKILL'));
+        }
+        if (SIFAS::isWaveMissionCritical($dbWave['k_name'])) {
+            Util::arrayPushUnique($tTags, constant(__NAMESPACE__.'\Constants::EIS_SONG_TAG_'.$d.'_AC_CRITICAL'));
+        }
+        unset($tTags);
+    }
 }
 
 $clientGimmicks = [];
@@ -427,6 +467,7 @@ while ($dbEmblem = $dbEmblems->fetch_assoc()) {
 Cache::writeMultiJson('live-detail.js', [
     'songs' => $clientSongs,
     'songGroups' => $clientSongGroups,
+    'songTags' => $cSongTags,
     'effects' => $clientEffects,
     'targets' => $clientTargets,
     'gimmicks' => $clientGimmicks,

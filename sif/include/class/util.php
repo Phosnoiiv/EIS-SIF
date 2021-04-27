@@ -11,4 +11,11 @@ class Util {
     static function readConfig($table, $key) {
         return self::readMultiConfig($table, $key)[''];
     }
+
+    static function arrayPushUnique(array &$array, ...$values): void {
+        foreach ($values as $value) {
+            if (in_array($value, $array)) continue;
+            $array[] = $value;
+        }
+    }
 }

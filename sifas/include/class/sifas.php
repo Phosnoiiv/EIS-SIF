@@ -31,4 +31,13 @@ class SIFAS {
                 break;
         }
     }
+
+    static function isWaveMissionSkill(string $text): bool {
+        if (strpos($text, '発動') !== false) return true;
+        return false;
+    }
+    static function isWaveMissionCritical(string $text): bool {
+        if (strpos($text, 'クリティカル') !== false) return true;
+        return false;
+    }
 }

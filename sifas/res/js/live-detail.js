@@ -18,6 +18,7 @@ function init() {
         });
     });
     sortSong();
+    refreshSongTags();
     enableCountdown();
 }
 function songGroupConfirm(songID) {
@@ -28,6 +29,7 @@ function songGroupConfirm(songID) {
         if (groupSongID==songID) return;
         qSongLink(groupSongID, "produce("+groupSongID+")", true, "改选【"+text+"】").appendTo("#dialog-song-group-songs");
     });
+    refreshSongTags();
     showDialogMessage("#dialog-song-group-select", $.noop, "取消");
 }
 function produce(songID, target) {
@@ -364,6 +366,20 @@ function showDrops() {
     });
     $("#map-drops-button").hide();
 }
+function refreshSongTags(force) {
+    $(".song-link-tags").filter(force?"*":":empty").empty().append(function() {
+        var a = [];
+        var songID = $(this).parent().attr("data-song"), song = songs[songID];
+        $.each(song[1], function(tagIndex, tagID) {
+            var tag = songTags[tagID];
+            a.push($('<span class="eis-sif-tag song-'+tag[1]+'" data-tid="'+tagID+'">').text(tag[3]).attr("title",tag[2]+"："+tag[5]));
+        });
+        a.sort(function(a1,a2) {
+            return songTags[$(a1).attr("data-tid")][0]-songTags[$(a2).attr("data-tid")][0];
+        });
+        return a;
+    });
+}
 function getSongCategory(songID) {
     return Math.ceil(songID / 1000);
 }
@@ -404,6 +420,7 @@ function qSongLink(songID, onclick, noTag, text) {
         song[3] ? qASImg("icon/a"+song[3]).addClass("song-link-attribute") : null,
         song[15] ? qASImg("icon/a"+song[15]).addClass("song-link-attribute-2") : null,
         noTag ? null : $('<span class="eis-sif-tag song-link-info '+(song[0]?'default':'route-'+song[9])+'">'),
+        $('<div class="song-link-tags">'),
     );
 }
 

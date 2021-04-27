@@ -38,6 +38,7 @@ require ROOT_SIFAS_WEB . '/common-b63adcdf/head2.php';
 <div id="dialog-songs-notice" class="eis-sif-notice eis-sif-hidden"></div>
 <p class="eis-sif-note">※ 彩色信息标签表示该歌曲为 3D 歌曲，灰色为 2D 歌曲。</p>
 <p class="eis-sif-note">※ 快速搜索支持使用原名、简体字版译名、英语版译名。英文不区分大小写。</p>
+<p class="eis-sif-note">※ 目前“技”“暴”“驱”等标签仅限上级难度，其它难度暂不支持。</p>
 <div id="search-song-none" class="eis-sif-notice eis-sif-hidden"><p><i class="fas fa-exclamation-circle"></i> 未找到符合条件的歌曲。请尝试更换搜索文本。</p></div>
 <div id="songs" class="eis-sif-gallery"></div>
 </div>

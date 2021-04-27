@@ -7,7 +7,7 @@ h3 {
     color: #a04d0c; font-size: 20px;
 }
 .song-link{
-    position: relative; width: 250px; height: 35px; margin: 10px;
+    position: relative; width: 250px; height: 35px; margin: 5px 10px 20px;
 }
 .song-link.category-1 {
     background: #fae7ec;
@@ -49,6 +49,13 @@ h3 {
 }
 .song-link-info {
     position: absolute; left: 45px; top: -8px; padding: 1px 5px;
+    font-size: 12px;
+}
+.song-link-tags {
+    position: absolute; left: 2px; bottom: -12px;
+}
+.song-link-tags .eis-sif-tag {
+    margin-right: 2px; padding: 1px 3px;
     font-size: 12px;
 }
 #titles {
@@ -278,6 +285,8 @@ h3 {
 .eis-sif-tag.event-3 { background: #d4e157; color: #000; }
 .eis-sif-tag.event-song-1 { background: #8d6e63; }
 .eis-sif-tag.event-song-2 { background: #ef5350; }
+.eis-sif-tag.song-5 { background: #c0c0c0; border: 1px solid #808080; }
+.eis-sif-tag.song-6 { background: #cd7f32; border: 1px solid #808080; }
 .category-1 #titles { color: #c93a61; }
 .category-2 #titles { color: #006fb7; }
 .category-3 #titles { color: #f29230; }
