@@ -313,6 +313,7 @@ function readNotice(noticeID) {
 
 function sConfigByRangeID(rangeID) {
     if (rangeID > 0) return sConfig;
+    return sConfigGlobal;
 }
 function openSettings() {
     $("#settings-list-page, #settings-list-global").empty();
@@ -321,6 +322,7 @@ function openSettings() {
     } else {
         initSettings("#settings-list-page", sConfig);
     }
+    initSettings("#settings-list-global", sConfigGlobal);
     showDialogConfirm("#settings-dialog", saveSettings);
     $("#settings-tabs").tabs("refresh");
 }
@@ -374,6 +376,7 @@ function saveSettings() {
         if (config.f) config.f();
     };
     if (typeof sConfig != "undefined") saveIter(sConfig);
+    saveIter(sConfigGlobal);
 }
 function readSetting(rangeID, key) {
     var setting = store.get("sif.settings"+rangeID, {})[key];
@@ -381,6 +384,21 @@ function readSetting(rangeID, key) {
 }
 function readDefaultSetting(rangeID, key) {
     return sConfigByRangeID(rangeID).s[key].d;
+}
+function rDict(dictName, vocName, language) {
+    if (!language) language = readSetting(0, dictName);
+    return dicts[dictName][vocName][language];
+}
+function qDict(dictName, vocName) {
+    return $('<span class="eis-sif-dict" data-dict="'+dictName+'" data-voc="'+vocName+'">').text(rDict(dictName,vocName));
+}
+function refreshDicts() {
+    $.each(dicts, function(dictName, dict) {
+        var language = readSetting(0, dictName);
+        $('.eis-sif-dict[data-dict="'+dictName+'"]').text(function() {
+            return rDict(dictName, $(this).attr("data-voc"), language);
+        });
+    });
 }
 
 function refreshLimit(limitType) {
@@ -514,4 +532,18 @@ $(document).ready(function() {
         $(".eis-sif-header-button[title='设置']").remove();
     }
     lazyload();
+    refreshDicts();
 });
+
+var sConfigGlobal = {
+    r:0,
+    s:{
+        "58":{t:1,l:[[4,"词库 1（张力）"],[3,"词库 2（热度）"]],d:3},
+    },
+    l:[
+        {g:"语言设置",l:[{k:"58",n:"SIFAS 用语词库"}]},
+    ],
+    f:function() {
+        refreshDicts();
+    },
+};

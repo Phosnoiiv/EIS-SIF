@@ -66,6 +66,7 @@ if ($useSIFStyle ?? false) {
 <?php
 echo HTML::js('common-4fcb29e1');
 echo HTML::js('common-d42c0d8a');
+echo HTML::js('dict-d42c0d8a');
 ?>
 <script>
 <?php

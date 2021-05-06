@@ -27,6 +27,10 @@ class HTMLBase {
         return $code . "\n";
     }
 
+    static function dict($dictName, $vocName, $tagName = 'span', $attr = ''): string {
+        return '<'.$tagName.(empty($attr)?'':' '.$attr).' class="eis-sif-dict" data-dict="'.$dictName.'" data-voc="'.$vocName.'"></'.$tagName.'>';
+    }
+
     static function paragraphs($text) {
         return implode("\n", array_map(function($p){return '<p>'.$p.'</p>';}, explode('\\n', $text)));
     }

@@ -12,7 +12,7 @@ function init() {
             if (eventSong[0] == 1)
                 return;
             $("<span>").addClass("eis-sif-flag static").append(
-                serverNameAShort[currentEvent[1]] + " 张力排名歌曲／",
+                serverNameAShort[currentEvent[1]] + " ",qDict("58","vs"),"排名歌曲／",
                 $("<span>").addClass("eis-sif-countdown").attr("data-time", currentEvent[2]).attr("data-countdown-short", 1),
             ).appendTo(".song-link[data-song='" + eventSong[1] + "']");
         });

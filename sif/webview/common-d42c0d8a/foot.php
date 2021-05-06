@@ -26,9 +26,13 @@ if (!defined('EIS_ENV'))
 <div id="settings-tabs" class="eis-jq-tabs" data-scroll=1>
 <ul>
 <li id="settings-card-page"><a href="#settings-page">本页面设置</a></li>
+<li id="settings-card-global"><a href="#settings-global">全站设置</a></li>
 </ul>
 <div id="settings-page">
 <div id="settings-list-page"></div>
+</div>
+<div id="settings-global">
+<div id="settings-list-global"></div>
 </div>
 </div>
 </div>

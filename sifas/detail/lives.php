@@ -25,11 +25,11 @@ require ROOT_SIFAS_WEB . '/common-b63adcdf/head2.php';
 <option value=2 selected>推荐顺序</option>
 <option value=1>游戏内默认顺序</option>
 <option value=0>歌曲 ID</option>
-<option value=4>上级目标张力</option>
-<option value=5>上级建议 LIVE 力</option>
-<option value=6>上级建议体力</option>
-<option value=7>上级节奏图示消耗体力</option>
-<option value=16>上级＋目标热度</option>
+<?=HTML::dict('58','3z',tagName:'option',attr:'value=4')?>
+<?=HTML::dict('58','nq',tagName:'option',attr:'value=5')?>
+<?=HTML::dict('58','u8',tagName:'option',attr:'value=6')?>
+<?=HTML::dict('58','nb',tagName:'option',attr:'value=7')?>
+<?=HTML::dict('58','uv',tagName:'option',attr:'value=16')?>
 </select><select id="sort-song-direction" onchange="sortSong()">
 <option value=1 selected>升序</option>
 <option value=-1>降序</option>
@@ -83,18 +83,18 @@ require ROOT_SIFAS_WEB . '/common-b63adcdf/head2.php';
 </table>
 </section>
 <div class="eis-sif-info-gallery">
-<div><div>建议 LIVE 力</div><div class="map-data" data-index=2></div></div>
-<div><div>建议体力</div><div class="map-data" data-index=3></div></div>
+<div><?=HTML::dict('58','3b',tagName:'div')?><div class="map-data" data-index=2></div></div>
+<div><?=HTML::dict('58','ib',tagName:'div')?><div class="map-data" data-index=3></div></div>
 <div><div>消耗 LP</div><div class="map-data" data-index=5></div></div>
 <div><div>获得经验值</div><div class="map-data" data-index=6></div></div>
-<div><div>组合技量表最大值</div><div class="map-data" data-index=14></div></div>
-<div><div>节奏图示消耗体力</div><div class="map-data" data-index=15></div></div>
-<div><div>表现累积张力上限</div><div class="map-data" data-index=16></div></div>
-<div><div>组合技累积张力上限</div><div class="map-data" data-index=17></div></div>
-<div><div>技能累积张力上限</div><div class="map-data" data-index=18></div></div>
+<div><?=HTML::dict('58','8r',tagName:'div')?><div class="map-data" data-index=14></div></div>
+<div><div><?=HTML::dict('58','hi')?>体力<?=HTML::dict('58','34')?></div><div class="map-data" data-index=15></div></div>
+<div><div>表现<?=HTML::dict('58','xj').HTML::dict('58','vs')?>上限</div><div class="map-data" data-index=16></div></div>
+<div><div><?=HTML::dict('58','co').HTML::dict('58','xj').HTML::dict('58','vs')?>上限</div><div class="map-data" data-index=17></div></div>
+<div><div>技能<?=HTML::dict('58','xj').HTML::dict('58','vs')?>上限</div><div class="map-data" data-index=18></div></div>
 <div><div>开工日期＊</div><div class="map-data" data-index=36 data-date=1 data-hide=1></div></div>
 <div><div>完工日期＊</div><div class="map-data" data-index=37 data-date=1 data-hide=1></div></div>
-<div><div>节奏图示总数</div><div class="map-data" data-index=26 data-link=1 data-hide=1></div></div>
+<div><div><?=HTML::dict('58','hi')?>总数</div><div class="map-data" data-index=26 data-link=1 data-hide=1></div></div>
 </div>
 <p class="eis-sif-note">※ 关于部分标记＊的数据项，参见本页面帮助中的说明。本页面帮助链接位于页顶信息条中。</p>
 <div class="map-chart-container"><canvas id="map-evaluation"></canvas></div>
@@ -103,13 +103,13 @@ require ROOT_SIFAS_WEB . '/common-b63adcdf/head2.php';
 <p class="map-data-string" data-index=22></p>
 <p class="map-data-string" data-index=23></p>
 <p class="eis-sif-note">※ 以下部分内容支持自动翻译成多种语言，详见页面顶部右上方设置。</p>
-<h4>节奏图示特效</h4>
+<?=HTML::dict('58','su',tagName:'h4')?>
 <div id="map-notes" class="eis-sif-gallery"></div>
-<p id="map-notes-none">此 LIVE 没有节奏图示特效。</p>
-<h4>表现时间</h4>
-<p class="eis-sif-note">※ 表现时间成功时张力 UP，失败时消耗体力。</p>
+<p id="map-notes-none">此 LIVE 没有<?=HTML::dict('58','su')?>。</p>
+<?=HTML::dict('58','7t',tagName:'h4')?>
+<p class="eis-sif-note">※ <?=HTML::dict('58','7t')?>成功时<?=HTML::dict('58','xj').HTML::dict('58','vs')?>，失败时体力<?=HTML::dict('58','34')?>。</p>
 <div id="map-waves" class="eis-sif-gallery"></div>
-<p id="map-waves-none">此 LIVE 没有表现时间。</p>
+<p id="map-waves-none">此 LIVE 没有<?=HTML::dict('58','7t')?>。</p>
 <h4>掉落道具</h4>
 <div class="eis-sif-notice"><p><i class="fas fa-exclamation-circle"></i> 日替歌曲的掉落道具情报不准确，请以游戏内实际为准。</p></div>
 <div class="eis-sif-notice"><p><i class="fas fa-exclamation-circle"></i> 除上述情况外，以下所列的掉落道具仅适用于日语版当前版本。</p></div>

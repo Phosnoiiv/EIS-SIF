@@ -39,6 +39,7 @@ echo HTML::css('common-b63adcdf');
 <?php
 echo SIF\HTML::js('common-4fcb29e1');
 echo SIF\HTML::js('common-d42c0d8a');
+echo SIF\HTML::js('dict-d42c0d8a');
 echo HTML::js('common-b63adcdf');
 ?>
 <script>
