@@ -54,7 +54,7 @@ while ($dbSong = $dbSongs->fetch_assoc()) {
     $clientSongs[$id][9] = intval($dbSong['route']);
     $clientSongs[$id][10] = intval($dbSong['route_param']);
     if (empty($clientSongs[$id][12])) $clientSongs[$id][12] = $dbSong['sif_en_name'] ?? '';
-    if (empty($clientSongs[$id][13])) $clientSongs[$id][13] = $dbSong['sif_cn_name'] ?? '';
+    if (empty($clientSongs[$id][13])) $clientSongs[$id][13] = $dbSong['zhs_name'] ?? $dbSong['sif_cn_name'] ?? '';
 }
 
 $sql = 'SELECT * FROM live_song_group';
