@@ -155,6 +155,9 @@ h3 {
 .map-link.difficulty-4.active {
     background: linear-gradient(135deg, #fe3636 25px, #f53436 25px);
 }
+.map-link.difficulty-5.active {
+    background: linear-gradient(135deg, #df65e3 25px, #db31e8 25px);
+}
 .map-link-attribute {
     position: absolute; height: 20px; left: 2px; top: -8px;
 }

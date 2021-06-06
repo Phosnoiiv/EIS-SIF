@@ -396,7 +396,7 @@ function getMapName(mapType, difficulty) {
         case 5:
             return towers[difficulty[0]][1] + (difficulty[1] ? " " + difficulty[1] : difficulty[2]);
         default:
-            return [null, "", "活动", null, "SBL "][mapType] + [null, "初级", "中级", "上级", "上级＋"][difficulty];
+            return [null, "", "活动", null, "SBL "][mapType] + [null, "初级", "中级", "上级", "上级＋", "挑战"][difficulty];
     }
 }
 function getItemImg(type, key) {
