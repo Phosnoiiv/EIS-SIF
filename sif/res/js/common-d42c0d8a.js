@@ -1,4 +1,5 @@
 var limitStorage = {};
+var sCodeInitialized = false;
 
 function matchTrackName(input, track, indices) {
     var reg = new RegExp(input, "i"), r = 0;
@@ -285,20 +286,20 @@ function switchButtonGroup(button) {
 }
 
 function readNotice(noticeID) {
-    var notice = notices[noticeID];
+    var notice = notices[noticeID] || autoNotices[noticeID];
     $("#eis-sif-dialog-notice-title").empty().append(
         '<i class="fas fa-' + (notice[0] || "bullhorn") + '"></i> ',
         notice[2],
     );
     $("#eis-sif-dialog-notice-date").text(serverDate(notice[1], 3).getUTCDateTimeFull());
     $("#eis-sif-dialog-notice-contents").empty();
-    $.each(notice[3].split("\\n"), function(paragraphIndex, paragraph) {
+    $.each(codeProcess(notice[3]).split("\\n"), function(paragraphIndex, paragraph) {
         $("<p>").html(paragraph).addClass(paragraph.substring(0, 1) == "※" ? "eis-sif-note" : "").appendTo("#eis-sif-dialog-notice-contents");
     });
     showDialogMessage("#eis-sif-dialog-notice", $.noop, "关闭");
     var readNoticeIDs = (Cookies.get("readNotices") || "").split("s"), newIDs = [];
     $.each(readNoticeIDs.concat(noticeID), function(index, id) {
-        if (notices[id] && newIDs.indexOf(parseInt(id)) < 0) {
+        if ((notices[id] || autoNotices[id]) && newIDs.indexOf(parseInt(id)) < 0) {
             newIDs.push(parseInt(id));
         }
     });
@@ -399,6 +400,40 @@ function refreshDicts() {
             return rDict(dictName, $(this).attr("data-voc"), language);
         });
     });
+}
+
+function codeInit() {
+    XBBCODE.addTags({
+        "hb":{
+            openTag:function(p,c){return '<span class="eis-sif-code-hb">◼ ';},
+            closeTag:function(p,c){return '</span>';},
+        },
+        "hi":{
+            openTag:function(p,c){return '<span class="eis-sif-code-hi">';},
+            closeTag:function(p,c){return '</span>';},
+        },
+        "time":{
+            openTag:function(p,c){return '<div class="eis-sif-timetip">';},
+            closeTag:function(p,c){return '</div>';},
+        },
+        "banner_as":{
+            openTag:function(p,c){return '<div style="text-align:center"><img src="'+c+'" width=420 height=128 style="max-width:100%;height:auto"/></div>';},
+            closeTag:function(p,c){return '';},
+            displayContent:false,
+        },
+        "asmp3":{
+            openTag:function(p,c){
+                var comma = p.indexOf(",");
+                return '<a href="/sifas/interface/mp3.php?p='+p.substring(1,comma)+'&c='+p.substring(comma+1)+'" target="_blank">';
+            },
+            closeTag:function(p,c){return '</a>';},
+        },
+    });
+    sCodeInitialized = true;
+}
+function codeProcess(text) {
+    if (!sCodeInitialized) codeInit();
+    return XBBCODE.process({text:text}).html.replace(/&lt;(.+?)&gt;/g, "<$1>");
 }
 
 function refreshLimit(limitType) {

@@ -181,6 +181,10 @@ abstract class DBBase {
         $sql = "INSERT INTO `$table` ($columns) VALUES ($values)";
         return self::ltParamQuery($db, $sql, $params);
     }
+
+    static function ltSQLTimeIn(string $column1, string $column2): string {
+        return "$column1<=datetime('now','localtime') AND ($column2 IS NULL OR $column2>=datetime('now','localtime'))";
+    }
 }
 
 class DB extends DBBase {

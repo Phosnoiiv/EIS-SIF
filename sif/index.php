@@ -63,6 +63,24 @@ echo HTML::js('home');
 }, []))?>
 <?=Cache::read('articles.js')?>
 <?=Cache::read('matomo/articles.js')?>
+<?php
+$sql = "SELECT * FROM s_banner_home WHERE ".DB::ltSQLTimeIn('time_open','time_close')." ORDER BY `priority` DESC,id ASC";
+$col = [['s','img'],['i','buttons',0]];
+$cBanners = DB::ltSelect(DB_EIS_MAIN, $sql, $col, '');
+$rButtonGroupIDs = array_column($cBanners, 1);
+$sql = 'SELECT * FROM s_banner_home_button WHERE buttons IN (' . implode(',',$rButtonGroupIDs?:[0]) . ')';
+$col = [['i','type'],['s','link'],['i','notice'],['s','icon'],['s','name']];
+$cBannerButtons = DB::ltSelect(DB_EIS_MAIN, $sql, $col, 'buttons', ['m'=>true]);
+array_walk($cBanners, function(&$a) use ($cBannerButtons) {
+    $a[1] = $cBannerButtons[$a[1]]??[];
+});
+echo HTML::json('banners', $cBanners);
+
+$sql = "SELECT * FROM s_notice_auto WHERE id IN (SELECT notice FROM s_banner_home_button WHERE buttons IN (SELECT buttons FROM s_banner_home WHERE ".DB::ltSQLTimeIn('time_open','time_close')."))";
+$columns = [['s','icon'],['t','time_record',3],['s','title'],['s','content']];
+$cAutoNotices = DB::ltSelect(DB_EIS_MAIN, $sql, $columns, 'id');
+echo HTML::json('autoNotices', $cAutoNotices);
+?>
 </script>
 <?php
 foreach (Basic::getAvailableMods() as $mod) {
@@ -104,24 +122,17 @@ foreach (Basic::getAvailableMods() as $mod) {
 <?=createButton(14, [1,3], '仅限查卡器无文字的课题', 'goals.js')?>
 </section>
 <section class="eis-sif-section buttons">
-<h4><i class="fas fa-gamepad"></i> 玩法</h4>
-<?=createButton(17, [], '', '', ['title'=>'招募模拟'])?>
-<?php
-$banners = Basic::getBanners(1);
-if (!empty($banners)) {
-    foreach ($banners as $banner) {
-        switch ($banner[1]) {
-            case 1:
-                echo '<a class="banner" href="'.Basic::getPageURL($banner[2]).'" target="_blank"><img src="/sif/res/img/u/banner/'.$banner[0].'"/></a>'."\n";
-                break;
-        }
-    }
-}
-?>
-</section>
-<section class="eis-sif-section buttons">
 <h4><i class="fas fa-tools"></i> 工具</h4>
 <?=createButton(21, [], 'Icon Collection、SM、MF、CF、友情大合战', '', ['title'=>'活动 pt 计算器（含控分计算）'])?>
+</section>
+<section class="section-main-noborder">
+<div id="home-banner-container">
+<span id="home-banner-arrow-left" class="eis-jq-button" onclick="switchBannerDelta(-1)"><i class="fas fa-angle-left"></i></span>
+<span id="home-banner-arrow-right" class="eis-jq-button" onclick="switchBannerDelta(1)"><i class="fas fa-angle-right"></i></span>
+<div id="home-banner"></div>
+</div>
+<div id="home-banner-links"></div>
+<div id="home-banner-dots"></div>
 </section>
 </div>
 <section class="eis-sif-section-noborder buttons">

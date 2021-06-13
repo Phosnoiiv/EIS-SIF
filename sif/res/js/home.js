@@ -23,6 +23,10 @@ function init() {
     $.each(notices, function(noticeID, notice) {
         noticeIDs.push(noticeID);
     });
+    for (var i=0; i<banners.length; i++) {
+        $('<div class="home-banner-dot">').appendTo("#home-banner-dots");
+    }
+    $(".home-banner-dot:first-child").addClass("active");
     enableCountdown();
 }
 function listArticles(panelID) {
@@ -62,8 +66,43 @@ function refreshNotices() {
     }
     refreshPageBar(null, true);
 }
+function switchBanner() {
+    var iLink = function(target, type, link, notice) {
+        switch (type) {
+            case 1:
+                $(target).wrap($('<a href="'+link+'" target="_blank">'));
+                break;
+            case 2:
+                $(target).attr("onclick", "readNotice("+notice+");refreshNotices()");
+                break;
+        }
+    };
+    var index = $(".home-banner-dot.active").index();
+    var banner = banners[index], buttons = banner[1];
+    $("#home-banner").empty().append($('<img src="/sif/res/img/u/banner/'+banner[0]+'.jpg">'));
+    if (buttons.length) {
+        iLink("#home-banner>img", buttons[0][0], buttons[0][1], buttons[0][2]);
+    }
+    $("#home-banner-links").empty();
+    $.each(buttons, function(buttonIndex, button) {
+        var $link = $("<span>").append(
+            '<i class="fas fa-'+(button[3]||"bullhorn")+'"></i> ',
+            $('<span class="home-banner-link-text">').text(button[4]),
+        );
+        iLink($link.children(".home-banner-link-text"), button[0], button[1], button[2]);
+        $("#home-banner-links").append($link);
+    });
+}
+function switchBannerDelta(delta) {
+    var index = $(".home-banner-dot.active").index() + delta;
+    if (index<0) index = banners.length-1;
+    else if (index>=banners.length) index = 0;
+    $(".home-banner-dot").removeClass("active").filter(":nth-child("+(index+1)+")").addClass("active");
+    switchBanner();
+}
 
 $(document).ready(function() {
     init();
     refreshNotices();
+    switchBanner();
 });

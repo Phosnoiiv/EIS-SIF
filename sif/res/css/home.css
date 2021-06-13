@@ -67,6 +67,9 @@ section {
 #sections-main section {
     width: 300px; margin: 10px;
 }
+.section-main-noborder {
+    width: 334px !important;
+}
 .section-paged {
     padding-bottom: 35px;
 }
@@ -247,6 +250,50 @@ section.disabled p {
 }
 .banner img {
     width: 100%;
+}
+#home-banner-container {
+    position: relative; padding: 0 17px;
+}
+#home-banner img {
+    display: block; width: 100%;
+}
+#home-banner img[onclick] {
+    cursor: pointer;
+}
+#home-banner-arrow-left, #home-banner-arrow-right {
+    position: absolute; top: calc(50% - 13px); width: 20px; height: 20px; padding: 2px;
+    font-size: 14px;
+}
+#home-banner-arrow-left {
+    left: 3px;
+}
+#home-banner-arrow-right {
+    right: 3px;
+}
+#home-banner-links {
+    margin: 0 17px; padding: 0 5px;
+    background: linear-gradient(90deg, #fff 40%, #fff0 90%);
+    font-size: 14px;
+}
+#home-banner-links>span {
+    display: inline-block; margin-right: 10px;
+    color: #3831a8;
+}
+#home-banner-links a {
+    color: #3831a8; text-decoration: none;
+}
+.home-banner-link-text:hover {
+    color: #8086e0; cursor: pointer;
+}
+#home-banner-dots {
+    display: flex; justify-content: center; margin-top: 3px;
+}
+.home-banner-dot {
+    width: 6px; height: 6px; margin: 0 2px;
+    border: 1px solid #999; border-radius: 4px;
+}
+.home-banner-dot.active {
+    background: #ffe082; border-color: #ffa000;
 }
 .live-container {
     display: table; margin-bottom: 10px; padding-right: 20px;

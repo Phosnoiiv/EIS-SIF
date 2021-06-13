@@ -63,6 +63,7 @@ if ($useSIFStyle ?? false) {
 <script src="https://cdn.jsdelivr.net/npm/store2@2.12.0/dist/store2.min.js" integrity="sha256-wHWwnHXFMh1IdY5kZN2T9YUDEU9ZJ4S70hQVk8Goeac=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js" integrity="sha256-WzuqEKxV9O7ODH5mbq3dUYcrjOknNnFia8zOyPhurXg=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xbbcode-parser@0.1.2/xbbcode.min.js"></script>
 <?php
 echo HTML::js('common-4fcb29e1');
 echo HTML::js('common-d42c0d8a');

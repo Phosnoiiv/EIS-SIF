@@ -61,6 +61,8 @@ require_once ROOT_SIF_CONFIG . '/config.php';
 require_once ROOT_SIF_CONFIG . '/version.php';
 require_once ROOT_SIF_CONFIG . '/pages.php';
 
+const DB_EIS_MAIN = 'eis.s3db';
+
 if (empty($isMaintenancePage) && ($code = Basic::inMaintenance())) {
     header('Location: /sif/maintenance.php?c=' . $code, true, 302);
     exit();
