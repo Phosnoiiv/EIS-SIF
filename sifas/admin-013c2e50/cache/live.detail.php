@@ -193,12 +193,12 @@ $sql = 'SELECT rld.*,m_live_difficulty_const.*,live_difficulty.*,rldg.skill_mast
     FROM (SELECT * FROM m_live_difficulty UNION SELECT * FROM r.m_live_difficulty) AS rld
     LEFT JOIN m_live_difficulty_const ON difficulty_const_master_id=m_live_difficulty_const.id
     LEFT JOIN (SELECT * FROM m_live_difficulty_gimmick UNION SELECT * FROM r.m_live_difficulty_gimmick) AS rldg ON live_difficulty_id=live_difficulty_master_id
-    LEFT JOIN k.m_dictionary AS kg ON substr(name,3)=kg.id
+    LEFT JOIN (SELECT * FROM k.m_dictionary UNION SELECT * FROM r.m_dictionary_k) AS kg ON substr(name,3)=kg.id
     LEFT JOIN kz.m_dictionary AS kzg ON substr(name,3)=kzg.id
     LEFT JOIN (SELECT * FROM k.m_dictionary UNION SELECT * FROM r.m_dictionary_k) AS kh ON substr(description,3)=kh.id
     LEFT JOIN kz.m_dictionary AS kzh ON substr(description,3)=kzh.id
     LEFT JOIN c.live_difficulty ON live_difficulty_id=live_difficulty.id
-    WHERE live_id>10000
+    WHERE live_id>10000 AND hide IS NULL
 ';
 $dbMaps = DB::lt_query('jp/masterdata.db', $sql);
 while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
@@ -303,6 +303,7 @@ $sql = 'SELECT live_difficulty_id,note_gimmick_type,note_gimmick_icon_type,note_
     LEFT JOIN kz.m_dictionary AS kzn ON substr(name,3)=kzn.id
     LEFT JOIN k.m_dictionary AS kd ON substr(description,3)=kd.id
     LEFT JOIN kz.m_dictionary AS kzd ON substr(description,3)=kzd.id
+    WHERE live_difficulty_id NOT IN (SELECT id FROM c.live_difficulty WHERE hide IS NOT NULL)
 ';
 $dbNotes = DB::lt_query('jp/masterdata.db', $sql);
 while ($dbNote = $dbNotes->fetchArray(SQLITE3_ASSOC)) {
@@ -351,6 +352,7 @@ $sql = 'SELECT t.live_difficulty_id,state,live_wave.*,skill_target_master_id1,
     LEFT JOIN (SELECT * FROM k.m_dictionary UNION SELECT * FROM r.m_dictionary_k) AS kd ON substr(description,3)=kd.id
     LEFT JOIN kz.m_dictionary AS kzd ON substr(description,3)=kzd.id
     LEFT JOIN c.live_wave ON t.live_difficulty_id=live_wave.live_difficulty AND t.wave_id=wave
+    WHERE live_difficulty_id NOT IN (SELECT id FROM c.live_difficulty WHERE hide IS NOT NULL)
 ';
 $dbWaves = DB::lt_query('jp/masterdata.db', $sql);
 while ($dbWave = $dbWaves->fetchArray(SQLITE3_ASSOC)) {

@@ -33,8 +33,8 @@ function songGroupConfirm(songID) {
     showDialogMessage("#dialog-song-group-select", $.noop, "取消");
 }
 function produce(songID, target) {
+    $("#dialog-song-group-select.ui-dialog-content").dialog("close"); // This must go first
     $("#dialog-songs").dialog("close");
-    $("#dialog-song-group-select.ui-dialog-content").dialog("close");
     $("body").removeClass("eis-sif-init");
     currentSongID = songID;
     if (songID in songStorage) {
