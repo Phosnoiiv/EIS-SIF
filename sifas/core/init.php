@@ -42,4 +42,5 @@ spl_autoload_register(function($name) {
 
 require_once ROOT_SIFAS_CONFIG . '/config.php';
 
+const DB_EIS_MAIN = 'eis.s3db';
 const DB_GAME_JP_MASTER = 'jp/masterdata.db';

@@ -2,35 +2,24 @@
 namespace EIS\Lab\SIFAS;
 require_once dirname(dirname(__DIR__)) . '/core/init.php';
 
+$sql = "SELECT * FROM cache_item";
+$col = [['i','type'],['i','key'],['i','count']];
+$dCacheItems = DB::mySelect($sql, $col, '');
+
 $allItems = $cacheItems = [];
 $clientCountItems = [null];
-$sql = 'SELECT * FROM item_general';
-$dbItems = DB::my_query($sql);
-while ($dbItem = $dbItems->fetch_assoc()) {
-    $type = intval($dbItem['item_type']);
-    $key = intval($dbItem['item_key']);
-    $image = intval($dbItem['calendar_login_image']);
-    $cacheItem = [
-        intval($dbItem['calendar_login_image']),
-        $dbItem['jp_image1'] ?? '',
-        $dbItem['jp_image2'] ?? '',
-        intval($dbItem['calendar_login_position']),
-        intval($dbItem['calendar_login_order']),
-        $dbItem['jp_name'] ?? '',
-        $dbItem['en_name'] ?? '',
-        $dbItem['zh_name'] ?? '',
-        $dbItem['jp_desc'] ?? '',
-        $dbItem['en_desc'] ?? '',
-        $dbItem['zh_desc'] ?? '',
-        $dbItem['intro'] ?? '',
-    ];
-    if ($dbItem['calendar_login_cache']) {
-        $cacheItems[$type][$key] = $cacheItem;
+$sql = 'SELECT * FROM item_v105 WHERE (`type`,`key`) IN (SELECT DISTINCT gift_type,gift_key FROM login_gift)';
+$col = [
+    ['i','calendar_login_image'],['s','image1'],['s','image2',''],['i','calendar_login_position'],['i','calendar_login_order'],
+    ['s','jp_name',''],['s','en_name',''],['s','zhs_name',''],
+    ['s','jp_desc',''],['s','en_desc',''],['s','zhs_desc',''],['s','intro',''],
+];
+$allItems = DB::mySelect($sql, $col, 'type', ['k'=>'key']);
+foreach ($dCacheItems as $dCacheItem) {
+    $type = $dCacheItem[0]; $key = $dCacheItem[1]; $count = $dCacheItem[2];
+    $cacheItems[$type][$key] = $allItems[$type][$key];
         $allItems[$type][$key] = true;
-    } else {
-        $allItems[$type][$key] = $cacheItem;
-    }
-    if ($count = intval($dbItem['calendar_login_count'])) {
+    if (!empty($count)) {
         $clientCountItems[$count] = [$type, $key];
     }
 }

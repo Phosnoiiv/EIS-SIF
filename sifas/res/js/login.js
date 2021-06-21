@@ -8,6 +8,7 @@ var calendarArg = {
     "components":["date","star","item1"],
 };
 var countResults = {};
+const COL_LOGIN_GIFT1 = 14;
 function init() {
     if (inAprilFools) {
         items[1][0][1] = "../sif/item/l"; items[1][0][2] = "../sif/item/ls";
@@ -65,20 +66,20 @@ function produceFinal() {
         countResults[pointer] = 0;
     });
     $.each(data.bonuses, function(id, bonus) {
-        var dateOpen = new Date((bonus[1] + serverTimezone[server]) * 1000);
-        var dateLast = new Date((bonus[1] + serverTimezone[server]) * 1000 + (bonus[5].length - 1) * 86400000);
+        var dateOpen = (bonus[1+2*server]||bonus[3]).toServerDate(2,server);
+        var dateLast = ((bonus[1+2*server]||bonus[3])+(bonus[COL_LOGIN_GIFT1].length-1)*86400).toServerDate(2,server);
         if (dateOpen.getUTCMonth() == month - 1 || dateLast.getUTCMonth() == month - 1) {
             $("<li>").append(
                 $("<span>").addClass("bonus-date-open").text(dateOpen.getUTCDateMedium()),
-                $("<span>").addClass("bonus-clickable eis-sif-text category-" + bonus[3]).text(bonus[0]).attr("onclick", "popupBonus(" + id + ")"),
+                $("<span>").addClass("bonus-clickable eis-sif-text category-" + bonus[9]).text(bonus[-1+server]).attr("onclick", "popupBonus(" + id + ")"),
             ).appendTo("#bonuses");
         }
-        for (var i = 0; i < bonus[5].length; i++) {
-            var dateThis = new Date((bonus[1] + serverTimezone[server]) * 1000 + i * 86400000);
+        for (var i = 0; i < bonus[COL_LOGIN_GIFT1].length; i++) {
+            var dateThis = ((bonus[1+2*server]||bonus[3])+i*86400).toServerDate(2,server);
             var isThisMonth = dateThis.getUTCMonth() == month - 1;
             var date = dateThis.getUTCDate();
             var isFirstItem = true;
-            $.each(gifts[bonus[5][i]], function(type, content) {
+            $.each(gifts[bonus[COL_LOGIN_GIFT1][i]], function(type, content) {
                 if ($.isNumeric(content)) {
                     addItem(id, isFirstItem ? i + 1 : 0, isThisMonth, date, type, 0, content);
                 } else if ($.isArray(content)) {
@@ -118,12 +119,12 @@ function produceFinal() {
 }
 function popupBonus(id) {
     var bonus = data.bonuses[id];
-    var dateOpen = new Date((bonus[1] + serverTimezone[server]) * 1000);
-    var dateClose = new Date((bonus[2] + serverTimezone[server]) * 1000);
+    var dateOpen = (bonus[1+2*server]||bonus[3]).toServerDate(2,server);
+    var dateClose = (bonus[2+2*server]||bonus[4]).toServerDate(2,server);
     var dialog = $("#dialog-bonus");
     $("#dialog-bonus .eis-sif-dialog-title").empty().append(
         $("<span>").addClass("eis-sif-tag server-" + server).text(serverNameAShort[server]),
-        $("<span>").addClass("eis-sif-text category-" + bonus[3]).text(bonus[0]),
+        $("<span>").addClass("eis-sif-text category-" + bonus[9]).text(bonus[-1+server]),
     );
     $("#dialog-bonus .eis-sif-dialog-info").empty().append(
         $("<p>").append(
@@ -132,10 +133,9 @@ function popupBonus(id) {
         ),
     );
     var table = $(".bonus-table").empty();
-    for (var i = 0; i < bonus[5].length; i++) {
-        var dateCurrent = new Date((bonus[1] + serverTimezone[server]) * 1000 + i * 86400000);
+    for (var i = 0; i < bonus[COL_LOGIN_GIFT1].length; i++) {
         var isFirstItem = true;
-        $.each(gifts[bonus[5][i]], function(type, content) {
+        $.each(gifts[bonus[COL_LOGIN_GIFT1][i]], function(type, content) {
             if ($.isNumeric(content)) {
                 qItemTable(isFirstItem ? i + 1 : 0, type, 0, content).appendTo(table);
             } else if ($.isArray(content)) {
@@ -152,9 +152,9 @@ function popupBonus(id) {
             isFirstItem = false;
         });
     }
-    if (bonus[4]) {
-        $(".bonus-bg-thumb").attr("src", getImgFullPath("sifas/thumb/" + bonus[4] + ".jpg"));
-        if (availablePNGs[bonus[4]]) {
+    if (bonus[10+server]) {
+        $(".bonus-bg-thumb").attr("src", getImgFullPath("sifas/thumb/" + bonus[10+server] + ".jpg"));
+        if (availablePNGs[bonus[10+server]]) {
             var png = availablePNGs[bonus[4]];
             var group = availablePNGGroups[png[0]];
             var link = "/sifas/interface/png.php?p=" + group[1] + "&c=" + png[1];
@@ -163,7 +163,7 @@ function popupBonus(id) {
             $("#dialog-gallery-link").attr("href", "/sifas/interface/png.php?p=" + group[1] + "&c=" + png[1]);
         } else {
             $("#dialog-gallery-free").hide();
-            $("#dialog-gallery-link").attr("href", "/sifas/interface/png.php?k=" + bonus[4]);
+            $("#dialog-gallery-link").attr("href", "/sifas/interface/png.php?k=" + bonus[10+server]);
         }
         $(".bonus-bg-thumb, #dialog-gallery-panel").show();
         $("#bonus-bg-none").hide();
@@ -172,10 +172,10 @@ function popupBonus(id) {
         $("#bonus-bg-none").show();
     }
     $(dialog).dialog({modal:true, position:{of:window}, resizable:false, draggable:false, closeText:"关闭", classes:{
-        "ui-dialog":"dialog-bonus category-" + bonus[3],
+        "ui-dialog":"dialog-bonus category-" + bonus[9],
     }, close:function(event, ui) {
         $(this).dialog("destroy");
-    }}).tooltip({items:".bonus-table td:nth-child(4)", content:function() {
+    }}).tooltip({items:".bonus-table td:nth-child(5)", content:function() {
         var type = $(this).attr("data-type"), key = $(this).attr("data-key");
         return qItemIntro(type, key);
     }, position:{my:"right top", at:"right bottom"}});
@@ -210,8 +210,8 @@ function qItemTable(dayNum, type, key, amount) {
     var item = (items[type] && items[type][key]) ? items[type][key] : data.items[type][key];
     return $("<tr>").append(
         $("<td>").text(dayNum ? "第 " + dayNum + " 天：" : ""),
+        $("<td>").append($("<div>").append(qASImg(item[2]||item[1]))),
         $("<td>").append(
-            qASImg(item[2] || item[1]),
             item[4 + server],
         ),
         $("<td>").text(amount),
@@ -230,7 +230,7 @@ function qItemIntro(type, key) {
         $("<h5>").text(names[server]),
         descriptions[1] || descriptions[2] || descriptions[3] ? $("<h6>").addClass("header-desc").text("官方介绍") : "",
         descriptions[0] ? $("<h6>").text("补充介绍") : "",
-        descriptions[0] ? $("<p>").html(descriptions[0].replace(/\\n/g, "<br>")) : "",
+        descriptions[0] ? $("<p>").html(descriptions[0].replace(/\n/g, "<br>")) : "",
     );
     for (var i = 3; i >= 1; i--) {
         if (server == i)
@@ -239,11 +239,11 @@ function qItemIntro(type, key) {
             div.find("h5").after($("<p>").addClass("eis-sif-note").text(names[i]));
         }
         if (descriptions[i]) {
-            div.find(".header-desc").after($("<p>").addClass("eis-sif-note").html(descriptions[i].replace(/\\n/g, "<br>")));
+            div.find(".header-desc").after($("<p>").addClass("eis-sif-note").html(descriptions[i].replace(/\n/g, "<br>")));
         }
     }
     if (descriptions[server]) {
-        div.find(".header-desc").after($("<p>").html(descriptions[server].replace(/\\n/g, "<br>")));
+        div.find(".header-desc").after($("<p>").html(descriptions[server].replace(/\n/g, "<br>")));
     }
     return div;
 }

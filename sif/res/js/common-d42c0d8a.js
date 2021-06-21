@@ -20,11 +20,19 @@ var difficultyNames = [null, "EASY", "NORMAL", "HARD", "EXPERT", "TECHNICAL", "M
 var difficultyShortNames = [null, "E", "N", "H", "EX", "TE", "MA"];
 var articleTagNames = [null, "站务", "资料", "杂谈", "追踪", "搬运"];
 
+var serverTimeDiffs = [null, [null, 32400, 0, 28800], [null, 32400, 32400, 28800]];
+var serverMerge121 = 1623294000;
+
 Number.prototype.toSortedRarity = function() {
     return [0, 1, 2, 3, 5, 4][this];
 }
 Number.prototype.fromDatestamp = function(base) {
     return this ? (this + base) * 86400000 : 0;
+}
+Number.prototype.toServerDate = function(game, server) {
+    var diff = serverTimeDiffs[game][server];
+    if (game==1 && server==2 && this>=serverMerge121) diff = serverTimeDiffs[1][1];
+    return new Date((this+diff)*1000);
 }
 Array.prototype.shuffle = function() {
     var a = this.slice(), r = [];

@@ -4,6 +4,9 @@ if (!defined('EIS_ENV'))
     exit;
 
 class SIF {
+    static $prefixServer = [null, 'jp', 'gl', 'cn'];
+    static $prefixLanguage = [null, 'jp', 'en', 'zhs', 'zht'];
+
     static function getServerNameAShort($server) {
         return [null, 'JP', 'WW', 'CN'][$server];
     }

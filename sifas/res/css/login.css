@@ -98,17 +98,23 @@ input {
 .detail p {
     margin: 0;
 }
-.bonus-table td:nth-child(2) img {
-    height: 16px; margin-right: 5px;
+.bonus-table td:nth-child(2) {
+    width: 20px;
 }
-.bonus-table td:nth-child(3) {
+.bonus-table td:nth-child(2)>div {
+    display: flex;
+}
+.bonus-table td:nth-child(2) img {
+    height: 20px;
+}
+.bonus-table td:nth-child(4) {
     width: 90px;
     color: #007e4e; text-align: right;
 }
-.bonus-table td:nth-child(3)::before {
+.bonus-table td:nth-child(4)::before {
     content: "×";
 }
-.bonus-table td:nth-child(4) {
+.bonus-table td:nth-child(5) {
     width: 30px;
     color: #8e2901; text-align: right;
 }

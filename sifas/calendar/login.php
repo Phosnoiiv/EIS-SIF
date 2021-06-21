@@ -12,7 +12,7 @@ $relatedPage = [
 ];
 $barContentsAppend = [
     '<i class="fas fa-calendar"></i> 月份：<input id="month" type="month" min="2019-09" max="' . date('Y-m') . '" value="' . date('Y-m') . '" onchange="produce()"/>',
-    '<i class="fas fa-server"></i> 服务器：<select id="server" onchange="produce()"><option value="1" selected>日语版</option><option value="2">国际版</option></select>',
+    '<i class="fas fa-server"></i> 服务器：<select id="server" onchange="produce()"><option value="1" selected>日语版</option><option value="3">简体字版</option><option value="2">国际版</option></select>',
 ];
 
 $instantGroups = $instantPNGs = [];
