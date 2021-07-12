@@ -4,12 +4,16 @@ if (!defined('EIS_ENV'))
     exit;
 
 class Util {
-    static function readMultiConfig($table, $key) {
+    static function readMultiConfig(string $table, string $key, bool $isJson = false) {
         $sql = "SELECT `index`,`value` FROM c_$table WHERE `key`='$key'";
-        return DB::ltSelect('eis.s3db', $sql, [['s','value']], 'index', ['s'=>true]);
+        $configs = DB::ltSelect(DB_EIS_MAIN, $sql, [['s','value']], 'index', ['s'=>true]);
+        if ($isJson) {
+            array_walk($configs, fn(&$a)=>$a=json_decode($a));
+        }
+        return $configs;
     }
-    static function readConfig($table, $key) {
-        return self::readMultiConfig($table, $key)[''];
+    static function readConfig(string $table, string $key, bool $isJson = false) {
+        return self::readMultiConfig($table, $key, $isJson)[''];
     }
 
     static function arrayPushUnique(array &$array, ...$values): void {

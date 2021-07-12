@@ -28,4 +28,5 @@ $pages = [
       24 => ['key'=>'archive/notices', 'title'=>'过去的告知', 'game'=>0, 'path'=>'archive/notices'],
       25 => ['key'=>'play/richman', 'game'=>1, 'path'=>'sim/richman'],
       26 => ['key'=>'play/aquarium', 'game'=>1, 'path'=>'sim/aquarium'],
+      27 => ['key'=>'tool/accessories', 'title'=>'SIF 饰品计算器', 'game'=>1, 'path'=>'tool/accessories'],
 ];

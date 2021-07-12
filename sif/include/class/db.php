@@ -130,6 +130,9 @@ abstract class DBBase {
     }
     static function ltSelect($db, $query, $columns, $key, $options = []) {
         $dbResult = self::lt_query($db, $query);
+        if (!empty($options['z'])) {
+            $result = [null];
+        }
         while ($dbRow = $dbResult->fetchArray(SQLITE3_ASSOC)) {
             $row = [];
             foreach ($columns as $column) {

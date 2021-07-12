@@ -19,6 +19,7 @@ var skillTriggerShortNames = {1:"T", 3:"N", 4:"C", 5:"爆分", 6:"P", 12:"星标
 var difficultyNames = [null, "EASY", "NORMAL", "HARD", "EXPERT", "TECHNICAL", "MASTER"];
 var difficultyShortNames = [null, "E", "N", "H", "EX", "TE", "MA"];
 var articleTagNames = [null, "站务", "资料", "杂谈", "追踪", "搬运"];
+var game1Rarities = [null,{l:40},{l:60},{l:80},{l:100},{l:90}];
 
 var serverTimeDiffs = [null, [null, 32400, 0, 28800], [null, 32400, 32400, 28800]];
 var serverMerge121 = 1623294000;
