@@ -124,6 +124,7 @@ foreach (Basic::getAvailableMods() as $mod) {
 <section class="eis-sif-section buttons">
 <h4><i class="fas fa-tools"></i> 工具</h4>
 <?=createButton(21, [], 'Icon Collection、SM、MF、CF、友情大合战', '', ['title'=>'活动 pt 计算器（含控分计算）'])?>
+<?=createButton(27, [], '', '', ['title'=>'通常饰品制作概率计算器'])?>
 </section>
 <section class="section-main-noborder">
 <div id="home-banner-container">
