@@ -26,6 +26,13 @@
     height: 22px;
 }
 
+#map [data-index="-1"] {display:none;}
+#map[data-size="6"]  [data-index="0"]  {top:35%;left:20%;}
+#map[data-size="6"]  [data-index="1"]  {top:35%;left:35%;}
+#map[data-size="6"]  [data-index="2"]  {top:35%;left:50%;}
+#map[data-size="6"]  [data-index="3"]  {top:45%;left:60%;}
+#map[data-size="6"]  [data-index="4"]  {top:50%;left:45%;}
+#map[data-size="6"]  [data-index="5"]  {top:45%;left:30%;}
 #map[data-size="12"] [data-index="0"]  {top:25%;left: 5%;}
 #map[data-size="12"] [data-index="1"]  {top:25%;left:20%;}
 #map[data-size="12"] [data-index="2"]  {top:25%;left:35%;}

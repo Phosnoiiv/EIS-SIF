@@ -53,6 +53,10 @@ function actionsDisp() {
     $(".inv-seal").text(playGetPocketItem(CT[3][0][0],CT[3][0][1]));
 }
 function sealNext() {
+    if (CI[7]==-1) {
+        playData.p1s = -1;
+        return;
+    }
     var b = Math.ceil(playData.p1npb*playData.p1jc.length/100), u = Math.floor(playData.p1npu*playData.p1jc.length/100);
     playData.p1s = (playData.p1s + Math.floor(Math.random()*(u-b+1)+b)) % playData.p1jc.length;
 }

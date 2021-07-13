@@ -430,6 +430,11 @@ function codeInit() {
             closeTag:function(p,c){return '';},
             displayContent:false,
         },
+        "c11":{
+            openTag:function(p,c){return '<img class="eis-sif-code-card-1" src="/vio/sif/unit/icon1/'+Math.ceil(parseInt(c)/100)+'/'+c+'.png"/>';},
+            closeTag:function(p,c){return '';},
+            displayContent:false,
+        },
         "asmp3":{
             openTag:function(p,c){
                 var comma = p.indexOf(",");

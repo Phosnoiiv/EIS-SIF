@@ -428,6 +428,9 @@ img.eis-sif-switch[data-switch="0"] {
 .eis-sif-code-hi {
     color: #4746c1; font-weight: bold;
 }
+.eis-sif-code-card-1 {
+    height: 50px;
+}
 .eis-sif-post {
     margin: 5px 0; padding: 5px 10px;
     background: #e6f2f9; border: 1px solid #5399d9; border-radius: 10px;
