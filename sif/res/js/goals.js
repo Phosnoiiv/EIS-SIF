@@ -51,7 +51,7 @@ function sifGoalDesc(server, type, param1, param2, param3, param4, param5, param
     var strRanks = [null, "S", "A", "B", "C"];
     switch (type) {
         case 1:
-            return strs[1].replace("%d", param1);
+            return strs[1].replace("%d", param1).replace("{{params1}}", param1);
         case 2:
             return strs[param3 ? 2 : 1].replace("%s", strDifficulties[param1]).replace("%d", param2);
         case 3:
