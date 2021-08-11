@@ -221,6 +221,7 @@ function playFlagChange(flag, value, pattern, buttonOption) {
 }
 
 $(document).ready(function() {
+    if (typeof pConfig == "undefined") return;
     if (pConfig.m) {
         var buttonTemplate = function(code, text) {
             return $("<span>").text(text).attr("data-mode",code).button().click(function() {

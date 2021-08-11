@@ -1,0 +1,16 @@
+#fullscreen-footer {
+    position:fixed; left:20px; bottom:5px;
+    font-size:12px;
+}
+#fullscreen-footer p {
+    margin:0;
+}
+
+.sif-button-group .ui-button {
+    padding:4px 16px;
+    background:#e6c5a1; color:#cc791b; border:2px solid #fff; border-radius:15px; box-shadow:1px 1px 1px #000;
+    font-weight:bold; font-size:14px;
+}
+.sif-button-group .ui-button.active {
+    background:#f92; color:#fff;
+}

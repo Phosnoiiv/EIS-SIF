@@ -35,6 +35,15 @@ Number.prototype.toServerDate = function(game, server) {
     if (game==1 && server==2 && this>=serverMerge121) diff = serverTimeDiffs[1][1];
     return new Date((this+diff)*1000);
 }
+String.prototype.toJQImg = function(site, game, isLazy) {
+    var s = this, r;
+    if (r = s.match(/^((?:[g]\d:)*)s(\d):(.*)$/)) {site = r[2]; s = r[1]+r[3];}
+    var src = (site<2 ? ["/","/vio/"][site] : resourceHosts[site-2])
+            + ([2].indexOf(site)<0 ? ["","sif/","sifas/"][game] : "")
+            + s + ([".jpg"].indexOf(s.substring(s.length-4))<0 ? ".png" : "");
+    if (isLazy) return $('<img class="lazyload">').attr("data-src",src);
+    return $("<img>").attr("src",src);
+}
 Array.prototype.shuffle = function() {
     var a = this.slice(), r = [];
     for (var i = this.length; i > 0; i--) {
@@ -158,6 +167,7 @@ function gItemImage(type, key, server, options, config) {
         case 1001:
             var unit = config.fUnit(key);
             var folder = Math.ceil(key / 100);
+            if (options.v>=78) return "s3:card/icon1/"+folder+"/"+key + (options.g?"s":options.i?"i":"");
             return options.s ? "icon/" + rarityShortNames[unit[config.unitRarity]] : "unit/icon1/" + folder + "/" + key + (options.g ? "s" : options.i ? "i" : "");
         case 5100:
             var title = config.fTitle(key);
@@ -174,7 +184,7 @@ function gItemImage(type, key, server, options, config) {
 }
 function gItem(type, key, server, amount, options, config) {
     return $(options.d ? "<div>" : "<span>").addClass("eis-sif-item").append(
-        qImg(gItemImage(type, key, server, options, config)),
+        options.v>=78 ? gItemImage(type,key,server,options,config).toJQImg(1,1,options.z) : qImg(gItemImage(type, key, server, options, config)),
         amount && (amount > 1 || options.o) ? $("<span>").addClass("eis-sif-item-amount").text(amount) : "",
     ).attr("data-type", type).attr("data-key", key).attr("data-server", server).attr("data-game", options.gx);
 }
@@ -243,6 +253,13 @@ function showDialogConfirm(content, callbackOK) {
         $(this).dialog("destroy");
     }});
     $(window).resize();
+}
+function showFullDialog(selector) {
+    $(window).resize();
+    $(selector).dialog("open");
+}
+function closeDialogIfOpened(selector) {
+    $(selector+".ui-dialog-content").dialog("close");
 }
 
 function refreshPageBar(filter, stay) {

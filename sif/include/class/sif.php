@@ -194,4 +194,6 @@ class SIF {
             + $expect['r'] * self::VALUE_ADJUSTED_R
             + ($coupon ? self::VALUE_ADJUSTED_COUPON * $count / 10 : 0);
     }
+
+    const RARITY_LIMIT = 11, RARITY_SELECT = 12;
 }

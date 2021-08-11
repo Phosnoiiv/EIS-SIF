@@ -22,4 +22,8 @@ class Util {
             $array[] = $value;
         }
     }
+
+    static function toJSON(array $array): string {
+        return json_encode($array, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    }
 }

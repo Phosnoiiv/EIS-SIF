@@ -1,0 +1,66 @@
+#gacha-ne {
+    position:fixed; right:5%; top:90px;
+}
+#gacha-se {
+    position:fixed; right:5%; bottom:30px;
+}
+#gacha-sw {
+    position:fixed; left:5%; bottom:30px;
+}
+#button-list {
+    padding:3px 25px;
+    background:#f69; color:#fff; border:none; border-radius:15px;
+    font-size:14px;
+}
+.gacha-list-item {
+    display:flex; flex-direction:column;
+}
+.gacha-list-item img {
+    width:300px;
+}
+.gacha-list-item-name {
+    color:#333;
+    font-size:13px;
+}
+#box-remain {
+    background:#fff; border:2px solid #5d0; border-radius:5px;
+}
+#box-remain h4 {
+    margin:0; padding:10px 5px;
+    background:#2a3; color:#fff;
+}
+#box-remain h4 .box-remain-sum {
+    margin-left:5px; float:right;
+}
+.box-remain-rarity {
+    display:flex; align-items:center; justify-content:space-between; padding:2px 5px 2px 0;
+    color:#ff4aa5;
+}
+.box-remain-rarity:not(:first-child) {
+    border-top:2px dotted #5d5;
+}
+.box-remain-rarity[data-rarity="12"] {color:#f60;}
+.box-remain-rarity[data-rarity="11"] {color:#ca13ff;}
+.box-remain-rarity[data-rarity="4"] {color:#0072ff;}
+#results {
+    background:#ffffffc4;
+}
+.dialog-caption {
+    font-size:15px; text-align:center;
+}
+.select-choice {
+    margin:10px;
+    cursor:pointer;
+}
+.select-choice img {
+    height:96px;
+}
+.select-choice.selected {
+    margin:5px;
+}
+.select-choice.selected img {
+    border:5px solid #fb3; border-radius:10px;
+}
+.select-choice.unselected img {
+    filter:brightness(50%);
+}

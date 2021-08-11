@@ -81,7 +81,7 @@ abstract class DBBase {
                 $result[$dbRow[$key]] = $row;
             }
         }
-        return $result;
+        return $result ?? [];
     }
     static function myInsert($table, $params) {
         self::myCheck();
