@@ -1,0 +1,99 @@
+#g-main .eis-sif-gallery {
+    justify-content:flex-start;
+    font-size:15px;
+}
+#g-main[data-gallery-css-view="2"] .eis-sif-gallery {
+    font-size:13px;
+}
+#g-main .eis-sif-gallery>[onclick] {
+    cursor:pointer;
+}
+.accessory-image img {
+    height:100px;
+}
+[data-gallery-css-view="2"] .accessory {
+    flex-basis:140px; display:flex; flex-direction:column; align-items:center; padding:2px;
+    background:#fff; border:1px solid #bbb;
+}
+.accessory-view-2-detail {
+    align-self:stretch; display:flex;
+}
+.accessory-view-2-detail p {
+    margin:0;
+}
+.accessory-view-2-detail .eis-sif-item img {
+    height:50px; vertical-align:bottom;
+}
+.accessory-view-2-detail-effect {
+    flex-grow:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+.accessory-view-2-detail-effect img {
+    height:16px; margin-right:2px; vertical-align:bottom;
+}
+#g-main[data-gallery-css-view="3"] .eis-sif-gallery {
+    flex-direction:column;
+}
+[data-gallery-css-view="3"] .accessory {
+    padding:5px;
+    background:#fff; border:1px solid #bbb;
+}
+[data-gallery-css-view="3"] .accessory-image {
+    float:left; margin-right:10px;
+}
+.accessory-view-3-card {
+    float:right; display:flex; flex-direction:column; align-items:flex-end;
+    font-size:13px;
+}
+.accessory-view-3-card p {
+    margin:0;
+}
+.accessory-view-3-card p img {
+    height:16px; margin-right:2px; vertical-align:bottom;
+}
+.accessory-view-3-card .eis-sif-item img {
+    height:50px;
+}
+.accessory-view-3-name {
+    margin:5px 0;
+    color:#3f3cb5;
+    font-size:16px;
+}
+.accessory-view-3-effect {
+    margin:5px 0 0;
+    font-size:14px;
+}
+#dialog-accessory-title .accessory-image {
+    float:left; margin-right:10px;
+}
+#dialog-accessory-title-name {
+    margin:10px 0 0;
+    color:#3f3cb5; border-bottom:1px solid #2c1c92;
+}
+#dialog-accessory-title-name-translations {
+    margin:0 0 10px;
+    color:#333;
+    font-size:14px;
+}
+#dialog-accessory-card {
+    display:flex; align-items:center;
+    font-size:14px;
+}
+#dialog-accessory-card img {
+    height:50px;
+}
+#accessory-levels {
+    clear:left;
+}
+.accessory-level {
+    display:flex; flex-wrap:wrap; padding:3px;
+    font-size:15px;
+}
+.accessory-level:not(:first-child) {
+    border-top:1px dashed #bbb;
+}
+.accessory-level-caption {
+    flex-basis:40px; margin-right:10px;
+}
+.accessory-level .sif-attr-score-group {
+    margin-right:5px;
+}

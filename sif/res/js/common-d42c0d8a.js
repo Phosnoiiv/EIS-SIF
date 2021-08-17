@@ -1,3 +1,7 @@
+var commons = {p:{},
+    c:{g:{}},
+    r:{g:{}},
+};
 var limitStorage = {};
 var sCodeInitialized = false;
 
@@ -64,6 +68,51 @@ function sifEXP(rank) {
     return rank <= 1000 ? f(rank) - f(rank - 33) : 34435 + (rank - 1001) * (35 + 1550 * (rank - 1000));
 }
 
+var G1C = {
+    skillEffectSN:{5:"判",9:"奶",11:"分",2000:"技率↑",2100:"复读",2201:"PP",2300:"CF",2400:"属性同",2500:"Lv↑",2600:"属性↑"},
+    skillSN:{
+        1:{5:"#s 时判",9:"#s 时奶",11:"#s 时分"},
+        3:{5:"#N 判",9:"#N 奶",11:"#N 分",2000:"#N 技率↑",2100:"#N 复读",2500:"#N Lv↑",2600:"#N 属性↑"},
+        4:{9:"#C 奶",11:"#C 分",2300:"#CF"},
+        6:{9:"#P 奶",11:"#P 分",2201:"#PP"},
+        100:{11:"连锁分"},
+    },
+    skillTriggerD:{
+        "-1":"满足条件的技能未发动时，",
+    },
+    skillEffectD:{
+        4:"就有 {r}% 的概率使判定在 {t} 秒内得到小幅强化",
+        5:"就有 {r}% 的概率强化判定 {t} 秒",
+        9:"就有 {r}% 的概率恢复体力 {v} 点",
+        11:"就有 {r}% 的概率增加分数 {v} 点",
+        2000:"就有 {r}% 的概率在 {t} 秒内将发动其它技能的概率提升至 {v} 倍",
+        2100:"就有 {r}% 的概率发动之前发动的除重复以外的特技效果",
+        2201:"就有 {r}% 的概率在 {t} 秒内将获得 PERFECT 时的点击分数增加 {v} 点",
+        2300:"就有 {r}% 的概率根据 {t} 秒内的连击数提升点击分数",
+        2400:"就有 {r}% 的概率在 {t} 秒内使属性变得与随机一位{e}成员相同",
+        2500:"就有 {r}% 的概率将下次发动的技能等级提升 {v} 级",
+        2600:"就有 {r}% 的概率在 {t} 秒内使{e}的属性提升 {v2}%",
+    },
+};
+function g1SkillDesc(triggerType, effectType, triggerValue, rate, effectTime, effectValue, args) {
+    var triggerDesc = G1C.skillTriggerD[triggerType];
+    var effectDesc = G1C.skillEffectD[effectType].replace("{r}",rate).replace("{t}",effectTime).replace("{v}",effectValue).replace("{v2}",Math.round((effectValue-1)*100000)/1000);
+    if (effectDesc.indexOf("{e}")>=0) effectDesc = effectDesc.replace("{e}",G1P.target2Str(args.e));
+    var r = triggerDesc + effectDesc;
+    return r;
+}
+var G1P = {
+    target2Str:function(targets) {
+        var r = "";
+        $.each(targets, function(targetIndex, target) {
+            switch (target[0]) {
+                case 3: r+=commons.p.a.member.g(target[1])[commons.p.a.member.nzhs]; break;
+            }
+        });
+        return r;
+    }
+}
+
 function getImgSmall(type, key) {
     if ([5100, 5200, 5600].indexOf(type) >= 0)
         return "type/" + type + "s";
@@ -116,6 +165,7 @@ var gConfigDefault = {
     fItem:function(type,key){return items[type][key];},
     fUnit:function(unitID){return units[unitID];},
     fMember:function(memberID){return members[memberID];},
+    fAccessory:function(accessoryID){return accessories[accessoryID];},
     fTitle:function(titleID){return titles[titleID];},
     fBackground:function(backgroundID){return backgrounds[backgroundID];},
     fSI:function(SIID){return SIs[SIID];},
@@ -169,6 +219,9 @@ function gItemImage(type, key, server, options, config) {
             var folder = Math.ceil(key / 100);
             if (options.v>=78) return "s3:card/icon1/"+folder+"/"+key + (options.g?"s":options.i?"i":"");
             return options.s ? "icon/" + rarityShortNames[unit[config.unitRarity]] : "unit/icon1/" + folder + "/" + key + (options.g ? "s" : options.i ? "i" : "");
+        case 1002:
+            var accessory = config.fAccessory(key);
+            return "s3:accessory/" + (options.i ? "icon"+options.i+"/" : "") + accessory[config.accessoryImage];
         case 5100:
             var title = config.fTitle(key);
             return "title/" + title[config.titleImages[server]];
@@ -311,6 +364,63 @@ function switchButtonGroup(button) {
     $(button).siblings(":not([data-disable])").button("enable").removeClass("active");
 }
 
+// --------------------------------------------------
+// Gallery
+// --------------------------------------------------
+function recoverGallery(selector) {
+    var configID = $(selector).attr("data-gallery-config"), config = commons.c.g[configID];
+    commons.r.g[configID] = {filters:{},options:{}};
+    var viewType = getMemory("commons", "g.v."+configID) || config.defaultViewType;
+    $(selector+" [data-gallery-role=views] [data-click-arg="+viewType+"]").click();
+    $.each(config.filterIDs, function(filterIndex, filterID) {
+        var value = getMemory("commons", "g.f."+configID+"."+filterID);
+        if (value==undefined) value = config.filterDefaults[filterID] || 0;
+        $(selector+" [data-gallery-role=filter][data-gallery-filter="+filterID+"] [data-click-arg="+value+"]").click();
+    });
+    $.each(config.optionIDs, function(optionIndex, optionID) {
+        var value = getMemory("commons", "g.o."+configID+"."+optionID);
+        if (value==undefined) value = config.optionDefaults[optionID] || 0;
+        $(selector+" [data-gallery-role=option][data-gallery-option="+optionID+"] [data-click-arg="+value+"]").click();
+    });
+    commons.r.g[configID].ready = true;
+    refreshGallery(selector);
+}
+function changeGalleryView(selector, viewType) {
+    var configID = $(selector).attr("data-gallery-config"), config = commons.c.g[configID];
+    commons.r.g[configID].viewType = viewType;
+    $(selector).attr("data-gallery-css-view", viewType);
+    setMemory("commons", "g.v."+configID, viewType);
+    if (commons.r.g[configID].ready) refreshGallery(selector);
+}
+function changeGalleryFilter(selector, filterID, filterValue) {
+    var configID = $(selector).attr("data-gallery-config"), config = commons.c.g[configID];
+    commons.r.g[configID].filters[filterID] = filterValue;
+    setMemory("commons", "g.f."+configID+"."+filterID, filterValue);
+    if (commons.r.g[configID].ready) refreshGallery(selector);
+}
+function changeGalleryOption(selector, optionID, optionValue) {
+    var configID = $(selector).attr("data-gallery-config"), config = commons.c.g[configID];
+    commons.r.g[configID].options[optionID] = optionValue;
+    setMemory("commons", "g.o."+configID+"."+optionID, optionValue);
+    if (commons.r.g[configID].ready) refreshGallery(selector);
+}
+function refreshGallery(selector) {
+    var configID = $(selector).attr("data-gallery-config"), config = commons.c.g[configID];
+    $(selector+" [data-gallery-role=gallery]").empty();
+    $.each(config.getItems(), function(itemID, item) {
+        if (!item) return;
+        var filterPassed = true;
+        $.each(config.filterIDs, function(filterIndex, filterID) {
+            if (config.checkFilter(itemID,item,filterID,commons.r.g[configID].filters[filterID])) return;
+            filterPassed = false;
+            return false;
+        });
+        if (!filterPassed) return;
+        config.createViewItem(itemID,item,commons.r.g[configID].viewType).attr("onclick",config.itemClick(itemID,item)).appendTo(selector+" [data-gallery-role=gallery]");
+    });
+    lazyload();
+}
+
 function readNotice(noticeID) {
     var notice = notices[noticeID] || autoNotices[noticeID];
     $("#eis-sif-dialog-notice-title").empty().append(
@@ -426,6 +536,14 @@ function refreshDicts() {
             return rDict(dictName, $(this).attr("data-voc"), language);
         });
     });
+}
+function getMemory(group, key) {
+    return store.get("sif.memory."+group, {})[key];
+}
+function setMemory(group, key, value) {
+    var object = store.get("sif.memory."+group, {});
+    object[key] = value;
+    store("sif.memory."+group, object);
 }
 
 function codeInit() {
@@ -552,6 +670,9 @@ $(document).ready(function() {
         $(this).tabs(options);
     });
     $(".eis-jq-button").button();
+    $(".eis-sif-button-group[data-click]").children().attr("onclick", function() {
+        return $(this).parent().attr("data-click").replace("$",$(this).attr("data-click-arg"));
+    });
     $(".eis-sif-button-group").children().button().click(function() {
         switchButtonGroup(this);
     }).filter("[data-default]").click();

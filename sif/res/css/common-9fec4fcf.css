@@ -1,4 +1,20 @@
 @charset "utf-8";
+.sif-attr-score {
+    padding:1px;
+    border-radius:10px;
+    font-weight:bold;
+}
+.sif-attr-score-group.tiny>.sif-attr-score {
+    padding:1px 5px;
+}
+.sif-attr-score-group:not(.tiny)>.sif-attr-score {
+    display:inline-block; width:50px; margin:0 2px;
+    font-size:14px; text-align:center;
+}
+.sif-attr-score[data-attribute="1"] {background:#fcc9d1; color:#f9639d;}
+.sif-attr-score[data-attribute="2"] {background:#99e6d8; color:#06c32c;}
+.sif-attr-score[data-attribute="3"] {background:#70d0eb; color:#09e;}
+
 .sif-goal-title {
     position: relative; padding-left: 82px;
     background: #e6e1e3; border-radius: 10px;

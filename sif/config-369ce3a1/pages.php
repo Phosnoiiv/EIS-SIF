@@ -30,4 +30,5 @@ $pages = [
       26 => ['key'=>'play/aquarium', 'game'=>1, 'path'=>'sim/aquarium'],
       27 => ['key'=>'tool/accessories', 'title'=>'SIF 饰品计算器', 'game'=>1, 'path'=>'tool/accessories'],
       28 => ['key'=>'sim/gacha', 'title'=>'SIF 招募模拟', 'game'=>1, 'path'=>'sim/gacha'],
+      29 => ['key'=>'list/accessories', 'title'=>'SIF 饰品一览', 'game'=>1, 'path'=>'list/accessories'],
 ];
