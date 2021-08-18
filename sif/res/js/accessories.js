@@ -80,6 +80,9 @@ function showDetail(accessoryID) {
     });
 
     showDialogMessage("#dialog-accessory", $.noop);
+    var _paq = window._paq || [];
+    _paq.push(["setCustomVariable", 1, "Accessory ID", accessoryID, "page"]);
+    _paq.push(["trackEvent", "G1-Accessories", "Show"]);
 }
 function getSkillDesc(accessoryID, levelID) {
     var accessory = accessories[accessoryID], level = accessory[COL_ACCESSORY_LEVELS][levelID] || accessoryStorage[accessoryID][levelID];
