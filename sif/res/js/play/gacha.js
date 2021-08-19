@@ -182,7 +182,7 @@ function draw(type, key, amount, count, options) {
             });
             var decidedRarity = decideRarity(remainCapacity);
             playedCapacity[decidedRarity] = (playedCapacity[decidedRarity]||0) + 1;
-            var decidedCard = decideCard(c.u[decidedRarity]);
+            var decidedCard = (decidedRarity==RARITY_SELECT && c.rb[1]==2) ? playData.s[c.c] : decideCard(c.u[decidedRarity].slice(), decidedRarity==RARITY_SELECT && c.rb[1]==1 ? playData.s[c.c] : null);
             results.push([decidedCard]);
         }
         playData.tbc[c.c] = playedCapacity;
@@ -207,7 +207,10 @@ function decideRarity(rates) {
     });
     return result;
 }
-function decideCard(cardIDs) {
+function decideCard(cardIDs, selectedMemberID) {
+    if (selectedMemberID) {
+        for (var i=cardIDs.length-1; i>=0; i--) if (cardStorage[cardIDs[i]][1]!=selectedMemberID) cardIDs.splice(i,1);
+    }
     return cardIDs[Math.floor(Math.random()*cardIDs.length)];
 }
 function closeResult() {
