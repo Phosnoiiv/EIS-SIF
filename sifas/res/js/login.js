@@ -75,20 +75,23 @@ function produceFinal() {
             ).appendTo("#bonuses");
         }
         for (var i = 0; i < bonus[COL_LOGIN_GIFT1].length; i++) {
+            var giftID = bonus[COL_LOGIN_GIFT1][i];
             var dateThis = ((bonus[1+2*server]||bonus[3])+i*86400).toServerDate(2,server);
             var isThisMonth = dateThis.getUTCMonth() == month - 1;
             var date = dateThis.getUTCDate();
             var isFirstItem = true;
             $.each(gifts[bonus[COL_LOGIN_GIFT1][i]], function(type, content) {
                 if ($.isNumeric(content)) {
-                    addItem(id, isFirstItem ? i + 1 : 0, isThisMonth, date, type, 0, content);
+                    addItem(id, giftID, isFirstItem ? i + 1 : 0, isThisMonth, date, type, 0, content);
                 } else if ($.isArray(content)) {
                     $.each(content, function(_, key) {
-                        addItem(id, isFirstItem ? i + 1 : 0, isThisMonth, date, type, key, 1);
+                        addItem(id, giftID, isFirstItem ? i + 1 : 0, isThisMonth, date, type, key, 1);
+                        isFirstItem = false;
                     });
                 } else if ($.isPlainObject(content)) {
                     $.each(content, function(key, amount) {
-                        addItem(id, isFirstItem ? i + 1 : 0, isThisMonth, date, type, key, amount);
+                        addItem(id, giftID, isFirstItem ? i + 1 : 0, isThisMonth, date, type, key, amount);
+                        isFirstItem = false;
                     });
                 }
                 isFirstItem = false;
@@ -182,20 +185,19 @@ function popupBonus(id) {
     $(window).resize();
     enableCountdown();
 }
-function addItem(id, dayNum, isThisMonth, date, type, key, amount) {
+function addItem(id, giftID, dayNum, isThisMonth, date, type, key, amount) {
     var item = (items[type] && items[type][key]) ? items[type][key] : data.items[type][key];
-    $("<tr>").append([
-        $("<td>").text(dayNum ? "第 " + dayNum + " 天：" : ""),
-        $("<td>").text(item[3]),
-        $("<td>").addClass("amount").text(amount),
-    ]).appendTo("#bonus-" + id + " table");
     if (!isThisMonth)
         return;
     $("#" + calendarArg.dateIdPrefix + date).removeClass(calendarArg.classDefault);
+    if (largeGiftIDs.indexOf(giftID)<0) {
     var container = $("<span>");
     qASImg(item[item[0]]).appendTo(container);
     $("<span>").text(amount).appendTo(container);
     container.addClass("calendar-item").attr("data-type", type).attr("data-key", key).appendTo($("#" + calendarArg.dateIdPrefix + date + ">div")[item[3]]);
+    } else if (dayNum) {
+        $("<span>").append("icon/d0".toJQImg(1,2)).appendTo("#"+calendarArg.dateIdPrefix+date+">div:nth-child(3)");
+    }
     var pointer = type + "-" + key;
     if (countResults[pointer] != undefined) {
         countResults[pointer] += amount;

@@ -46,6 +46,9 @@ while ($dbGift = $dbGifts->fetch_assoc()) {
     }
 }
 
+$sql = 'SELECT gift_group_id,COUNT(*) c FROM login_gift GROUP BY gift_group_id HAVING c>9';
+$cLargeGifts = DB::mySelect($sql, [['i','gift_group_id']], '', ['s'=>true]);
+
 $clientBirthdays = [null];
 for ($i = 1; $i <= 12; $i++) {
     $clientBirthdays[$i] = [];
@@ -64,6 +67,7 @@ Cache::writeMultiJson('login.js', [
     'countItems' => $clientCountItems,
     'items' => $cacheItems,
     'gifts' => $cacheGifts,
+    'largeGiftIDs' => $cLargeGifts,
     'birthdays' => $clientBirthdays,
 ]);
 Cache::writePhp('login.php', [
