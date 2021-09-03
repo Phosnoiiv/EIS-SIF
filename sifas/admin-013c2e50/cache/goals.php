@@ -35,14 +35,19 @@ $towerMissions = DB::mySelect($sql, [['i','term']], 'mission', ['s'=>true]);
 $sql = 'SELECT * FROM campaign_mission';
 $campaignMissions = DB::mySelect($sql, [['i','campaign']], 'mission', ['s'=>true]);
 
-$sql = 'SELECT * FROM m_mission_reward';
-$columns = [['i','mission_id'],['i','content_type'],['i','content_id'],['i','content_amount']];
-$dbRewards = DB::ltSelect('restore.s3db', $sql, $columns, '');
-foreach ($dbRewards as $dbReward) {
-    $restoreRewards[$dbReward[0]][] = array_slice($dbReward, 1);
-}
-
 foreach ([1=>'jp',2=>'gl',3=>'cn'] as $server => $serverKey) {
+    $sql = "SELECT * FROM rs_mission WHERE `server`=$server";
+    $col = [['i','time_open'],['i','time_close'],['i','type'],['i','count'],['i','param1'],['i','param2']];
+    $restoreMissions = DB::ltSelect(DB_EIS_RESTORE, $sql, $col, 'id');
+
+    $sql = "SELECT * FROM rs_mission_reward WHERE `server`=$server";
+    $col = [['i','item_type'],['i','item_key'],['i','amount']];
+    $restoreRewards = DB::ltSelect(DB_EIS_RESTORE, $sql, $col, 'id', ['m'=>true]);
+
+    $prfSrvEvent = $serverKey.'_event';
+    $sql = "SELECT * FROM c.mission WHERE $prfSrvEvent IS NOT NULL";
+    $replaceEventIDs = DB::ltSelect($serverKey.'/masterdata.db', $sql, [['i',$prfSrvEvent]], 'id', ['s'=>true]);
+
     $rewards = $clientMissions = [];
     $sql = 'SELECT * FROM m_mission_reward WHERE mission_id IN (SELECT id FROM m_mission WHERE pickup_type=3)';
     $columns = [['i','mission_id'],['i','content_type'],['i','content_id'],['i','content_amount']];
@@ -69,6 +74,10 @@ foreach ([1=>'jp',2=>'gl',3=>'cn'] as $server => $serverKey) {
     ];
     $dbMissions = DB::ltSelect($serverKey . '/masterdata.db', $sql, $columns, 'id');
     foreach ($dbMissions as $id => $dbMission) {
+        if (isset($restoreMissions[$id])) {
+            $tRestore = $restoreMissions[$id];
+            foreach ([1=>2,2=>3,3=>4,4=>5,5=>0,6=>1] as $f=>$t) if ($tRestore[$t]!==null) $dbMission[$f] = $tRestore[$t];
+        }
         preg_match('/^\[(.+)\]/', $dbMission[7], $matches);
         preg_match('/^(.+?):/', $dbMission[7], $matches2);
         $clientMission = array_slice($dbMission, 0, 5);
@@ -78,11 +87,17 @@ foreach ([1=>'jp',2=>'gl',3=>'cn'] as $server => $serverKey) {
             $groupID = $eventCount + $towerMissions[$id];
         } else if (isset($campaignMissions[$id])) {
             $groupID = $eventCount + $towerTermCount + 1 + array_search($campaignMissions[$id], $listCampaigns);
+        } else if (isset($replaceEventIDs[$id])) {
+            $groupID = $replaceEventIDs[$id];
         } else if ($id < 500000000) {
+            try {
             $groupID = min(array_keys(array_filter($clientEvents, function($e) {
                 global $server, $dbMission;
-                return in_array($e[0], [1,2]) && $dbMission[5] < $e[3+2*$server];
+                    return !empty($e) && in_array($e[0], [1,2]) && $dbMission[5] < $e[3+2*$server];
             })));
+            } catch (\ValueError $ex) {
+                SIF\Basic::exit("ValueError (server=$server missionID=$id)");
+            }
         } else {
             $groupID = $eventCount + $towerTermCount + $campaignCount + 1 + $dictTopics->set($matches[1] ?? $matches2[1] ?? '');
         }
@@ -107,13 +122,8 @@ $sql = 'SELECT * FROM live_song WHERE id IN (' . implode(',', $listSongs) . ')';
 $columns = [['s','jp_name']];
 $clientSongs = DB::mySelect($sql, $columns, 'id');
 
-$dbMembers = DB::my_query('SELECT * FROM member');
-while ($dbMember = $dbMembers->fetch_assoc()) {
-    $id = $dbMember['id'];
-    $clientMembers[$id] = [
-        $dbMember['cn_name'] ?? $dbMember['jp_name'],
-    ];
-}
+$sql = "SELECT sifas_id,IFNULL(zhs_name,jp_name) `name` FROM v_member_v107 WHERE sifas_id IS NOT NULL";
+$clientMembers = DB::mySelect($sql, [['s','name']], 'sifas_id');
 
 $clientWords = [null];
 $dbWords = DB::my_query('SELECT * FROM word_mission');

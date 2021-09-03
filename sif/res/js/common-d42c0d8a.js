@@ -48,6 +48,9 @@ String.prototype.toJQImg = function(site, game, isLazy) {
     if (isLazy) return $('<img class="lazyload">').attr("data-src",src);
     return $("<img>").attr("src",src);
 }
+String.prototype.addSpaces = function() {
+    return (/^[μ\w]/.test(this)?" ":"") + this + (/[\w]$/.test(this)?" ":"");
+}
 Array.prototype.shuffle = function() {
     var a = this.slice(), r = [];
     for (var i = this.length; i > 0; i--) {
@@ -112,6 +115,10 @@ var G1P = {
         return r;
     }
 }
+
+var G2C = {
+    unitN:[null,"Printemps","BiBi","lily white","CYaRon！","AZALEA","Guilty Kiss","A・ZU・NA","DiverDiva","QU4RTZ"],
+};
 
 function getImgSmall(type, key) {
     if ([5100, 5200, 5600].indexOf(type) >= 0)

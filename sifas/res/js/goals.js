@@ -187,6 +187,8 @@ function aGoalDesc(type, count, param1, param2) {
             return (words[type][0][2] || words[type][0][1]).replace("$", count).replace("^", song[0]).replace("*", difficultyNamesCD[param1/10] + (param1<30 ? "以上" : ""));
         case 22:
             return (words[type][0][2] || words[type][0][1]).replace("$", count).replace("^", memberGroupNamesCT[param1]);
+        case 23:
+            return (words[type][0][2] || words[type][0][1]).replace("$", count).replace("^", G2C.unitN[param1].addSpaces());
         case 24: case 50: case 51:
             return (words[type][0][2] || words[type][0][1]).replace("$", count).replace("^", members[param1][0]);
         case 53:
