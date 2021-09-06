@@ -53,13 +53,12 @@ $clientBirthdays = [null];
 for ($i = 1; $i <= 12; $i++) {
     $clientBirthdays[$i] = [];
 }
-$sql = 'SELECT * FROM sif.member WHERE (category IS NOT NULL OR sifas_category IS NOT NULL) AND birthday IS NOT NULL';
-$dbBirthdays = DB::my_query($sql);
-while ($dbBirthday = $dbBirthdays->fetch_assoc()) {
-    $birthday = strtotime($dbBirthday['birthday']);
-    $month = date('n', $birthday);
-    $day = date('j', $birthday);
-    $clientBirthdays[$month][$day] = intval($dbBirthday['display_class']);
+$sql = "SELECT * FROM v_member_v107 WHERE sifas_birthday IS NOT NULL";
+$col = [['s','birthday'],['i','no'],['i','sifas_birthday']];
+$dBirthdays = DB::mySelect($sql, $col, '');
+foreach ($dBirthdays as $dBirthday) {
+    $tDateSplits = explode('-', $dBirthday[0]);
+    $clientBirthdays[intval($tDateSplits[0])][intval($tDateSplits[1])] = array_slice($dBirthday, 1);
 }
 
 ksort($clientCountItems);

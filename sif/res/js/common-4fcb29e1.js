@@ -67,7 +67,7 @@ function calendar(ref, year, month, arg) {
         }
         for (; d < dayCount && i < 7; i++) {
             var td = tdTemplate.clone().attr("id", arg.dateIdPrefix + (++d));
-            td.addClass(birthdays[month][d] ? "eis-sif-bg-1 member-" + birthdays[month][d] : "");
+            td.addClass(birthdays[month][d] && birthdays[month][d][1]<=year ? "eis-sif-bg-1 member-" + birthdays[month][d][0] : "");
             td.children(arg.dateClass).text(d);
             td.appendTo(tr);
         }

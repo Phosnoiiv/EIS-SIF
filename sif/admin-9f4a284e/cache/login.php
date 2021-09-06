@@ -80,21 +80,14 @@ while ($item = $db_items->fetch_assoc()) {
 
 $clientMembers = [];
 $clientBirthdays = [null, [], [], [], [], [], [], [], [], [], [], [], []];
-$sql = 'SELECT * FROM member WHERE member_id IN (SELECT unit_member FROM unit WHERE unit_id IN (SELECT gift_key FROM login_gift WHERE gift_type=1001))';
-$dbMembers = DB::my_query($sql);
-while ($dbMember = $dbMembers->fetch_assoc()) {
-    $id = $dbMember['member_id'];
-    $clientMembers[$id] = [
-        $dbMember['jp_name'],
-        $dbMember['en_name'],
-        $dbMember['cn_name'],
-    ];
-    if (!empty($dbMember['category']) && !empty($dbMember['birthday'])) {
-        $birthday = strtotime($dbMember['birthday']);
-        $month = date('n', $birthday);
-        $day = date('j', $birthday);
-        $clientBirthdays[$month][$day] = intval($dbMember['display_class']);
-    }
+$sql = "SELECT * FROM member_v107 WHERE sif_birthday IS NOT NULL OR sif_id IN (SELECT DISTINCT unit_member FROM unit WHERE unit_id IN (SELECT DISTINCT gift_key FROM login_gift WHERE gift_type=1001))";
+$col = [['s','jp_name'],['s','en_name'],['s','zhs_name'],['s','birthday'],['i','no'],['i','sif_birthday']];
+$dMembers = DB::mySelect($sql, $col, 'sif_id');
+foreach ($dMembers as $memberID => $dMember) {
+    $clientMembers[$memberID] = array_slice($dMember, 0, 3);
+    if (empty($dMember[5])) continue;
+    $tDateSplits = explode('-', $dMember[3]);
+    $clientBirthdays[intval($tDateSplits[0])][intval($tDateSplits[1])] = array_slice($dMember, 4);
 }
 
 $serverUnits = [];

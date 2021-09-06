@@ -28,7 +28,7 @@ function init() {
         ).attr("data-type", type).attr("data-key", key).appendTo("#counts");
         countResults[type + "-" + key] = 0;
     });
-    $("#calendar").tooltip({items:".calendar-item", content:function() {
+    $("#calendar").tooltip({items:".calendar-item, .eis-sif-item", content:function() {
         var type = parseInt($(this).attr("data-type")), key = $(this).attr("data-key");
         return qItemIntro(type, key);
     }, position:{my:"left-15 top-5", at:"right bottom"}});
@@ -280,6 +280,7 @@ function addItem(date, type, key, amount) {
     }
 }
 function qItemCalendar(type, key, amount) {
+    if (type==1001) return gItem(1001,key,1,0,{v:78},gConfig);
     return $("<span>").addClass("calendar-item").append(
         qImg(getImgCalendar(type, key)),
         amount ? $("<span>").addClass("calendar-amount " + (amount > 1 ? "" : "single")).text(amount) : "",
@@ -329,3 +330,7 @@ $(document).ready(function() {
     init();
     produce(true);
 })
+
+var gConfig = $.extend({}, gConfigDefault, {
+    fUnit:function(cardID){return null;},
+});
