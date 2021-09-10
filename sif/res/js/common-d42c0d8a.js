@@ -1,6 +1,7 @@
 var commons = {p:{},
     c:{g:{}},
     r:{g:{}},
+    now:(new Date()).getTime()/1000,
 };
 var limitStorage = {};
 var sCodeInitialized = false;
@@ -97,6 +98,9 @@ var G1C = {
         2600:"就有 {r}% 的概率在 {t} 秒内使{e}的属性提升 {v2}%",
     },
 };
+var G1E = {
+    serverSN:[null,"JP","GL","CN"],
+};
 function g1SkillDesc(triggerType, effectType, triggerValue, rate, effectTime, effectValue, args) {
     var triggerDesc = G1C.skillTriggerD[triggerType];
     var effectDesc = G1C.skillEffectD[effectType].replace("{r}",rate).replace("{t}",effectTime).replace("{v}",effectValue).replace("{v2}",Math.round((effectValue-1)*100000)/1000);
@@ -118,6 +122,10 @@ var G1P = {
 
 var G2C = {
     unitN:[null,"Printemps","BiBi","lily white","CYaRon！","AZALEA","Guilty Kiss","A・ZU・NA","DiverDiva","QU4RTZ"],
+    difficultyN:[null,"初级","中级","上级","上级＋","挑战"],
+};
+var G2E = {
+    songFlagN:[null,"先行配信","限时配信","交换所排名","SBL 排名","频道应援","服装奖励"],
 };
 
 function getImgSmall(type, key) {
@@ -374,6 +382,18 @@ function switchButtonGroup(button) {
 // --------------------------------------------------
 // Gallery
 // --------------------------------------------------
+var commonGallery = {
+    sortMethodName:function(configID, sortID) {
+        var method = commons.c.g[configID].sortMethods[sortID];
+        if (method.n) return method.n;
+        if (method.k) return rDict(method.d, method.k);
+        return "默认";
+    },
+};
+function initGallery(selector) {
+    $(selector+" [data-gallery-role=search]").on("input",function(){changeGallerySearch(selector,$(this).val());});
+    $(selector+" [data-gallery-role=sort]").click(function(){openGallerySort(selector);}).button();
+}
 function recoverGallery(selector) {
     var configID = $(selector).attr("data-gallery-config"), config = commons.c.g[configID];
     commons.r.g[configID] = {filters:{},options:{}};
@@ -389,6 +409,9 @@ function recoverGallery(selector) {
         if (value==undefined) value = config.optionDefaults[optionID] || 0;
         $(selector+" [data-gallery-role=option][data-gallery-option="+optionID+"] [data-click-arg="+value+"]").click();
     });
+    var sortID = getMemory("commons", "g.s."+configID+".m") || config.sortDefault[0];
+    var sortDirection = getMemory("commons", "g.s."+configID+".d") || config.sortDefault[1];
+    changeGallerySort(selector, sortID, sortDirection);
     commons.r.g[configID].ready = true;
     refreshGallery(selector);
 }
@@ -411,10 +434,55 @@ function changeGalleryOption(selector, optionID, optionValue) {
     setMemory("commons", "g.o."+configID+"."+optionID, optionValue);
     if (commons.r.g[configID].ready) refreshGallery(selector);
 }
+function changeGallerySearch(selector, searchWord) {
+    var configID = $(selector).attr("data-gallery-config"), config = commons.c.g[configID];
+    commons.r.g[configID].search = searchWord;
+    if (commons.r.g[configID].ready) refreshGallery(selector);
+}
+function openGallerySort(selector) {
+    var configID = $(selector).attr("data-gallery-config"), config = commons.c.g[configID];
+    $methods = $('<div id="eis-sif-common-gallery-sort-methods" class="eis-sif-gallery eis-sif-button-group" data-click="selectGallerySortMethod(\''+selector+'\',$)">');
+    $.each(config.sortMethods, function(sortID, method) {
+        $('<span data-click-arg='+sortID+'>').text(commonGallery.sortMethodName(configID,sortID)).appendTo($methods);
+    });
+    $div = $('<div class="eis-sif-common-gallery-sort" title="排序选项" data-width=500>').append(
+        $('<h4 class="eis-sif-dialog-section-header">').text("排序依据"),
+        $methods,
+        $('<h4 class="eis-sif-dialog-section-header">').text("顺序"),
+        $('<div id="eis-sif-common-gallery-sort-direction" class="eis-sif-gallery eis-sif-button-group">').append(
+            $('<span id="eis-sif-common-gallery-sort-asc" data-value=1>'),
+            $('<span id="eis-sif-common-gallery-sort-desc" data-value=-1>'),
+        ),
+    );
+    showDialogConfirm($div, function() {
+        var sortID = $("#eis-sif-common-gallery-sort-methods>.active").attr("data-click-arg");
+        var sortDirection = $("#eis-sif-common-gallery-sort-direction>.active").attr("data-value");
+        changeGallerySort(selector, sortID, sortDirection);
+    });
+    documentFunctions.initButtonGroup();
+    $("#eis-sif-common-gallery-sort-direction>[data-value="+commons.r.g[configID].sort.d+"]").click();
+    $("#eis-sif-common-gallery-sort-methods>[data-click-arg="+commons.r.g[configID].sort.m+"]").click();
+}
+function selectGallerySortMethod(selector, sortID) {
+    var configID = $(selector).attr("data-gallery-config"), config = commons.c.g[configID];
+    var method = config.sortMethods[sortID];
+    $("#eis-sif-common-gallery-sort-asc").text(method.a||"正序");
+    $("#eis-sif-common-gallery-sort-desc").text(method.z||"逆序");
+}
+function changeGallerySort(selector, sortID, sortDirection) {
+    var configID = $(selector).attr("data-gallery-config"), config = commons.c.g[configID];
+    var method = config.sortMethods[sortID];
+    commons.r.g[configID].sort = {m:sortID,d:sortDirection};
+    $(selector+" [data-gallery-role=sort]").text(commonGallery.sortMethodName(configID,sortID)+" | "+(sortDirection>0?method.a||"正序":method.z||"逆序"));
+    setMemory("commons", "g.s."+configID+".m", sortID);
+    setMemory("commons", "g.s."+configID+".d", sortDirection);
+    if (commons.r.g[configID].ready) refreshGallery(selector);
+}
 function refreshGallery(selector) {
     var configID = $(selector).attr("data-gallery-config"), config = commons.c.g[configID];
     $(selector+" [data-gallery-role=gallery]").empty();
-    $.each(config.getItems(), function(itemID, item) {
+    var IDs = [], items = config.getItems();
+    $.each(items, function(itemID, item) {
         if (!item) return;
         var filterPassed = true;
         $.each(config.filterIDs, function(filterIndex, filterID) {
@@ -423,8 +491,34 @@ function refreshGallery(selector) {
             return false;
         });
         if (!filterPassed) return;
+        if (commons.r.g[configID].search) {
+            var searchWord = commons.r.g[configID].search, searchReg = new RegExp(searchWord, "i"), searchPassed = false;
+            $.each(config.itemSearchWords(itemID,item), function(wordIndex, word) {
+                if ($.isArray(word)) {
+                    if (word[1]==1 && searchWord!=word[0]) return;
+                } else if (!searchReg.test(word)) return;
+                searchPassed = true;
+                return false;
+            });
+            if (!searchPassed) return;
+        }
+        IDs.push(itemID);
+    });
+    if (!IDs.length) {
+        $('<p class="eis-sif-common-gallery-search-empty eis-sif-note">').text("未能搜索到符合条件的数据。").appendTo(selector+" [data-gallery-role=gallery]");
+        return;
+    }
+    var sortConfig = commons.r.g[configID].sort, sortMethod = config.sortMethods[sortConfig.m];
+    IDs.sort(function(ID1, ID2) {
+        var v1 = sortMethod.v(ID1,items[ID1]), v2 = sortMethod.v(ID2,items[ID2]);
+        if (v1<=-99) v1 = 2e9*sortConfig.d; if (v2<=-99) v2 = 2e9*sortConfig.d;
+        return (v1-v2)*sortConfig.d || (ID1-ID2)*sortConfig.d;
+    });
+    $.each(IDs, function(index, itemID) {
+        var item = items[itemID];
         config.createViewItem(itemID,item,commons.r.g[configID].viewType).attr("onclick",config.itemClick(itemID,item)).appendTo(selector+" [data-gallery-role=gallery]");
     });
+    if (config.eRefreshed) config.eRefreshed();
     lazyload();
 }
 
@@ -665,6 +759,18 @@ window.onerror = function(message, source, lineno, colno, error) {
     showDialogMessage(dialog, $.noop);
 }
 
+var documentFunctions = {
+    initButtonGroup:function() {
+        $(".eis-sif-button-group:not(.eis-sif-doc-done)").each(function() {
+            if ($(this).attr("data-click")) {
+                var pattern = $(this).attr("data-click");
+                $(this).children().attr("onclick", function(){return pattern.replace("$",$(this).attr("data-click-arg"));});
+            }
+            $(this).children().button().click(function(){switchButtonGroup(this);}).filter("[data-default]").click();
+            $(this).addClass("eis-sif-doc-done");
+        });
+    },
+};
 $(document).ready(function() {
     $("img[data-resource1]").attr("data-src", function() {
         return getResourcePath1($(this).attr("data-resource1"));
@@ -677,12 +783,6 @@ $(document).ready(function() {
         $(this).tabs(options);
     });
     $(".eis-jq-button").button();
-    $(".eis-sif-button-group[data-click]").children().attr("onclick", function() {
-        return $(this).parent().attr("data-click").replace("$",$(this).attr("data-click-arg"));
-    });
-    $(".eis-sif-button-group").children().button().click(function() {
-        switchButtonGroup(this);
-    }).filter("[data-default]").click();
     $(".eis-jq-accordion").each(function() {
         var options = {heightStyle:"content"};
         if (!$(this).attr("data-expand")) {
@@ -725,6 +825,7 @@ $(document).ready(function() {
     if (!$("#settings-dialog").length) {
         $(".eis-sif-header-button[title='设置']").remove();
     }
+    documentFunctions.initButtonGroup();
     lazyload();
     refreshDicts();
 });

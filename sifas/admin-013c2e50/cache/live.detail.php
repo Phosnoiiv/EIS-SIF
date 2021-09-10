@@ -33,8 +33,8 @@ while ($dbSong = $dbSongs->fetchArray(SQLITE3_ASSOC)) {
         /* 11 */ $dbSong['k_name'],
         $dbSong['kz_name'] ?? '',
         '','',
-        /* 15 */ 0,null,
     ];
+    // Since v1.8, [3-7] is no longer used.
     $detailSongs[$id]['writers'] = $dbSong['k_copyright'];
     $detailSongs[$id]['source'] = $dbSong['k_source'];
     $detailSongs[$id]['maps'] = [null, [], [], [], [], []];
@@ -149,15 +149,15 @@ $sql = 'SELECT * FROM tower';
 $columns = [['s','display_name'],['s','short_name']];
 $clientTowers = DB::mySelect($sql, $columns, 'id');
 
-$sql = 'SELECT * FROM m_tower_composition';
-$columns = [['i','tower_id'],['i','floor_no'],['i','live_difficulty_id'],['i','tower_clear_reward_id'],['i','tower_progress_reward_id']];
+$sql = "SELECT tc.*,default_attribute FROM m_tower_composition tc LEFT JOIN m_live_difficulty ld USING (live_difficulty_id)";
+$columns = [['i','tower_id'],['i','floor_no'],['i','live_difficulty_id'],['i','tower_clear_reward_id'],['i','tower_progress_reward_id'],['i','default_attribute']];
 $towerFloors = DB::ltSelect('jp/masterdata.db', $sql, $columns, '');
 $towerFloorsByMap = array_column($towerFloors, 2);
 foreach ($towerFloors as $towerFloor) {
     $towerID = $towerFloor[0];
     if (!empty($mapID = $towerFloor[2])) {
         $liveFloorNumber = count($towerLiveFloors[$towerID] ?? []) + 1;
-        $towerLiveFloors[$towerID][$liveFloorNumber] = $towerFloor[2];
+        $towerLiveFloors[$towerID][$liveFloorNumber] = [floor($towerFloor[2]/1000)%10000, $towerFloor[5]];
         $towerLiveFloorsByMap[$mapID] = [$towerID, $liveFloorNumber];
     }
     if (!empty($towerFloor[4])) {
@@ -222,11 +222,11 @@ while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
         }
         for ($i = 1; $i <= 1; $i++) {
             if (!isset($towerLiveFloors[$towerID][$liveFloorNumber-$i])) break;
-            $extendData['p'][] = floor($towerLiveFloors[$towerID][$liveFloorNumber-$i] / 1000) % 10000;
+            $extendData['p'][] = $towerLiveFloors[$towerID][$liveFloorNumber-$i];
         }
         for ($i = 1; $i <= 5; $i++) {
             if (!isset($towerLiveFloors[$towerID][$liveFloorNumber+$i])) break;
-            $extendData['n'][] = floor($towerLiveFloors[$towerID][$liveFloorNumber+$i] / 1000) % 10000;
+            $extendData['n'][] = $towerLiveFloors[$towerID][$liveFloorNumber+$i];
         }
         }
     }
@@ -276,21 +276,13 @@ while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
     ];
     $refMaps[$dbMap['live_difficulty_id']] = [$songID, $mapType, count($detailSongs[$songID]['maps'][$mapType]) - 1];
     $allSongs[$songID][0][$attribute]++;
-    if ($mapType == 1 && $difficulty == 3) {
-        $clientSongs[$songID][3] = $dbMap['default_attribute'];
-        $clientSongs[$songID][4] = $dbMap['evaluation_s_score'];
-        $clientSongs[$songID][5] = $dbMap['recommended_score'];
-        $clientSongs[$songID][6] = $dbMap['recommended_stamina'];
-        $clientSongs[$songID][7] = $dbMap['note_stamina_reduce'];
+    if ($mapType==1 && in_array($difficulty,Constants::EIS_SONG_DIF_NOTEWORTHY) && !($difficulty==4&&$dbMap['note_voltage_upper_limit']<=50000)) {
+        $clientSongs[$songID][1][$difficulty] = [$dbMap['default_attribute'], $dbMap['evaluation_s_score'], $dbMap['recommended_score'], $dbMap['recommended_stamina'], $dbMap['note_stamina_reduce'], []];
         $tEffect = $rEffects[$rSkills[$dbMap['skill_master_id']][0]];
         if (!$tEffect[0] && !$tEffect[1]) {
-            $clientSongs[$songID][1][] = Constants::EIS_SONG_TAG_3_NEGATE;
+            $clientSongs[$songID][1][$difficulty][5][] = Constants::EIS_SONG_TAG_3_NEGATE;
         }
-        $mMap3[$mapID] = $songID;
-    }
-    if ($mapType == 1 && $difficulty == 4 && $dbMap['note_voltage_upper_limit'] > 50000) {
-        $clientSongs[$songID][15] = $dbMap['default_attribute'];
-        $clientSongs[$songID][16] = $dbMap['evaluation_s_score'];
+        ${"mMap$difficulty"}[$mapID] = $songID;
     }
 }
 $sql = 'SELECT live_difficulty_id,note_gimmick_type,note_gimmick_icon_type,note_id,name,skill_target_master_id1,
@@ -326,15 +318,15 @@ while ($dbNote = $dbNotes->fetchArray(SQLITE3_ASSOC)) {
             $dbNote['finishv1'],
     ];
         $allNotes[$dbNote['live_difficulty_id']][] = $dbNote['name'];
-        foreach ([3] as $d) {
+        foreach (Constants::EIS_SONG_DIF_NOTEWORTHY as $d) {
             if (!array_key_exists($mapID, ${"mMap$d"})) continue;
             $songID = ${"mMap$d"}[$mapID];
-            $tTags = &$clientSongs[$songID][1];
+            $tTags = &$clientSongs[$songID][1][$d][5];
             if ($dbNote['finish1'] == 8) {
                 if ($rEffects[$dbNote['type1']][0]) {
-                    Util::arrayPushUnique($tTags, constant(__NAMESPACE__.'\Constants::EIS_SONG_TAG_'.$d.'_STRATEGY_NOSWITCH'));
+                    Util::arrayPushUnique($tTags, constant(__NAMESPACE__.'\Constants::EIS_SONG_TAG_3_STRATEGY_NOSWITCH'));
                 } else {
-                    Util::arrayPushUnique($tTags, constant(__NAMESPACE__.'\Constants::EIS_SONG_TAG_'.$d.'_STRATEGY_SWITCH'));
+                    Util::arrayPushUnique($tTags, constant(__NAMESPACE__.'\Constants::EIS_SONG_TAG_3_STRATEGY_SWITCH'));
                 }
             }
             unset($tTags);
@@ -372,15 +364,15 @@ while ($dbWave = $dbWaves->fetchArray(SQLITE3_ASSOC)) {
         $dbWave['finish1'],
         $dbWave['finishv1'],
     ];
-    foreach ([3] as $d) {
+    foreach (Constants::EIS_SONG_DIF_NOTEWORTHY as $d) {
         if (!array_key_exists($mapID, ${"mMap$d"})) continue;
         $songID = ${"mMap$d"}[$mapID];
-        $tTags = &$clientSongs[$songID][1];
+        $tTags = &$clientSongs[$songID][1][$d][5];
         if (SIFAS::isWaveMissionSkill($dbWave['k_name'])) {
-            Util::arrayPushUnique($tTags, constant(__NAMESPACE__.'\Constants::EIS_SONG_TAG_'.$d.'_AC_SKILL'));
+            Util::arrayPushUnique($tTags, constant(__NAMESPACE__.'\Constants::EIS_SONG_TAG_3_AC_SKILL'));
         }
         if (SIFAS::isWaveMissionCritical($dbWave['k_name'])) {
-            Util::arrayPushUnique($tTags, constant(__NAMESPACE__.'\Constants::EIS_SONG_TAG_'.$d.'_AC_CRITICAL'));
+            Util::arrayPushUnique($tTags, constant(__NAMESPACE__.'\Constants::EIS_SONG_TAG_3_AC_CRITICAL'));
         }
         unset($tTags);
     }
@@ -466,6 +458,10 @@ while ($dbEmblem = $dbEmblems->fetch_assoc()) {
     ];
 }
 
+$sql = "SELECT * FROM live_song_flag WHERE time_till_utc8 IS NULL OR time_till_utc8>NOW()";
+$col = [['i','song'],['i','type'],['i','server'],['s','time_show'],['s','time_till']];
+$sFlags = DB::mySelect($sql, $col, 'id');
+
 Cache::writeMultiJson('live-detail.js', [
     'songs' => $clientSongs,
     'songGroups' => $clientSongGroups,
@@ -496,3 +492,6 @@ foreach ($detailSongs as $id => $detail) {
     });
     Cache::writeJson('lives/' . $id . '.json', $detail, true);
 }
+Cache::writePhp('live-detail.php', [
+    'cacheSongFlags' => $sFlags,
+]);

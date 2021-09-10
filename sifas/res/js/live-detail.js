@@ -1,25 +1,99 @@
+var ff = {
+    sortMethod1:function(index){return function(itemID,item) {
+        var difID = commons.r.g[2001].options[1];
+        if (!item[1][difID]) return -99;
+        return item[1][difID][index];
+    }},
+};
+commons.c.g[2001] = {
+    defaultViewType:2,
+    getItems:function(){return songs;},
+    filterIDs:[1], filterDefaults:{1:0},
+    checkFilter:function(itemID,item,filterID,filterValue){
+        switch (filterID) {
+            case 1: if(filterValue&&!(songFlags[itemID]&&songFlags[itemID].length)) return false; return true;
+        }
+    },
+    optionIDs:[1], optionDefaults:{1:3},
+    sortMethods:{
+        1:{v:function(itemID,item){var difID=commons.r.g[2001].options[1];if(!item[1][difID])return -99;return songRouteOrders[item[9]]*1000+item[8];}},
+        2:{n:"游戏内顺序",v:function(itemID,item){return item[2];}},
+        3:{n:"歌曲 ID",v:function(itemID,item){return itemID;}},
+        4:{d:"58",k:"cf",a:"低",z:"高",v:ff.sortMethod1(1)},
+        5:{n:"推荐力",a:"低",z:"高",v:ff.sortMethod1(2)},
+        6:{n:"推荐体力",a:"低",z:"高",v:ff.sortMethod1(3)},
+        7:{d:"58",k:"w7",a:"低",z:"高",v:ff.sortMethod1(4)},
+    }, sortDefault:[3,1],
+    itemClick:function(itemID,item){return "songLinkClicked("+itemID+")"},
+    itemSearchWords:function(itemID,item){var a=[];
+        a.push(item[11],item[12],item[13]);
+        a.push(["#"+itemID,1]);
+    return a;},
+    createViewItem:function(itemID,item,viewType){
+        var projectID = getSongCategory(itemID);
+        var difID = commons.r.g[2001].options[1], dif = item[1][difID];
+        var sortMethod = parseInt(commons.r.g[2001].sort.m);
+        var hasFlags = songFlags[itemID]&&songFlags[itemID].length, $flags;
+        if (hasFlags) {
+            $flags = $('<span class="eis-sif-flag static">');
+            if (hasFlags>1) {
+                $flags.addClass("dynamic").hide().attr("data-song",itemID);
+            } else {
+                $flags.text(getFlagText(itemID,0));
+            }
+        }
+        switch (viewType) {
+            case 1: return qSongLink(itemID,"").append(hasFlags?$flags:null);
+            case 2: return $('<div class="g-song">').append(
+                $('<div class="eis-sif-gallery-item song-link category-'+projectID+'">').append($("<span>").html(item[11]), hasFlags?$flags:null),
+                $('<div class="g-song-view-2-detail">').append(
+                    $('<div class="eis-sif-row">').append(
+                        dif ? $('<div>').append(
+                            $('<span class="eis-sif-tag" data-g2-dif='+difID+'>').text(G2C.difficultyN[difID]),
+                            ("icon/a"+dif[0]).toJQImg(1,2).addClass("g-song-view-2-attr"),
+                        ) : $('<span>'),
+                        $('<div>').append(
+                            $('<span>').text(sortMethod==3 ? "#"+itemID : getRouteDesc(itemID)),
+                            item[0] ? $('<span class="eis-sif-tag default">').text("2D") : null,
+                        ),
+                    ),
+                    $('<div class="eis-sif-row">').append(
+                        $('<div data-song='+itemID+'>').append(
+                            $('<div class="song-link-tags">'),
+                        ),
+                        $('<span>').text(function() {
+                            if (!dif) return "";
+                            switch (sortMethod) {
+                                case 5: return dif[2];
+                                case 6: return dif[3];
+                                case 7: return dif[4];
+                                default: return dif[1];
+                            }
+                        }),
+                    ),
+                ),
+            );
+        }
+    },
+    eRefreshed:function(){
+        refreshSongTags();
+        if (songFlagIntervalID>=0) clearInterval(songFlagIntervalID);
+        animateFlag();
+        songFlagIntervalID = setInterval(animateFlag, 5000);
+    }
+};
+
 var currentSongID, currentMapType, currentMapIndex, songStorage = {}, charts = {};
+var songFlags = {}, songFlagIntervalID = -1;
 function init() {
-    $.each(songs, function(songID, song) {
-        var group = getSongGroup(songID);
-        qSongLink(songID, group ? "songGroupConfirm("+songID+")" : "produce("+songID+")").appendTo("#songs");
+    $.each(flags, function(flagIndex, flag) {
+        if (!songFlags[flag[0]]) songFlags[flag[0]] = [];
+        songFlags[flag[0]].push([flag[1],flag[2],flag[3]]);
     });
-    $.each(currentEvents, function(eventIndex, currentEvent) {
-        if (currentEvent[2] < (new Date).getTime() / 1000)
-            return;
-        var event = events[currentEvent[0]];
-        $.each(event[10], function(songIndex, eventSong) {
-            if (eventSong[0] == 1)
-                return;
-            $("<span>").addClass("eis-sif-flag static").append(
-                serverNameAShort[currentEvent[1]] + " ",qDict("58","vs"),"排名歌曲／",
-                $("<span>").addClass("eis-sif-countdown").attr("data-time", currentEvent[2]).attr("data-countdown-short", 1),
-            ).appendTo(".song-link[data-song='" + eventSong[1] + "']");
-        });
-    });
-    sortSong();
-    refreshSongTags();
-    enableCountdown();
+}
+function songLinkClicked(songID) {
+    if (getSongGroup(songID)) songGroupConfirm(songID);
+    else produce(songID);
 }
 function songGroupConfirm(songID) {
     var group = getSongGroup(songID);
@@ -108,58 +182,6 @@ function showDialogSongs() {
     $(window).resize();
     $("#dialog-songs").dialog("open");
 }
-function filterSong() {
-    $("#songs").children().each(function() {
-        var songID = $(this).attr("data-song"), song = songs[songID];
-        var match = matchTrackName($("#search-song").val(), song, [null,11,12,13,14]);
-        if (match) {
-            $(this).show();
-        } else {
-            $(this).hide();
-        }
-    });
-    if ($("#songs").children(":visible").length) {
-        $("#search-song-none").hide();
-    } else {
-        $("#search-song-none").show();
-    }
-}
-function sortSong() {
-    var sortMethod = parseInt($("#sort-song").val()), sortDirection = $("#sort-song-direction").val();
-    var listSongs = $("#songs").children().each(function() {
-        var songID = $(this).attr("data-song"), song = songs[songID];
-        var info, value;
-        switch (sortMethod) {
-            case 0:
-                info = "#" + songID;
-                value = songID;
-                break;
-            case 1:
-                info = [1,3,4,8,9].indexOf(song[9]) >= 0 ? songRouteStrings[song[9]].replace("#", song[10]) : null;
-                value = song[2];
-                break;
-            case 2:
-                info = songRouteStrings[song[9]].replace("#", song[9] == 2 ? songDailyNames[song[10]] : song[10]);
-                value = songRouteOrders[song[9]] * 1000 + song[8];
-                break;
-            default:
-                info = song[sortMethod];
-                value = song[sortMethod] || -1;
-        }
-        if (info != null) {
-            $(this).find(".song-link-info").text(info).show();
-        } else {
-            $(this).find(".song-link-info").hide();
-        }
-        $(this).attr("data-sort-value", value);
-    });
-    listSongs.sort(function(s1, s2) {
-        var v1 = $(s1).attr("data-sort-value") >= 0 ? $(s1).attr("data-sort-value") : 2e9 * sortDirection;
-        var v2 = $(s2).attr("data-sort-value") >= 0 ? $(s2).attr("data-sort-value") : 2e9 * sortDirection;
-        return (v1 - v2) * sortDirection;
-    });
-    $("#songs").empty().append(listSongs);
-}
 function showEvents() {
     var server = parseInt($("#events-server").val());
     var song = songs[currentSongID], data = songStorage[currentSongID];
@@ -207,19 +229,19 @@ function showMap(songID, mapType, mapIndex) {
                 });
             }
             if (map[38].p) {
-                var prevSongID = map[38].p[0], prevSong = songs[prevSongID];
-                $("<span>").addClass("map-detail-jump").append('<i class="fas fa-backward"></i>', qASImg("icon/a" + prevSong[3]), prevSong[11]).attr("onclick", "produce(" + prevSongID + ",{tower:[" + map[0][0] + "," + (map[0][1]-1) + "]})").button().appendTo("#map-detail-tower-prev");
+                var prevSongInfo = map[38].p[0], prevSongID = prevSongInfo[0], prevSong = songs[prevSongID];
+                $("<span>").addClass("map-detail-jump").append('<i class="fas fa-backward"></i>', qASImg("icon/a" + prevSongInfo[1]), prevSong[11]).attr("onclick", "produce(" + prevSongID + ",{tower:[" + map[0][0] + "," + (map[0][1]-1) + "]})").button().appendTo("#map-detail-tower-prev");
             } else {
                 $("<span>").addClass("map-detail-jump").append('<i class="fas fa-fast-backward"></i>', '该层为第一层').button({disabled:true}).appendTo("#map-detail-tower-prev");
             }
             if (map[38].n) {
-                var nextSongID = map[38].n[0], nextSong = songs[nextSongID];
-                $("<span>").addClass("map-detail-jump").append(qASImg("icon/a" + nextSong[3]), nextSong[11], '<i class="fas fa-forward"></i>').attr("onclick", "produce(" + nextSongID + ",{tower:[" + map[0][0] + "," + (map[0][1]+1) + "]})").button().appendTo("#map-detail-tower-next");
+                var nextSongInfo = map[38].n[0], nextSongID = nextSongInfo[0], nextSong = songs[nextSongID];
+                $("<span>").addClass("map-detail-jump").append(qASImg("icon/a" + nextSongInfo[1]), nextSong[11], '<i class="fas fa-forward"></i>').attr("onclick", "produce(" + nextSongID + ",{tower:[" + map[0][0] + "," + (map[0][1]+1) + "]})").button().appendTo("#map-detail-tower-next");
                 if (map[38].n.length > 1) {
                     var p = $("<p>").append("后续：");
                     for (var i = 1; i < map[38].n.length; i++) {
-                        var futureSongID = map[38].n[i], futureSong = songs[futureSongID];
-                        qASImg("icon/a" + futureSong[3], futureSong[11]).addClass("map-detail-info-icon").appendTo(p);
+                        var futureSongInfo = map[38].n[i], futureSongID = futureSongInfo[0], futureSong = songs[futureSongID];
+                        qASImg("icon/a" + futureSongInfo[1], futureSong[11]).addClass("map-detail-info-icon").appendTo(p);
                     }
                     $("#map-detail-tower-next").append("<br>", p);
                 }
@@ -370,7 +392,8 @@ function refreshSongTags(force) {
     $(".song-link-tags").filter(force?"*":":empty").empty().append(function() {
         var a = [];
         var songID = $(this).parent().attr("data-song"), song = songs[songID];
-        $.each(song[1], function(tagIndex, tagID) {
+        var difID = commons.r.g[2001].options[1];
+        $.each(song[1][difID]?song[1][difID][5]:[], function(tagIndex, tagID) {
             var tag = songTags[tagID];
             a.push($('<span class="eis-sif-tag song-'+tag[1]+'" data-tid="'+tagID+'">').text(tag[3]).attr("title",tag[2]+"："+tag[5]));
         });
@@ -388,6 +411,22 @@ function getSongGroup(songID) {
         if (songGroups[i][songID]) return songGroups[i];
     }
     return false;
+}
+function getRouteDesc(songID) {
+    var song = songs[songID];
+    return songRouteStrings[song[9]].replace("#", song[9]==2?songDailyNames[song[10]]:song[10]);
+}
+function getFlagText(songID, flagIndex) {
+    var flag = songFlags[songID][flagIndex];
+    return G1E.serverSN[flag[1]]+" "+G2E.songFlagN[flag[0]]+"／"+(flag[2]?(flag[2]-commons.now).toPeriod(true):"时间未定");
+}
+function animateFlag() {
+    $(".eis-sif-flag.dynamic").each(function() {
+        var songID = $(this).attr("data-song");
+        var flagIndex = parseInt($(this).attr("data-next") || 0);
+        if ((flagIndex%songFlags[songID].length)==0) flagIndex = 0;
+        $(this).text(getFlagText(songID,flagIndex)).fadeIn(300).delay(4000).fadeOut(300).attr("data-next", flagIndex+1);
+    });
 }
 function getMapName(mapType, difficulty) {
     switch (mapType) {
@@ -417,15 +456,17 @@ function qSongLink(songID, onclick, noTag, text) {
     var song = songs[songID];
     return $('<div class="eis-sif-gallery-item song-link category-'+getSongCategory(songID)+'" data-song='+songID+' onclick="'+onclick+'">').append(
         $("<span>").html(text||song[11]),
-        song[3] ? qASImg("icon/a"+song[3]).addClass("song-link-attribute") : null,
-        song[15] ? qASImg("icon/a"+song[15]).addClass("song-link-attribute-2") : null,
-        noTag ? null : $('<span class="eis-sif-tag song-link-info '+(song[0]?'default':'route-'+song[9])+'">'),
+        song[1][3] ? qASImg("icon/a"+song[1][3][0]).addClass("song-link-attribute") : null,
+        (song[1][4]||song[1][5]) ? qASImg("icon/a"+(song[1][4]?song[1][4][0]:song[1][5][0])).addClass("song-link-attribute-2") : null,
+        noTag ? null : $('<span class="eis-sif-tag song-link-info '+(song[0]?'default':'route-'+song[9])+'">').text(getRouteDesc(songID)),
         $('<div class="song-link-tags">'),
     );
 }
 
 $(document).ready(function() {
     init();
+    initGallery("#g-songs");
+    recoverGallery("#g-songs");
     $("body").addClass("eis-sif-init");
     $("#dialog-songs").dialog({modal:true, position:{of:window}, resizable:false, draggable:false, closeText:"关闭", autoOpen:false});
     if (typeof regionNotices != "undefined" && regionNotices["dialog-songs"]) {

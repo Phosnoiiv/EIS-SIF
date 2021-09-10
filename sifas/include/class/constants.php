@@ -4,6 +4,7 @@ if (!defined('EIS_ENV'))
     exit;
 
 class Constants {
+    const EIS_SONG_DIF_NOTEWORTHY = array(3,4,5);
     const EIS_SONG_TAG_3_NEGATE = 3;
     const EIS_SONG_TAG_3_AC_SKILL = 4;
     const EIS_SONG_TAG_3_AC_CRITICAL = 5;

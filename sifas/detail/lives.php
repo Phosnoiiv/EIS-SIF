@@ -1,7 +1,9 @@
 <?php
 namespace EIS\Lab\SIFAS;
+use EIS\Lab\SIF;
 $pageID = 20;
 require_once dirname(__DIR__) . '/core/init.php';
+include ROOT_SIFAS_CACHE.'/live-detail.php';
 
 $helpArticle = 30;
 $latestFile = ROOT_SIFAS_CACHE . '/live-detail.js';
@@ -13,34 +15,41 @@ echo HTML::js('live-detail');
 <script>
 <?=Cache::read('live-detail.js')?>
 <?=Cache::read('words.js')?>
+<?=SIF\HTML::json('flags', array_reduce($cacheSongFlags, function($carry, $flag) {
+    $tShow = SIF\SIF::toTimestamp($flag[3], $flag[2]);
+    $tTill = SIF\SIF::toTimestamp($flag[4], $flag[2]);
+    if ($tShow<=($time=time()) && ($tTill==0 || $tTill>=$time)) {
+        $carry[] = [$flag[0], $flag[1], $flag[2], $tTill];
+    }
+    return $carry;
+}, []))?>
 </script>
 <?php
 require ROOT_SIFAS_WEB . '/common-b63adcdf/head2.php';
 ?>
 <div class="eis-sif-page-button" onclick="showDialogSongs()">选择歌曲</div>
 <div id="dialog-songs" title="选择歌曲" data-full=1>
-<div class="eis-sif-bar">
-<span><i class="fas fa-search"></i> 快速搜索：<input id="search-song" type="text" oninput="filterSong()"/></span>
-<span><i class="fas fa-sort"></i> 排序：<select id="sort-song" onchange="sortSong()">
-<option value=2 selected>推荐顺序</option>
-<option value=1>游戏内默认顺序</option>
-<option value=0>歌曲 ID</option>
-<?=HTML::dict('58','3z',tagName:'option',attr:'value=4')?>
-<?=HTML::dict('58','nq',tagName:'option',attr:'value=5')?>
-<?=HTML::dict('58','u8',tagName:'option',attr:'value=6')?>
-<?=HTML::dict('58','nb',tagName:'option',attr:'value=7')?>
-<?=HTML::dict('58','uv',tagName:'option',attr:'value=16')?>
-</select><select id="sort-song-direction" onchange="sortSong()">
-<option value=1 selected>升序</option>
-<option value=-1>降序</option>
-</select></span>
-</div>
 <div id="dialog-songs-notice" class="eis-sif-notice eis-sif-hidden"></div>
-<p class="eis-sif-note">※ 彩色信息标签表示该歌曲为 3D 歌曲，灰色为 2D 歌曲。</p>
-<p class="eis-sif-note">※ 快速搜索支持使用原名、简体字版译名、英语版译名。英文不区分大小写。</p>
-<p class="eis-sif-note">※ 目前“技”“暴”“驱”等标签仅限上级难度，其它难度暂不支持。</p>
-<div id="search-song-none" class="eis-sif-notice eis-sif-hidden"><p><i class="fas fa-exclamation-circle"></i> 未找到符合条件的歌曲。请尝试更换搜索文本。</p></div>
-<div id="songs" class="eis-sif-gallery"></div>
+<div id="g-songs" data-gallery-config=2001>
+<div class="eis-sif-bar">
+<span><i class="fas fa-search"></i> 搜索：<input type=text data-gallery-role=search /></span>
+<span><span class="eis-sif-button-group tiny" data-click="changeGalleryFilter('#g-songs',1,$)" data-gallery-role=filter data-gallery-filter=1>
+    <span data-click-arg=0>全部歌曲</span>
+    <span data-click-arg=1>有标记歌曲</span>
+</span></span>
+<span>视图：<span class="eis-sif-button-group tiny" data-click="changeGalleryView('#g-songs',$);refreshSongTags()" data-gallery-role=views>
+    <span data-click-arg=1>经典</span>
+    <span data-click-arg=2>1.8</span>
+</span></span>
+<span>难度：<span class="eis-sif-button-group tiny" data-click="changeGalleryOption('#g-songs',1,$)" data-gallery-role=option data-gallery-option=1>
+    <span data-click-arg=3>上级</span>
+    <span data-click-arg=4>上级＋</span>
+    <span data-click-arg=5>挑战</span>
+</span></span>
+<span><i class="fas fa-sort"></i> 排序：<span data-gallery-role=sort></span></span>
+</div>
+<div class="eis-sif-gallery" data-gallery-role=gallery></div>
+</div>
 </div>
 <div id="detail" class="eis-sif-hidden">
 <h2></h2>

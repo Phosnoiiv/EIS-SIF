@@ -32,6 +32,8 @@ require ROOT_SIF_WEB.'/common-d42c0d8a/head2.php';
     <span data-click-arg=4>Lv.4</span>
     <span data-click-arg=8>Lv.8</span>
 </span></span>
+<span><i class="fas fa-sort"></i> 排序：<span data-gallery-role=sort></span></span>
+<span><i class="fas fa-search"></i> 搜索：<input type=text data-gallery-role=search /></span>
 </div>
 <div class="eis-sif-gallery" data-gallery-role=gallery></div>
 </div>

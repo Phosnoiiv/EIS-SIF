@@ -255,6 +255,9 @@ img.eis-sif-switch[data-switch="0"] {
     border: 3px solid #eaeafa;
     color: #3f3cb5; font-size: 22px; text-align: center;
 }
+.eis-sif-row {
+    display:flex; justify-content:space-between; align-items:center;
+}
 .eis-sif-gallery {
     display: flex; flex-wrap: wrap; justify-content: center;
 }
@@ -272,6 +275,11 @@ img.eis-sif-switch[data-switch="0"] {
 }
 .eis-sif-info-gallery>div>div:last-child {
     color: #2c1c92; font-family: "Century Gothic", "Segoe UI", sans-serif; font-weight: bold; font-size: 18px;
+}
+span[data-gallery-role=sort] {
+    margin:0; padding:1px 5px;
+    background:#80cbc4; border-color:#00796b;
+    color:#004d40; font-size:13px;
 }
 .eis-sif-item {
     position: relative;
@@ -460,6 +468,17 @@ img.eis-sif-switch[data-switch="0"] {
 .eis-sif-mourning {
     filter: grayscale(100%);
 }
+.eis-sif-common-gallery-search-empty {
+    flex-grow:1;
+    text-align:center;
+}
+.eis-sif-common-gallery-sort .eis-sif-gallery {
+    justify-content:flex-start;
+}
+.eis-sif-common-gallery-sort .eis-sif-gallery .ui-button {
+    width:80px; padding:3px 5px;
+    font-size:14px;
+}
 
 .eis-sif-tag {
     display: inline-block; margin-right: 5px; padding: 2px 5px;
@@ -479,6 +498,9 @@ img.eis-sif-switch[data-switch="0"] {
 .eis-sif-tag.article-3 { background: #4fc3f7; }
 .eis-sif-tag.article-4 { background: #e57373; }
 .eis-sif-tag.article-5 { background: #ffcc80; color: #000; }
+.eis-sif-tag[data-g2-dif="3"] {background:#e8a523;}
+.eis-sif-tag[data-g2-dif="4"] {background:#f53436;}
+.eis-sif-tag[data-g2-dif="5"] {background:#db31e8;}
 
 .eis-sif-text.category-0 { color: #4d4fcc; }
 .eis-sif-text.category-1 { color: #f0446a; }

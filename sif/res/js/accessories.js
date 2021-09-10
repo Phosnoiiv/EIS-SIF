@@ -9,7 +9,16 @@ commons.c.g[2901] = {
         }
     },
     optionIDs:[1], optionDefaults:{1:1},
+    sortMethods:{
+        1:{v:function(itemID,item){return itemID;}},
+        2:{n:"Smile",a:"低",z:"高",v:function(itemID,item){var levelID=commons.r.g[2901].options[1];return item[COL_ACCESSORY_LEVELS][levelID][0];}},
+        3:{n:"Pure",a:"低",z:"高",v:function(itemID,item){var levelID=commons.r.g[2901].options[1];return item[COL_ACCESSORY_LEVELS][levelID][1];}},
+        4:{n:"Cool",a:"低",z:"高",v:function(itemID,item){var levelID=commons.r.g[2901].options[1];return item[COL_ACCESSORY_LEVELS][levelID][2];}},
+    }, sortDefault:[1,1],
     itemClick:function(itemID,item){return "showDetail("+itemID+")"},
+    itemSearchWords:function(itemID,item){var a=[];
+        a.push(item[0],item[1],item[2]);
+    return a;},
     createViewItem:function(itemID,item,viewType){
         var levelID = commons.r.g[2901].options[1], level = item[COL_ACCESSORY_LEVELS][levelID];
         var isSpecial = item[5]>0; if (isSpecial) {
@@ -102,6 +111,7 @@ function qAttr(values) {
 }
 
 $(document).ready(function() {
+    initGallery("#g-main");
     recoverGallery("#g-main");
 });
 

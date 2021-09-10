@@ -58,6 +58,36 @@ h3 {
     margin-right: 2px; padding: 1px 3px;
     font-size: 12px;
 }
+#g-songs .eis-sif-gallery>[onclick] {
+    cursor:pointer;
+}
+[data-gallery-css-view="2"] .g-song {
+    margin:10px 5px 5px;
+}
+[data-gallery-css-view="2"] .song-link {
+    margin:0;
+}
+[data-gallery-css-view="2"] .song-link-tags {
+    position:relative; min-height:20px; left:0; bottom:0;
+}
+.g-song-view-2-detail {
+    margin:0 5px; padding:3px 3px 0;
+    border:1px solid #999; border-radius:0 0 5px 5px;
+    font-size:13px;
+}
+.g-song-view-2-detail .eis-sif-tag:not(.song-link-tags *) {
+    padding:1px 5px;
+    font-size:12px;
+}
+.g-song-view-2-detail .eis-sif-tag.default {
+    margin-left:5px;
+}
+.g-song-view-2-detail .eis-sif-row {
+    margin-top:1px;
+}
+.g-song-view-2-attr {
+    height:18px; vertical-align:bottom;
+}
 #titles {
     font-size: 18px; text-align: center;
 }
