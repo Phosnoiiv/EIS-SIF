@@ -23,7 +23,7 @@ commons.c.g[2001] = {
         5:{n:"推荐力",a:"低",z:"高",v:ff.sortMethod1(2)},
         6:{n:"推荐体力",a:"低",z:"高",v:ff.sortMethod1(3)},
         7:{d:"58",k:"w7",a:"低",z:"高",v:ff.sortMethod1(4)},
-    }, sortDefault:[3,1],
+    }, sortDefault:[1,1],
     itemClick:function(itemID,item){return "songLinkClicked("+itemID+")"},
     itemSearchWords:function(itemID,item){var a=[];
         a.push(item[11],item[12],item[13]);

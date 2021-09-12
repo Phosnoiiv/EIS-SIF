@@ -1,4 +1,4 @@
 <?php
 namespace EIS\Lab\SIF;
 
-$config['version'] = '1.7.2(r81)';
+$config['version'] = '1.8(r82)';

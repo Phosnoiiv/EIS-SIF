@@ -18,7 +18,7 @@ $sql = 'SELECT m_live.*,kn.message AS k_name,kzn.message AS kz_name,kc.message A
     LEFT JOIN kz.m_dictionary AS kzn ON substr(name,3)=kzn.id
     LEFT JOIN k.m_dictionary AS kc ON substr(copyright,3)=kc.id
     LEFT JOIN k.m_dictionary AS ks ON substr(source,3)=ks.id
-    WHERE live_id>10000
+    WHERE live_id>10000 AND live_id NOT IN (SELECT id FROM c.live WHERE hide IS NOT NULL)
 ';
 $dbSongs = DB::lt_query('jp/masterdata.db', $sql);
 while ($dbSong = $dbSongs->fetchArray(SQLITE3_ASSOC)) {
@@ -46,7 +46,7 @@ while ($dbSong = $dbSongs->fetchArray(SQLITE3_ASSOC)) {
     }
     $allSongs[$id] = [[null, 0, 0, 0, 0, 0, 0, null, null, 0]];
 }
-$sql = 'SELECT live_song.*,live_track.en_name AS sif_en_name,live_track.cn_name AS sif_cn_name,moe_name FROM live_song LEFT JOIN sif.live_track ON sif=track_id';
+$sql = 'SELECT live_song.*,live_track.en_name AS sif_en_name,live_track.cn_name AS sif_cn_name,moe_name FROM live_song LEFT JOIN sif.live_track ON sif=track_id WHERE release_order<1000';
 $dbSongs = DB::my_query($sql);
 while ($dbSong = $dbSongs->fetch_assoc()) {
     $id = $dbSong['id'];
@@ -198,7 +198,7 @@ $sql = 'SELECT rld.*,m_live_difficulty_const.*,live_difficulty.*,rldg.skill_mast
     LEFT JOIN (SELECT * FROM k.m_dictionary UNION SELECT * FROM r.m_dictionary_k) AS kh ON substr(description,3)=kh.id
     LEFT JOIN kz.m_dictionary AS kzh ON substr(description,3)=kzh.id
     LEFT JOIN c.live_difficulty ON live_difficulty_id=live_difficulty.id
-    WHERE live_id>10000 AND hide IS NULL
+    WHERE live_id>10000 AND live_difficulty_id<90000000 AND hide IS NULL
 ';
 $dbMaps = DB::lt_query('jp/masterdata.db', $sql);
 while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {

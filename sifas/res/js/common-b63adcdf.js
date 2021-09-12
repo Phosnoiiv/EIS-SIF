@@ -83,7 +83,7 @@ function aNoteName(lang, type, value) {
 }
 var aDescConditionPrefixes = ["条件：", "Condition: ", "条件：", "條件："];
 var aDescTimePrefixes = ["時間：", "Time: ", "时间：", "時間："];
-var aDescTargetPrefixes = ["対象：", "Affects: ", "对象: ", "適用對象："];
+var aDescTargetPrefixes = ["対象：", "Affects: ", "对象：", "適用對象："];
 var aDescWavePrefixes = ["【特殊効果】", "[Special Effect] ", "【特殊效果】", "【特殊效果】"];
 function aNoteDesc(lang, type, value, finishType, finishValue, target, gimmickType) {
     var r = wordFinishes[finishType][0][lang-1].replace("#", finishValue).replace("^", aEffect(2, lang, type, value));
