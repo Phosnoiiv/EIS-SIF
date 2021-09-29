@@ -185,6 +185,9 @@ while ($dbTarget = $dbTargets->fetch_assoc()) {
         $dbTarget['icons'] ?? '',
     ];
 }
+$sql = "SELECT * FROM skill_target_v109";
+$col = [['s','icons',''],['s','icons_reverse','']];
+$cTargets = DB::mySelect($sql, $col, 'id');
 
 $refMaps = [];
 $dictCommonRewards = new SIF\Dict;
@@ -230,8 +233,11 @@ while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
         }
         }
     }
-    if (($mapType == 4 && $dbMap['live_difficulty_type'] == 30) || $mapType == 5) {
-        $extendData['d'] = $dbMap['live_difficulty_type'] / 10;
+    if (($mapType == 4 && $dbMap['live_difficulty_type'] >= 30) || $mapType == 5) {
+        $extendData['d'] = SIFAS::MAP_DIF_SHORT_CODE[$dbMap['live_difficulty_type']];
+    }
+    if (isset($dbMap['coop_power'])) {
+        $extendData['w'] = $dbMap['coop_power'];
     }
     $detailSongs[$songID]['maps'][$mapType][] = [
         $mapType == 3 ? $allStories[$dbMap['live_difficulty_id']] ?? [$dbMap['old_story_chapter'], $dbMap['old_story_episode'], 0] : ($mapType == 5 ? $mapReference : ($difficulty = intdiv($dbMap['live_difficulty_id'] % 1000, 100))),
@@ -350,6 +356,7 @@ $dbWaves = DB::lt_query('jp/masterdata.db', $sql);
 while ($dbWave = $dbWaves->fetchArray(SQLITE3_ASSOC)) {
     $mapID = $dbWave['live_difficulty_id'];
     $ref = $refMaps[$dbWave['live_difficulty_id']];
+    $tExtract = SIFAS::extractWaveMission($dbWave['k_name']);
     $detailSongs[$ref[0]]['maps'][$ref[1]][$ref[2]][25][] = [
         $dictStrings[$ref[0]]->set($dbWave['k_name']),
         $dbWave['state'],
@@ -363,6 +370,8 @@ while ($dbWave = $dbWaves->fetchArray(SQLITE3_ASSOC)) {
         $dbWave['value1'],
         $dbWave['finish1'],
         $dbWave['finishv1'],
+        $tExtract[0],
+        $tExtract[1],
     ];
     foreach (Constants::EIS_SONG_DIF_NOTEWORTHY as $d) {
         if (!array_key_exists($mapID, ${"mMap$d"})) continue;
@@ -468,6 +477,7 @@ Cache::writeMultiJson('live-detail.js', [
     'songTags' => $cSongTags,
     'effects' => $clientEffects,
     'targets' => $clientTargets,
+    'targets83' => $cTargets,
     'gimmicks' => $clientGimmicks,
     'events' => $clientEvents,
     'currentEvents' => $clientCurrentEvents ?? [],

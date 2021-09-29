@@ -55,7 +55,7 @@ h3 {
     position: absolute; left: 2px; bottom: -12px;
 }
 .song-link-tags .eis-sif-tag {
-    margin-right: 2px; padding: 1px 3px;
+    margin-right: 2px; padding: 1px 3px!important;
     font-size: 12px;
 }
 #g-songs .eis-sif-gallery>[onclick] {
@@ -75,7 +75,7 @@ h3 {
     border:1px solid #999; border-radius:0 0 5px 5px;
     font-size:13px;
 }
-.g-song-view-2-detail .eis-sif-tag:not(.song-link-tags *) {
+.g-song-view-2-detail .eis-sif-tag { /* Do not use :not(.song-link-tags *) due to a bug of Minify extension */
     padding:1px 5px;
     font-size:12px;
 }
@@ -188,8 +188,19 @@ h3 {
 .map-link.difficulty-5.active {
     background: linear-gradient(135deg, #df65e3 25px, #db31e8 25px);
 }
+.map-link[data-map-cat="3"] {background:linear-gradient(135deg,#fff 25px,#f6f6f6 25px 80px,#e8a523 80px);}
+.map-link[data-map-cat="4"] {background:linear-gradient(135deg,#fff 25px,#f6f6f6 25px 80px,#f53436 80px);}
+.map-link[data-map-cat="3"].difficulty-1.active {background:linear-gradient(135deg,#3f8fff 25px,#277dfe 25px 80px,#e8a523 80px);}
+.map-link[data-map-cat="3"].difficulty-2.active {background:linear-gradient(135deg,#30d27b 25px,#1ec26e 25px 80px,#e8a523 80px);}
+.map-link[data-map-cat="4"].difficulty-1.active {background:linear-gradient(135deg,#3f8fff 25px,#277dfe 25px 80px,#f53436 80px);}
+.map-link[data-map-cat="4"].difficulty-2.active {background:linear-gradient(135deg,#30d27b 25px,#1ec26e 25px 80px,#f53436 80px);}
 .map-link-attribute {
     position: absolute; height: 20px; left: 2px; top: -8px;
+}
+.map-link-power {
+    position:absolute; bottom:-12px; padding:0 5px;
+    background:#e0ccb3; border-radius:8px; color:#994007;
+    font-size:12px;
 }
 .map-detail-type .eis-sif-item img {
     height: 50px;
@@ -227,7 +238,7 @@ h3 {
 #map-notes, #map-waves {
     padding: 0 20px; justify-content: normal;
 }
-.map-note, .map-wave {
+.map-note {
     position: relative; width: 270px; margin: 10px 10px 20px; padding: 5px;
     border: 1px solid #aaa;
 }
@@ -244,7 +255,7 @@ h3 {
     margin: 0 0 5px;
     font-weight: normal; font-size: 15px;
 }
-.map-note p, .map-wave p {
+.map-note p {
     margin: 0; padding: 3px 0;
     border-top: 1px dashed #aaa;
     font-size: 13px;
@@ -264,30 +275,61 @@ h3 {
 .map-note-tag.count::before {
     content: "×";
 }
-.map-wave-tag.range {
-    left: 5px;
-    background: #bc8c52;
+.map-wave {
+    width:340px; margin:10px;
 }
-.map-wave-tag.voltage {
-    left: 5px; top: auto; bottom: -12px;
-    background: #81c784;
+.map-wave-mission {
+    padding:3px;
+    color:#fff;
+    text-align:center;
 }
-.map-wave-tag.voltage::before {
-    content: "成功时张力 ";
+[data-wave-mission="1"] .map-wave-mission {background:linear-gradient(90deg,#ffffffff 0%,#d70083 10% 90%,#ffffffff 100%);}
+[data-wave-mission="2"] .map-wave-mission {background:linear-gradient(90deg,#ffffffff 0%,#ec8225 10% 90%,#ffffffff 100%);}
+[data-wave-mission="3"] .map-wave-mission {background:linear-gradient(90deg,#ffffffff 0%,#0036e1 10% 90%,#ffffffff 100%);}
+[data-wave-mission="4"] .map-wave-mission {background:linear-gradient(90deg,#ffffffff 0%,#2c8d20 10% 90%,#ffffffff 100%);}
+.map-wave-info {
+    padding:0 10px;
+    font-size:13px;
 }
-.map-wave-tag.damage {
-    right: 5px; top: auto; bottom: -12px;
-    background: #e57373;
+[data-wave-mission="1"] .map-wave-info {background:linear-gradient(90deg,#ffffffff 0%,#fab7e3 10% 90%,#ffffffff 100%);}
+[data-wave-mission="2"] .map-wave-info {background:linear-gradient(90deg,#ffffffff 0%,#fdf9c6 10% 90%,#ffffffff 100%);}
+[data-wave-mission="3"] .map-wave-info {background:linear-gradient(90deg,#ffffffff 0%,#c6cafe 10% 90%,#ffffffff 100%);}
+[data-wave-mission="4"] .map-wave-info {background:linear-gradient(90deg,#ffffffff 0%,#c7e6c2 10% 90%,#ffffffff 100%);}
+.map-wave-info .eis-sif-tag {
+    padding:1px 4px;
 }
-.map-wave-tag.damage::before {
-    content: "失败时体力 ";
+.map-wave-detail {
+    margin:0 10px; padding:3px 5px;
+    border:solid #aaa; border-width:0 1px 1px; border-radius:0 0 5px 5px;
+    font-size:13px;
 }
-.map-note-icons, .map-wave-icons {
+.map-wave-buff {
+    height:30px; vertical-align:bottom;
+}
+.map-note-icons {
     position: absolute; width: 100%; left: 0; top: -14px;
     text-align: center;
 }
-.map-note-icons img, .map-wave-icons img {
+.map-note-icons img {
     height: 20px;
+}
+.map-wave-icons {
+    display:inline-block;
+}
+.map-wave-icons img {
+    height:17px; vertical-align:bottom;
+}
+.map-wave-success {
+    padding:1px 1px 1px 4px;
+    background:#4caf50; color:#fff; border-radius:5px 0 0 5px;
+}
+.map-wave-failure {
+    padding:1px 4px 1px 1px;
+    background:#f44336; color:#fff; border-radius:0 5px 5px 0;
+}
+.map-wave-sf-connect {
+    display:inline-block; width:8px; padding:1px 0;
+    background:linear-gradient(110deg,#4caf50 50%,#f44336 50%);
 }
 #map-drops th img {
     width: 50px;
@@ -311,6 +353,7 @@ h3 {
     font-size: 15px; cursor: pointer;
 }
 
+.eis-sif-tag.map-default {background:#bc8c52;}
 .eis-sif-tag.route-1 { background: #0288d1; }
 .eis-sif-tag.route-3 { background: #c2185b; }
 .eis-sif-tag.event-1 { background: #ab47bc; }

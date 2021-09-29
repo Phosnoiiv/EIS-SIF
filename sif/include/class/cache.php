@@ -9,6 +9,9 @@ abstract class CacheBase {
     protected static function _read($root, $filename) {
         return file_get_contents($root . '/' . $filename);
     }
+    static function readJson(string $file, string $varname): string {
+        return 'var '.$varname.'='.static::read($file).";\n";
+    }
 
     static function write($filename, $content) {
         file_put_contents(static::getCacheRoot() . '/' . $filename, $content);
@@ -47,9 +50,6 @@ class Cache extends CacheBase {
     }
     static function read($filename) {
         return self::_read(ROOT_SIF_CACHE, $filename);
-    }
-    static function readJson($file, $varname) {
-        return 'var ' . $varname . '=' . self::read($file) . ";\n";
     }
 
     static function writeMultiJson($filename, $arrays) {

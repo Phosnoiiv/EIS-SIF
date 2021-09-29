@@ -13,6 +13,7 @@ echo HTML::js('live-detail');
 ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <script>
+<?=Cache::readJson('common/buffs.json', 'buffIcons')?>
 <?=Cache::read('live-detail.js')?>
 <?=Cache::read('words.js')?>
 <?=SIF\HTML::json('flags', array_reduce($cacheSongFlags, function($carry, $flag) {
@@ -117,6 +118,7 @@ require ROOT_SIFAS_WEB . '/common-b63adcdf/head2.php';
 <p id="map-notes-none">此 LIVE 没有<?=HTML::dict('58','su')?>。</p>
 <?=HTML::dict('58','7t',tagName:'h4')?>
 <p class="eis-sif-note">※ <?=HTML::dict('58','7t')?>成功时<?=HTML::dict('58','xj').HTML::dict('58','vs')?>，失败时体力<?=HTML::dict('58','34')?>。</p>
+<p><span data-flip-control=wave><span class="fa-stack" style="font-size:10px"><i class="far fa-circle fa-stack-2x"></i><i class="fas fa-sync-alt fa-stack-1x"></i></span></span></p>
 <div id="map-waves" class="eis-sif-gallery"></div>
 <p id="map-waves-none">此 LIVE 没有<?=HTML::dict('58','7t')?>。</p>
 <h4>掉落道具</h4>

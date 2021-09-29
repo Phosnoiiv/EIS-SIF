@@ -43,11 +43,15 @@ Number.prototype.toServerDate = function(game, server) {
 String.prototype.toJQImg = function(site, game, isLazy) {
     var s = this, r;
     if (r = s.match(/^((?:[g]\d:)*)s(\d):(.*)$/)) {site = r[2]; s = r[1]+r[3];}
+    if (r = s.match(/^()g(\d):(.*)$/)) {game = r[2]; s = r[1]+r[3];}
     var src = (site<2 ? ["/","/vio/"][site] : resourceHosts[site-2])
             + ([2].indexOf(site)<0 ? ["","sif/","sifas/"][game] : "")
             + s + ([".jpg"].indexOf(s.substring(s.length-4))<0 ? ".png" : "");
     if (isLazy) return $('<img class="lazyload">').attr("data-src",src);
     return $("<img>").attr("src",src);
+}
+String.prototype.addSpaceL = function() {
+    return (/^[μ\w]/.test(this)?" ":"") + this;
 }
 String.prototype.addSpaces = function() {
     return (/^[μ\w]/.test(this)?" ":"") + this + (/[\w]$/.test(this)?" ":"");
@@ -123,6 +127,26 @@ var G1P = {
 var G2C = {
     unitN:[null,"Printemps","BiBi","lily white","CYaRon！","AZALEA","Guilty Kiss","A・ZU・NA","DiverDiva","QU4RTZ"],
     difficultyN:[null,"初级","中级","上级","上级＋","挑战"],
+    waveMissionC:[null,1,2,2,2,1,3,1,2,2,4,4,1,1,1,1,4],
+    waveMissionD:{
+        1:"{58:xj}合计 # 的{58:vs}",
+        2:"NICE 以上的判定达到 # 次",
+        3:"GREAT 以上的判定达到 # 次",
+        5:"一次累积 # {58:vs}",
+        6:"使用<58:co}来{58:xj}合计 # 的{58:vs}",
+        7:"让 # 名学园偶像进行表现",
+        8:"获得 # 次暴击判定",
+        9:"发动 # 次特技",
+        16:"将体力维持在 #% 以上",
+    },
+};
+var G2F = {
+    waveMissionD:function(type, value) {
+        return G2C.waveMissionD[type]
+            .replace(/\{(\w+):(\w+)\}/g, function(match,p1,p2){return rDict(p1,p2);})
+            .replace(/<(\w+):(\w+)\}/g, function(match,p1,p2){return rDict(p1,p2).addSpaceL();})
+            .replace("#", value);
+    }
 };
 var G2E = {
     songFlagN:[null,"先行配信","限时配信","交换所排名","SBL 排名","频道应援","服装奖励"],
@@ -521,6 +545,44 @@ function refreshGallery(selector) {
     if (config.eRefreshed) config.eRefreshed();
     lazyload();
 }
+
+// --------------------------------------------------
+// Flip
+// --------------------------------------------------
+var eisFlip = function(){
+    var update = function() {
+        $("[data-flip-control]").each(function() {
+            var tag = $(this).attr("data-flip-control"), current = $(this).attr("data-flip-current");
+            $('[data-flip="'+tag+'"]').each(function() {
+                if ($(this).attr("data-flip-val")!=undefined) {
+                    if ($(this).attr("data-flip-val")==current) $(this).show();
+                    else $(this).hide();
+                }
+            });
+        });
+    };
+    var clicked = function(e) {
+        var flipControl = $('[data-flip-control="'+e.data.control+'"]');
+        var min = flipControl.attr("data-flip-min")||0, max = flipControl.attr("data-flip-max")||1;
+        var current = parseInt(flipControl.attr("data-flip-current")) + 1;
+        if (current>max) current = min;
+        flipControl.attr("data-flip-current", current);
+        update();
+    }
+    return {
+        init:function() {
+            $("[data-flip-control]").each(function() {
+                var min = $(this).attr("data-flip-min") || 0, max = $(this).attr("data-flip-max") || 1;
+                var current = $(this).attr("data-flip-current");
+                if (current==undefined || current<min) current = min;
+                if (current>max) current = max;
+                $(this).attr("data-flip-current", current);
+                $(this).off("click.flip").on("click.flip", {control:$(this).attr("data-flip-control")}, clicked);
+            });
+            update();
+        },
+    };
+}();
 
 function readNotice(noticeID) {
     var notice = notices[noticeID] || autoNotices[noticeID];

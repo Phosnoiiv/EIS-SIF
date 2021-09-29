@@ -26,4 +26,7 @@ class Util {
     static function toJSON(array $array): string {
         return json_encode($array, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
+    static function removeIntComma(string $num): int {
+        return intval(str_replace(',', '', $num));
+    }
 }

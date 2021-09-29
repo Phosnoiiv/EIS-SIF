@@ -152,10 +152,15 @@ function produceFin(songID, target) {
     }
     for (var i = 1; i <= 5; i++) {
         $.each(data.maps[i], function(mapIndex, map) {
-            $("<div>").addClass("eis-sif-gallery-item map-link " + ([3,5].indexOf(i)>=0 ? (map[0][2] == 2 ? "story-hard" : "story-normal")  : "difficulty-" + map[0])).addClass("difficulty-" + ([3,5].indexOf(i)>=0 ? 0 : map[0])).attr("data-map", i + "-" + mapIndex).append(
+            var $link = $("<div>").addClass("eis-sif-gallery-item map-link " + ([3,5].indexOf(i)>=0 ? (map[0][2] == 2 ? "story-hard" : "story-normal")  : "difficulty-" + map[0])).addClass("difficulty-" + ([3,5].indexOf(i)>=0 ? 0 : map[0])).attr("data-map", i + "-" + mapIndex).append(
                 $("<span>").text(getMapName(i, map[0])),
                 qASImg("icon/a" + map[1]).addClass("map-link-attribute"),
-            ).attr("onclick", "showMap(" + songID + "," + i + "," + mapIndex + ")").appendTo("#maps");
+                map[38].w!=undefined ? $('<span class="map-link-power">').text(map[38].w) : null,
+            ).attr("onclick", "showMap(" + songID + "," + i + "," + mapIndex + ")");
+            if (i==4) {
+                $link.attr("data-map-cat", inferMapCat(map));
+            }
+            $link.appendTo("#maps");
         });
     }
     $(window).scrollTop(0);
@@ -210,7 +215,15 @@ function showMap(songID, mapType, mapIndex) {
     currentMapType = mapType; currentMapIndex = mapIndex;
     var song = songs[songID], data = songStorage[songID], map = data.maps[mapType][mapIndex], strings = data.strings;
     var settingLang = parseInt(readSetting(1,"k4"));
-    var hasLinkedMap = map[38].d, linkedMap = hasLinkedMap ? data.maps[1][map[38].d-1] : [], untrusted = map[38].u;
+    var hasLinkedMap = map[38].d, linkedMap = [], untrusted = map[38].u;
+    if (hasLinkedMap) {
+        $.each(data.maps[1], function(linkIndex, linkMap) {
+            if (linkMap[0]==map[38].d && ((linkMap[16]<=50000&&map[16]<=50000)||(linkMap[16]>50000&&map[16]>50000))) {
+                linkedMap = linkMap;
+                return false;
+            }
+        });
+    }
     if (!linkedMap) hasLinkedMap = false;
     $(".map-detail-type").hide();
     $(".map-detail-type[data-type='" + mapType + "']").show();
@@ -278,8 +291,10 @@ function showMap(songID, mapType, mapIndex) {
             waveEnds.push(wave[4], wave[5]);
         } else if (hasLinkedMap) {
             var linkedWave = linkedMap[25][waveIndex];
+            if (linkedWave[4]) {
             waveEnds.push(linkedWave[4], linkedWave[5]);
             waveEndsLinked = true;
+            }
         }
     });
     var r = /<:icon_gimmick_([0-9]+)\/>/;
@@ -319,16 +334,28 @@ function showMap(songID, mapType, mapIndex) {
             waveData = [linkedWave[4], linkedWave[5], linkedWave[6], linkedWave[7]]; useLinked = true;
         }
         var questionable = untrusted || useLinked ? " (?)" : "";
-        $("<div>").addClass("map-wave" + ([3,255].indexOf(wave[1]) >= 0 ? "" : effects[wave[8]][0] ? " buff" : " debuff")).append(
-            $("<h6>").html(strings[wave[0]]),
-            $("<p>").html(strings[wave[2]].replace(/\n+$/, "").replace(/\n/g, "<br>")),
-            $("<p>").html(aWaveDesc(settingLang, wave[8], wave[9], wave[10], wave[11], wave[3], wave[1])),
-            waveData[0] ? $("<div>").addClass("map-wave-tag range").text(waveData[0] + "～" + waveData[1] + questionable) : "",
-            waveData[2] ? $("<div>").addClass("map-wave-tag voltage").text(waveData[2] + questionable) : "",
-            waveData[3] ? $("<div>").addClass("map-wave-tag damage").text(waveData[3] + questionable) : "",
-            targets[wave[3]] ? $("<div>").addClass("map-wave-icons").html(targets[wave[3]][effects[wave[8]][0]].replace(/\[(.+?)\]/g, function(match, p1) {
-                return $("<div>").append(qASImg(p1)).html();
-            })) : "",
+        var iconString = targets83[wave[3]] && targets83[wave[3]][1-effects[wave[8]][0]];
+        $('<div class="map-wave" data-wave-mission='+G2C.waveMissionC[wave[12]]+'>').append(
+            $('<div class="map-wave-mission">').append(
+                $('<span data-flip=wave data-flip-val=0>').text(G2F.waveMissionD(wave[12], wave[13])),
+                $('<span data-flip=wave data-flip-val=1>').html(strings[wave[0]]),
+            ),
+            waveData[0]||waveData[2]||waveData[3]||targets[wave[3]] ? $('<div class="map-wave-info eis-sif-row">').append(
+                $('<div>').append(
+                    waveData[0] ? $('<span class="eis-sif-tag map-default">').text(waveData[0]+"～"+waveData[1]+questionable) : null,
+                    iconString ? $('<div class="map-wave-icons">').html(iconString.replace(/\((.+?)\)/g, function(match,p1){return $("<div>").append(p1.toJQImg(1,2)).html();})) : null,
+                ),
+                $('<div>').append(
+                    waveData[2] ? $('<span class="map-wave-success">').text(waveData[2]+questionable) : null,
+                    waveData[2]||waveData[3] ? $('<span class="map-wave-sf-connect">').html("&nbsp;") : null,
+                    waveData[3] ? $('<span class="map-wave-failure">').text(waveData[3]+questionable) : null,
+                ),
+            ) : null,
+            $('<div class="map-wave-detail">').append(
+                buffIcons[wave[8]] ? ("ui/buff/"+buffIcons[wave[8]]).toJQImg(1,2).addClass("map-wave-buff") : null,
+                $('<span data-flip=wave data-flip-val=0>').html(aWaveDesc(settingLang,wave[8],wave[9],wave[10],wave[11],wave[3],wave[1])),
+                $('<span data-flip=wave data-flip-val=1>').html(strings[wave[2]].replace(/\n+$/,"").replace(/\n/g,"<br>")),
+            ),
         ).appendTo("#map-waves");
     });
     if ($("#map-waves").children().length) {
@@ -357,6 +384,7 @@ function showMap(songID, mapType, mapIndex) {
     $(".map-link").removeClass("active");
     $(".map-link[data-map='" + mapType + "-" + mapIndex + "']").addClass("active");
     $("#map-detail, #map-drops-button").show();
+    eisFlip.init();
 }
 function showDrops() {
     var data = songStorage[currentSongID], map = data.maps[currentMapType][currentMapIndex];
@@ -444,6 +472,10 @@ function getItemImg(type, key) {
             return emblems[key] ? "emblem/" + emblems[key][0] : "";
     }
     return items[type] && items[type][key] ? items[type][key][0] : "";
+}
+function inferMapCat(map) {
+    if (map[16]<=50000) return 3;
+    return 4;
 }
 function qItem(type, key, amount) {
     var img = getItemImg(type, key);
