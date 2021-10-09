@@ -95,7 +95,7 @@ function showDetail(accessoryID) {
 }
 function getSkillDesc(accessoryID, levelID) {
     var accessory = accessories[accessoryID], level = accessory[COL_ACCESSORY_LEVELS][levelID] || accessoryStorage[accessoryID][levelID];
-    var arg = {};
+    var arg = {a2300:level[6]};
     if (accessory[COL_ACCESSORY_APPEND]) {
         var append = accessory[COL_ACCESSORY_APPEND];
         arg.e = append.e;

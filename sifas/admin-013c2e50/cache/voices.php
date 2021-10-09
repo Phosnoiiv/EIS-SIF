@@ -3,17 +3,9 @@ namespace EIS\Lab\SIFAS;
 use EIS\Lab\SIF;
 require_once dirname(dirname(__DIR__)) . '/core/init.php';
 
-$clientMembers = [];
-$sql = 'SELECT * FROM member WHERE sifas_member_id IS NOT NULL';
-$dbMembers = SIF\DB::my_query($sql);
-while ($dbMember = $dbMembers->fetch_assoc()) {
-    $id = $dbMember['sifas_member_id'];
-    $clientMembers[$id] = [
-        intval($dbMember['sifas_category'] ?? $dbMember['category']),
-        $dbMember['jp_name'],
-        intval($dbMember['display_class']),
-    ];
-}
+$sql = "SELECT * FROM v_member_v107 WHERE sifas_id IS NOT NULL";
+$col = [['i','project'],['s','jp_name'],['i','no']];
+$clientMembers = DB::mySelect($sql, $col, 'sifas_id');
 
 $clientCards = [];
 $dictCards = new SIF\Dict(true);

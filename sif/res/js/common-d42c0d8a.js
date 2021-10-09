@@ -97,6 +97,7 @@ var G1C = {
         2100:"就有 {r}% 的概率发动之前发动的除重复以外的特技效果",
         2201:"就有 {r}% 的概率在 {t} 秒内将获得 PERFECT 时的点击分数增加 {v} 点",
         2300:"就有 {r}% 的概率根据 {t} 秒内的连击数提升点击分数",
+        "e23001":"就有 {r}% 的概率在 {t} 秒内提升点击分数 {v} 点",
         2400:"就有 {r}% 的概率在 {t} 秒内使属性变得与随机一位{e}成员相同",
         2500:"就有 {r}% 的概率将下次发动的技能等级提升 {v} 级",
         2600:"就有 {r}% 的概率在 {t} 秒内使{e}的属性提升 {v2}%",
@@ -106,6 +107,7 @@ var G1E = {
     serverSN:[null,"JP","GL","CN"],
 };
 function g1SkillDesc(triggerType, effectType, triggerValue, rate, effectTime, effectValue, args) {
+    if (effectType==2300 && !args.a2300) effectType = "e23001";
     var triggerDesc = G1C.skillTriggerD[triggerType];
     var effectDesc = G1C.skillEffectD[effectType].replace("{r}",rate).replace("{t}",effectTime).replace("{v}",effectValue).replace("{v2}",Math.round((effectValue-1)*100000)/1000);
     if (effectDesc.indexOf("{e}")>=0) effectDesc = effectDesc.replace("{e}",G1P.target2Str(args.e));

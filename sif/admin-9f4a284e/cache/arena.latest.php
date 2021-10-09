@@ -15,9 +15,9 @@ $sql = 'SELECT * FROM unit WHERE unit_id IN (' . implode(',', array_column($chee
 $columns = [['i','unit_number'],['i','unit_member'],['i','unit_rarity'],['i','attribute'],['s','jp_name',''],['i','idolized']];
 $clientUnits = DB::mySelect($sql, $columns, 'unit_id');
 
-$sql = 'SELECT * FROM member WHERE member_id IN (' . implode(',', array_unique(array_column($clientUnits, 1))) . ')';
+$sql = "SELECT * FROM member_v107 WHERE sif_id IN (SELECT DISTINCT unit_member FROM unit WHERE unit_id IN (SELECT unit FROM event_arena_cheer_unit WHERE arena=$arenaID))";
 $columns = [['s','jp_name']];
-$clientMembers = DB::mySelect($sql, $columns, 'member_id');
+$clientMembers = DB::mySelect($sql, $columns, 'sif_id');
 
 $sql = "SELECT * FROM arena_stage_m WHERE arena_id=$arenaID";
 $columns = [['i','capital_value']];
