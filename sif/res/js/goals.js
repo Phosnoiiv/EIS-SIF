@@ -82,7 +82,7 @@ function sifGoalDesc(server, type, param1, param2, param3, param4, param5, param
                 if (!param2 && !param4) {
                     str += strs[1].replace("%s", t);
                 } else if (param2 && !param4) {
-                    str += strs[2].replace("%s", t).replace("%s", strDifficulties[param2]);
+                    str += strs[2].replace("%s", t).replace("{{live_track_name}}", t).replace("%s", strDifficulties[param2]).replace("{{difficulty}}", strDifficulties[param2]);
                 } else if (!param2 && param4) {
                     str += strs[3].replace("%s", t).replace("%s", strs[34 + param4]);
                 } else if (param2 && param4) {
