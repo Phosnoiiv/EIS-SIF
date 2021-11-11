@@ -224,7 +224,7 @@ function showMap(songID, mapType, mapIndex) {
             }
         });
     }
-    if (!linkedMap) hasLinkedMap = false;
+    if (!linkedMap.length) hasLinkedMap = false;
     $(".map-detail-type").hide();
     $(".map-detail-type[data-type='" + mapType + "']").show();
     switch (mapType) {
