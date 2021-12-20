@@ -14,6 +14,8 @@ $config['matomo_host'] = '';
 $config['matomo_scheme'] = 'https';
 $config['resource_host_1'] = '';
 $config['resource_hosts'] = [];
+$config['resource_index_default'] = 0;
+$config['resource_index_override'] = [];
 
 $config['matomo_token'] = '';
 

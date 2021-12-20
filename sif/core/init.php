@@ -57,6 +57,7 @@ spl_autoload_register(function($name) {
     _autoload(__NAMESPACE__, ROOT_SIF_INC, $name);
 });
 
+require_once ROOT_SIF_CONFIG . '/resources.php';
 require_once ROOT_SIF_CONFIG . '/config.php';
 require_once ROOT_SIF_CONFIG . '/version.php';
 require_once ROOT_SIF_CONFIG . '/pages.php';

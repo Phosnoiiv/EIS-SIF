@@ -8,10 +8,10 @@ include ROOT_SIFAS_CACHE.'/live-detail.php';
 $helpArticle = 30;
 $latestFile = ROOT_SIFAS_CACHE . '/live-detail.js';
 require ROOT_SIFAS_WEB . '/common-b63adcdf/head1.php';
+echo HTML::resourceJS(SIF\RESOURCE_CHART);
 echo HTML::css('live-detail');
 echo HTML::js('live-detail');
 ?>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 <script>
 <?=Cache::readJson('common/buffs.json', 'buffIcons')?>
 <?=Cache::read('live-detail.js')?>

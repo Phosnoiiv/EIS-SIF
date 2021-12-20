@@ -26,6 +26,13 @@ class HTMLBase {
         $code = '<script src="' . $link . '"></script>';
         return $code . "\n";
     }
+    static function resourceJS(int $resourceId): string {
+        global $config;
+        $index = $config['resource_index_override'][$resourceId] ?? $config['resource_index_default'];
+        $resource = RESOURCES[$resourceId][$index];
+        $url = (isset($resource[0]) ? $config['resource_hosts'][$resource[0]] : '') . $resource[1];
+        return '<script src="'.$url.'"'.(!empty($resource[2])?' integrity="'.$resource[2].'" crossorigin="anonymous"':'').'></script>'."\n";
+    }
 
     static function dict($dictName, $vocName, $tagName = 'span', $attr = ''): string {
         return '<'.$tagName.(empty($attr)?'':' '.$attr).' class="eis-sif-dict" data-dict="'.$dictName.'" data-voc="'.$vocName.'"></'.$tagName.'>';
@@ -50,7 +57,7 @@ class HTML extends HTMLBase {
 
     const SERVER_ICON_JP = '<span class="fa-stack"><i class="fas fa-circle fa-stack-2x" style="color:#fff"></i><i class="fas fa-circle fa-stack-1x" style="color:#f00"></i></span>';
     const SERVER_ICON_WW = '<span class="fa-stack"><i class="fas fa-globe-asia fa-stack-2x" style="color:#098"></i></span>';
-    const SERVER_ICON_CN = '<span class="fa-stack"><i class="fas fa-circle fa-stack-2x" style="color:#f00"></i><i class="fas fa-star fa-stack-1x" style="color:#ff0"></i></span>';
+    const SERVER_ICON_CN = '<span style="font-size:6px"><span class="fa-stack"><i class="fas fa-circle fa-stack-2x" style="color:#f00"></i><i class="fas fa-star fa-stack-1x" data-fa-transform="left-5" style="color:#ff0"></i><i class="fas fa-star fa-stack-1x" data-fa-transform="shrink-8 up-9 right-6" style="color:#ff0"></i><i class="fas fa-star fa-stack-1x" data-fa-transform="shrink-8 up-3 right-8" style="color:#ff0"></i><i class="fas fa-star fa-stack-1x" data-fa-transform="shrink-8 down-3 right-8" style="color:#ff0"></i><i class="fas fa-star fa-stack-1x" data-fa-transform="shrink-8 down-9 right-6" style="color:#ff0"></i></span></span>';
     static function serverIcon($server) {
         return [null, self::SERVER_ICON_JP, self::SERVER_ICON_WW, self::SERVER_ICON_CN][$server];
     }
