@@ -87,33 +87,40 @@ var G1C = {
     },
     skillTriggerD:{
         "-1":"满足条件的技能未发动时，",
+        3:"每 {i} 个节奏图标",
+        4:"每完成 {i} 连击",
+        6:"每获得 {i} 次 PERFECT ",
     },
+    skillRateD:"就有 {r}% 的概率",
     skillEffectD:{
-        4:"就有 {r}% 的概率使判定在 {t} 秒内得到小幅强化",
-        5:"就有 {r}% 的概率强化判定 {t} 秒",
-        9:"就有 {r}% 的概率恢复体力 {v} 点",
-        11:"就有 {r}% 的概率增加分数 {v} 点",
-        2000:"就有 {r}% 的概率在 {t} 秒内将发动其它技能的概率提升至 {v} 倍",
-        2100:"就有 {r}% 的概率发动之前发动的除重复以外的特技效果",
-        2201:"就有 {r}% 的概率在 {t} 秒内将获得 PERFECT 时的点击分数增加 {v} 点",
-        2300:"就有 {r}% 的概率在 {t} 秒内根据连击数提升点击分数（在 {v}～{2300} 之间变动）",
-        "e23001":"就有 {r}% 的概率在 {t} 秒内提升点击分数 {v} 点",
-        2400:"就有 {r}% 的概率在 {t} 秒内使属性变得与随机一位{e}成员相同",
-        2500:"就有 {r}% 的概率将下次发动的技能等级提升 {v} 级",
-        2600:"就有 {r}% 的概率在 {t} 秒内使{e}的属性提升 {v2}%",
+        4:"使判定在 {t} 秒内得到小幅强化",
+        5:"强化判定 {t} 秒",
+        9:"恢复体力 {v} 点",
+        11:"增加分数 {v} 点",
+        2000:"在 {t} 秒内将发动其它技能的概率提升至 {v} 倍",
+        2100:"发动之前发动的除重复以外的特技效果",
+        2201:"在 {t} 秒内将获得 PERFECT 时的点击分数增加 {v} 点",
+        2300:"在 {t} 秒内根据连击数提升点击分数（在 {v}～{2300} 之间变动）",
+        "e23001":"在 {t} 秒内提升点击分数 {v} 点",
+        2400:"在 {t} 秒内使属性变得与随机一位{e}成员相同",
+        2500:"将下次发动的技能等级提升 {v} 级",
+        2600:"在 {t} 秒内使{e}的属性提升 {v2}%",
     },
 };
 var G1E = {
     serverSN:[null,"JP","GL","CN"],
 };
-function g1SkillDesc(triggerType, effectType, triggerValue, rate, effectTime, effectValue, args) {
+function g1SkillDesc(levelId, triggerType, effectType, triggerValue, rate, effectTime, effectValue, args) {
     if (effectType==2300 && !args.a2300) effectType = "e23001";
-    var triggerDesc = G1C.skillTriggerD[triggerType];
     var effectDesc = G1C.skillEffectD[effectType].replace("{r}",rate).replace("{t}",effectTime).replace("{v}",effectValue).replace("{v2}",Math.round((effectValue-1)*100000)/1000);
     if (effectDesc.indexOf("{e}")>=0) effectDesc = effectDesc.replace("{e}",G1P.target2Str(args.e));
     if (effectType==2300) effectDesc = effectDesc.replace("{2300}", effectValue*10);
-    var r = triggerDesc + effectDesc;
-    return r;
+    if (levelId<=8) {
+        var triggerDesc = G1C.skillTriggerD[triggerType].replace("{i}",triggerValue);
+        var rateDesc = G1C.skillRateD.replace("{r}",rate);
+        return triggerDesc + rateDesc + effectDesc;
+    }
+    return effectDesc;
 }
 var G1P = {
     target2Str:function(targets) {
