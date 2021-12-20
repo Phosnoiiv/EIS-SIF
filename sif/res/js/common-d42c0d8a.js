@@ -56,6 +56,13 @@ String.prototype.addSpaceL = function() {
 String.prototype.addSpaces = function() {
     return (/^[μ\w]/.test(this)?" ":"") + this + (/[\w]$/.test(this)?" ":"");
 }
+String.prototype.G1template = function(args) {
+    var s = this;
+    $.each(args, function(key, value) {
+        s = s.replace("{{"+key+"}}", value);
+    });
+    return s;
+}
 Array.prototype.shuffle = function() {
     var a = this.slice(), r = [];
     for (var i = this.length; i > 0; i--) {

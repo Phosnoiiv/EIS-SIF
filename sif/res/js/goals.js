@@ -30,7 +30,7 @@ function produce(ignoreRecord) {
                     ),
                 ),
             ),
-            $("<p>").addClass("goal-desc").html(sifGoalDesc(server, goal[6], goal[7], goal[8], goal[9], goal[10], goal[11], goal[12], goal[13], goal[14], goal[15], goal[16], goal[17])),
+            $("<p>").addClass("goal-desc").html(sifGoalDesc(server, goal[6], {params1:goal[7],params2:goal[8],params3:goal[9],params4:goal[10],params5:goal[11],params6:goal[12],params7:goal[13],params8:goal[14],params9:goal[15],params10:goal[16],params11:goal[17]})),
         ).addClass(isNew ? "new" : isExpired ? "expired" : "").appendTo("#goals");
     });
     $(".goal.expired").appendTo("#goals");
@@ -45,106 +45,132 @@ function produce(ignoreRecord) {
         _paq.push(["trackEvent", "Goals", "Switch Server"]);
     }
 }
-function sifGoalDesc(server, type, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10, param11) {
+function sifGoalDesc(server, type, params) {
     var strs = strings[server][type];
     var strDifficulties = [null, "EASY", "NORMAL", "HARD", "EXPERT", "TECHNICAL", "MASTER"];
     var strRanks = [null, "S", "A", "B", "C"];
+    var str = strs[1];
     switch (type) {
         case 1:
-            return strs[1].replace("%d", param1).replace("{{params1}}", param1);
+        case 11:
+            break;
         case 2:
-            return strs[param3 ? 2 : 1].replace("%s", strDifficulties[param1]).replace("{{difficulty}}", strDifficulties[param1]).replace("%d", param2).replace("{{params2}}", param2);
+            str = strs[params.params3 ? 2 : 1];
+            params.difficulty = strDifficulties[params.params1];
+            break;
         case 3:
         case 4:
-            if (param1 == 1) {
-                return strs[2].replace("%d", param2);
-            } else {
-                return strs[1].replace("%s", strRanks[param1]).replace("%d", param2);
-            }
+            str = strs[params.params1 == 1 ? 2 : 1];
+            params.live_goal_rank = strRanks[params.params1];
+            break;
         case 6:
-            return strs[param2].replace("%s", unitGroups[server][param1]);
+            str = strs[params.params2];
+            params.group_name = unitGroups[server][params.params1];
+            break;
         case 7:
-            return strs[param2].replace("%s", memberGroups[server][param1]);
+            str = strs[params.params2];
+            params.group_type_name = memberGroups[server][params.params1];
+            break;
         case 9:
-            return strs[param3].replace("%s", memberGroups[server][param2]).replace("%s", $("<span>").append(qTrack(param1, server)).html());
-        case 10:
-            return strs[1].replace("%s", strs[param1 == 1000 ? (param2 == 5 ? 5 : 3) : param1 + 1]).replace("%d", param3);
-        case 11:
-            return strs[1].replace("%d", param1);
+            str = strs[params.params3];
+            params.group_type_name = memberGroups[server][params.params2];
+            params.live_track_name = $("<span>").append(qTrack(params.params1, server)).html();
+            break;
         case 32:
-            return strs[1].replace("%s", $("<span>").append(qTrack(param1, server)).html());
         case 37:
-            return strs[1].replace("%s", $("<span>").append(qTrack(param1, server)).html()).replace("%d", param2);
+            params.live_track_name = $("<span>").append(qTrack(params.params1, server)).html();
+            break;
         case 50:
             var str = "";
-            if (param1) {
-                var t = $("<span>").append(qTrack(param1, server)).html();
-                if (!param2 && !param4) {
-                    str += strs[1].replace("%s", t);
-                } else if (param2 && !param4) {
-                    str += strs[2].replace("%s", t).replace("{{live_track_name}}", t).replace("%s", strDifficulties[param2]).replace("{{difficulty}}", strDifficulties[param2]);
-                } else if (!param2 && param4) {
-                    str += strs[3].replace("%s", t).replace("%s", strs[34 + param4]);
-                } else if (param2 && param4) {
-                    str += strs[4].replace("%s", t).replace("%s", strDifficulties[param2]).replace("%s", strs[34 + param4]);
+            if (params.params1) {
+                params.live_track_name = $("<span>").append(qTrack(params.params1, server)).html();
+                if (!params.params2 && !params.params4) {
+                    str += strs[1];
+                } else if (params.params2 && !params.params4) {
+                    str += strs[2];
+                    params.difficulty = strDifficulties[params.params2];
+                } else if (!params.params2 && params.params4) {
+                    str += strs[3];
+                    params.live_type = strs[34 + params.params4];
+                } else if (params.params2 && params.params4) {
+                    str += strs[4];
+                    params.difficulty = strDifficulties[params.params2];
+                    params.live_type = strs[34 + params.params4];
                 }
-            } else if (param3) {
-                var t = strs[31 + param3];
-                if (!param2 && !param4) {
-                    str += strs[7].replace("%s", t);
-                } else if (param2 && !param4) {
-                    str += strs[8].replace("%s", t).replace("%s", strDifficulties[param2]);
-                } else if (!param2 && param4) {
-                    str += strs[9].replace("%s", t).replace("%s", strs[34 + param4]);
-                } else if (param2 && param4) {
-                    str += strs[10].replace("%s", t).replace("%s", strDifficulties[param2]).replace("%s", strs[34 + param4]);
+            } else if (params.params3) {
+                params.live_attribute = strs[31 + params.params3];
+                if (!params.params2 && !params.params4) {
+                    str += strs[7];
+                } else if (params.params2 && !params.params4) {
+                    str += strs[8];
+                    params.difficulty = strDifficulties[params.params2];
+                } else if (!params.params2 && params.params4) {
+                    str += strs[9];
+                    params.live_type = strs[34 + params.params4];
+                } else if (params.params2 && params.params4) {
+                    str += strs[10];
+                    params.difficulty = strDifficulties[params.params2];
+                    params.live_type = strs[34 + params.params4];
                 }
             } else {
-                if (param2 && !param4) {
-                    str += strs[5].replace("%s", strDifficulties[param2]);
-                } else if (param2 && param4) {
-                    str += strs[6].replace("%s", strDifficulties[param2]).replace("%s", strs[34 + param4]);
-                } else if (param4) {
-                    str += strs[11].replace("%s", strs[34 + param4]);
+                if (params.params2 && !params.params4) {
+                    str += strs[5];
+                    params.difficulty = strDifficulties[params.params2];
+                } else if (params.params2 && params.params4) {
+                    str += strs[6];
+                    params.difficulty = strDifficulties[params.params2];
+                    params.live_type = strs[34 + params.params4];
+                } else if (params.params4) {
+                    str += strs[11];
+                    params.live_type = strs[34 + params.params4];
                 }
             }
-            if (param7 == 1) {
-                str += strs[11 + param9].replace("%s", unitGroups[server][param8]);
-            } else if (param7 == 2) {
-                str += strs[14 + param9].replace("%s", memberGroups[server][param8]);
+            if (params.params7 == 1) {
+                str += strs[11 + params.params9];
+                params.group_name = unitGroups[server][params.params8];
+            } else if (params.params7 == 2) {
+                str += strs[14 + params.params9];
+                params.group_type_name = memberGroups[server][params.params8];
             }
-            if (param5 && param6) {
-                if (param5 == 1 && param6 == 1) {
+            if (params.params5 && params.params6) {
+                if (params.params5 == 1 && params.params6 == 1) {
                     str += strs[21];
-                } else if (param5 == 1 && param6 != 1) {
-                    str += strs[20].replace("%s", strRanks[param6]);
-                } else if (param5 != 1 && param6 == 1) {
-                    str += strs[19].replace("%s", strRanks[param5]);
+                } else if (params.params5 == 1 && params.params6 != 1) {
+                    str += strs[20];
+                    params.combo_rank = strRanks[params.params6];
+                } else if (params.params5 != 1 && params.params6 == 1) {
+                    str += strs[19];
+                    params.score_rank = strRanks[params.params5];
                 } else {
-                    str += strs[18].replace("%s", strRanks[param5]).replace("%s", strRanks[param6]);
+                    str += strs[18];
+                    params.score_rank = strRanks[params.params5];
+                    params.combo_rank = strRanks[params.params6];
                 }
-            } else if (param5 && !param6) {
-                if (param5 == 1) {
+            } else if (params.params5 && !params.params6) {
+                if (params.params5 == 1) {
                     str += strs[27];
                 } else {
-                    str += strs[26].replace("%s", strRanks[param5]);
+                    str += strs[26];
+                    params.score_rank = strRanks[params.params5];
                 }
-            } else if (!param5 && param6) {
-                if (param6 == 1) {
+            } else if (!params.params5 && params.params6) {
+                if (params.params6 == 1) {
                     str += strs[29];
                 } else {
-                    str += strs[28].replace("%s", strRanks[param6]);
+                    str += strs[28];
+                    params.combo_rank = strRanks[params.params6];
                 }
             }
-            if (param10 == 1) {
+            if (params.params10 == 1) {
                 str += strs[31];
             } else {
-                str += strs[30].replace("%d", param10);
+                str += strs[30];
             }
-            return str;
+            break;
         default:
-            return "暂不支持此类课题";
+            str = "暂不支持此类课题";
     }
+    return str.G1template(params);
 }
 
 $(document).ready(function() {
