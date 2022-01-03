@@ -36,7 +36,7 @@ function init() {
 function produce(ignoreRecord) {
     year = $("#month").val().substr(0, 4);
     month = $("#month").val().substr(5, 2);
-    if (year < 2018 || year > 2021 || month < 1 || month > 12)
+    if (year < 2018 || year > 2022 || month < 1 || month > 12)
         return;
     var dateBegin = new Date(year, month - 1);
     server = parseInt($("#server").val());
@@ -280,7 +280,7 @@ function addItem(date, type, key, amount) {
     }
 }
 function qItemCalendar(type, key, amount) {
-    if (type==1001) return gItem(1001,key,1,0,{v:78},gConfig);
+    if (type==1001) return gItem(1001,key,1,amount,{v:78},gConfig);
     return $("<span>").addClass("calendar-item").append(
         qImg(getImgCalendar(type, key)),
         amount ? $("<span>").addClass("calendar-amount " + (amount > 1 ? "" : "single")).text(amount) : "",

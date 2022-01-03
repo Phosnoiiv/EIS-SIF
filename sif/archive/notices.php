@@ -21,7 +21,7 @@ foreach ($archiveNotices as $notice) {
     echo '<h2><i class="fas fa-' . ($notice[0] ?? 'bullhorn') . '"></i> ' . $notice[2] . '</h2><div>';
     echo '<h3><i class="fas fa-' . ($notice[0] ?? 'bullhorn') . '"></i> ' . $notice[2] . '</h3>';
     echo '<p class="note">' . date('Y/m/d H:i', $notice[1]) . '</p>';
-    echo '<div class="eis-sif-notice-content">';
+    echo '<div class="eis-sif-notice-content eis-sif-code-needed">';
     foreach (explode('\\n', $notice[3]) as $paragraph) {
         echo '<p' . (mb_substr($paragraph, 0, 1) == '※' ? ' class="eis-sif-note"' : '') . '>' . $paragraph . '</p>';
     }

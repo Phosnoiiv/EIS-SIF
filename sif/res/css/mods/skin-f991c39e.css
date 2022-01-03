@@ -43,6 +43,8 @@ h1 {color:#db2036;}
 .eis-sif-dialog-head {border-bottom-color:#bf0022;color:#bf0022;}
 .eis-sif-dialog-section-header {border-bottom-color:#db2036;color:#ed2c3c;}
 .eis-sif-notice-content h4 {border-bottom-color:#db2036;color:#ed2c3c;}
+.eis-sif-code-hb {color:#ed2c3c;}
+.eis-sif-code-hi {color:#ed2c3c;}
 .eis-sif-post {background:#fae4f2;border-color:#ef0087;}
 .eis-sif-text.category-0 {color:#fc363d;}
 
@@ -124,6 +126,9 @@ body[data-id="home"] .article-link {color:#ed2c3c;}
 body[data-id="home"] .article-link:hover {color:#ea7078;}
 body[data-id="home"] .notice-clickable {color:#ed2c3c;}
 body[data-id="home"] .notice-clickable:hover {color:#ea7078;}
+body[data-id="home"] #home-banner-links>span {color:#ad3836;}
+body[data-id="home"] #home-banner-links a {color:#ad3836;}
+body[data-id="home"] .home-banner-link-text:hover {color:#ea7078;}
 
 body[data-id="4"] article, body[data-id="5"] article {border-color:#bf0022;}
 body[data-id="4"] article h3, body[data-id="5"] article h3 {border-bottom-color:#db2036;color:#db2036;}
@@ -181,3 +186,6 @@ body[data-id="23"] .other {background:#f2ced3;}
 
 body[data-id="26"] .stamp.selected {border-color:#c6007b;}
 body[data-id="26"] .stamp-reward {background:#f64c57;}
+
+body[data-id="29"] .accessory-view-3-name {color:#db2036;}
+body[data-id="29"] #dialog-accessory-title-name {color:#db2036;border-bottom-color:#bf0022;}

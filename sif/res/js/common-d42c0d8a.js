@@ -740,6 +740,10 @@ function codeInit() {
             openTag:function(p,c){return '<div class="eis-sif-timetip">';},
             closeTag:function(p,c){return '</div>';},
         },
+        "tp":{
+            openTag:function(p,c){return '<span class="eis-sif-text category-'+p.substring(1)+'">';},
+            closeTag:function(p,c){return '</span>';},
+        },
         "banner_as":{
             openTag:function(p,c){return '<div style="text-align:center"><img src="'+c+'" width=420 height=128 style="max-width:100%;height:auto"/></div>';},
             closeTag:function(p,c){return '';},
@@ -747,6 +751,11 @@ function codeInit() {
         },
         "c11":{
             openTag:function(p,c){return '<img class="eis-sif-code-card-1" src="/vio/sif/unit/icon1/'+Math.ceil(parseInt(c)/100)+'/'+c+'.png"/>';},
+            closeTag:function(p,c){return '';},
+            displayContent:false,
+        },
+        "ca11":{
+            openTag:function(p,c){return '<img class="eis-sif-code-card-1" src="'+resourceHosts[1]+'sif/accessory/icon1/'+c+'.png"/>';},
             closeTag:function(p,c){return '';},
             displayContent:false,
         },
@@ -900,6 +909,9 @@ $(document).ready(function() {
         $.getJSON("/sif/interface/comments.php", {f:flowID}, function(data) {
             showPosts(flowID, data.posts);
         });
+    });
+    $(".eis-sif-code-needed").each(function() {
+        $(this).html(codeProcess($(this).html())).removeClass("eis-sif-code-needed");
     });
     if (!$("#settings-dialog").length) {
         $(".eis-sif-header-button[title='设置']").remove();

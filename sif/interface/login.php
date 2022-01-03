@@ -3,7 +3,7 @@ namespace EIS\Lab\SIF;
 require_once dirname(__DIR__) . '/core/init.php';
 
 $server = Basic::checkArg($_GET['s'] ?? false, range(1, 3));
-$year = Basic::checkArg($_GET['y'] ?? false, range(2018, 2021));
+$year = Basic::checkArg($_GET['y'] ?? false, range(2018, 2022));
 $month = Basic::checkArg($_GET['m'] ?? false, range(1, 12));
 include ROOT_SIF_CACHE . '/login.php';
 
