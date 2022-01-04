@@ -221,7 +221,12 @@ while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
         if (!empty($towerFloor[4])) {
             $extendData['r'] = $dictCommonRewards->set($towerProgressRewards[$towerFloor[4]]);
         } else {
-            $extendData['o'] = min(array_filter($towerProgressFloors[$towerFloor[0]], function($a) { global $mapReference; return $a > $mapReference[1]; }));
+            $tProgressFloors = array_filter($towerProgressFloors[$towerFloor[0]], fn($x)=>$x>$mapReference[1]);
+            if (!empty($tProgressFloors)) {
+                $extendData['o'] = min($tProgressFloors);
+            } else {
+                $extendData['f'] = true;
+            }
         }
         for ($i = 1; $i <= 1; $i++) {
             if (!isset($towerLiveFloors[$towerID][$liveFloorNumber-$i])) break;

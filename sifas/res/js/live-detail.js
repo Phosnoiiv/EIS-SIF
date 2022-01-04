@@ -236,6 +236,8 @@ function showMap(songID, mapType, mapIndex) {
             });
             if (map[38].o) {
                 $("<span>").html("下一个达成报酬<br>位于 " + (map[38].o - map[0][1]) + " 层后").appendTo("#map-detail-tower-progress");
+            } else if (map[38].f) {
+                $("<span>").html("已获得全部达成报酬").appendTo("#map-detail-tower-progress");
             } else {
                 $.each(rewards[map[38].r], function(rewardIndex, reward) {
                     gItem(reward[0], reward[1], 1, reward[2], {}, gConfig).appendTo("#map-detail-tower-progress");
