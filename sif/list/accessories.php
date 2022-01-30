@@ -32,6 +32,11 @@ require ROOT_SIF_WEB.'/common-d42c0d8a/head2.php';
     <span data-click-arg=4>Lv.4</span>
     <span data-click-arg=8>Lv.8</span>
 </span></span>
+<span><i class="fas fa-filter"></i> <select id="filter-members" data-gallery-role=filter data-gallery-filter=2>
+    <option value=0>全部</option>
+</select><select id="filter-effects" data-gallery-role=filter data-gallery-filter=3>
+    <option value=0>全部</option>
+</select></span>
 <span><i class="fas fa-sort"></i> 排序：<span data-gallery-role=sort></span></span>
 <span><i class="fas fa-search"></i> 搜索：<input type=text data-gallery-role=search /></span>
 </div>

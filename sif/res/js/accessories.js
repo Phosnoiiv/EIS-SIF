@@ -2,10 +2,17 @@ const COL_ACCESSORY_FROM_LT = 6, COL_ACCESSORY_LEVELS = 7, COL_ACCESSORY_APPEND 
 commons.c.g[2901] = {
     defaultViewType:2,
     getItems:function(){return accessories;},
-    filterIDs:[1], filterDefaults:{1:1},
+    filterIDs:[1,2,3], filterDefaults:{1:1,2:0,3:0},
     checkFilter:function(itemID,item,filterID,filterValue){
         switch (filterID) {
             case 1: return item[5]>0==filterValue>0;
+            case 2:
+                if (!filterValue) return true;
+                var card = cards[item[5]];
+                return card && card[0]==filterValue;
+            case 3:
+                if (!filterValue) return true;
+                return item[6]==filterValue;
         }
     },
     optionIDs:[1], optionDefaults:{1:1},
@@ -113,6 +120,18 @@ function qAttr(values) {
 }
 
 $(document).ready(function() {
+    $.each(members, function(memberId, member) {
+        $("<option>").attr("value",memberId).text(member[2]).appendTo("#filter-members");
+    });
+    $.each(G1C.skillEffectSN, function(effectId, effect) {
+        $("<option>").attr("value",effectId).text(effect).appendTo("#filter-effects");
+    });
+    $("#filter-members").change(function() {
+        changeGalleryFilter("#g-main",2,+$(this).val());
+    });
+    $("#filter-effects").change(function() {
+        changeGalleryFilter("#g-main",3,+$(this).val());
+    });
     initGallery("#g-main");
     recoverGallery("#g-main");
 });

@@ -443,7 +443,7 @@ function recoverGallery(selector) {
     $.each(config.filterIDs, function(filterIndex, filterID) {
         var value = getMemory("commons", "g.f."+configID+"."+filterID);
         if (value==undefined) value = config.filterDefaults[filterID] || 0;
-        $(selector+" [data-gallery-role=filter][data-gallery-filter="+filterID+"] [data-click-arg="+value+"]").click();
+        recoveryGalleryItem(selector+" [data-gallery-role=filter][data-gallery-filter="+filterID+"]", value);
     });
     $.each(config.optionIDs, function(optionIndex, optionID) {
         var value = getMemory("commons", "g.o."+configID+"."+optionID);
@@ -455,6 +455,14 @@ function recoverGallery(selector) {
     changeGallerySort(selector, sortID, sortDirection);
     commons.r.g[configID].ready = true;
     refreshGallery(selector);
+}
+function recoveryGalleryItem(fullSelector, value) {
+    var $i = $(fullSelector);
+    if ($i.filter("select").length) {
+        $i.val(value).change();
+    } else {
+        $i.children("[data-click-arg="+value+"]").click();
+    }
 }
 function changeGalleryView(selector, viewType) {
     var configID = $(selector).attr("data-gallery-config"), config = commons.c.g[configID];
@@ -533,7 +541,12 @@ function refreshGallery(selector) {
         });
         if (!filterPassed) return;
         if (commons.r.g[configID].search) {
-            var searchWord = commons.r.g[configID].search, searchReg = new RegExp(searchWord, "i"), searchPassed = false;
+            var searchWord = commons.r.g[configID].search, searchPassed = false;
+            try {
+                var searchReg = new RegExp(searchWord, "i");
+            } catch (ex) {
+                return;
+            }
             $.each(config.itemSearchWords(itemID,item), function(wordIndex, word) {
                 if ($.isArray(word)) {
                     if (word[1]==1 && searchWord!=word[0]) return;
