@@ -757,6 +757,11 @@ function codeInit() {
             openTag:function(p,c){return '<span class="eis-sif-text category-'+p.substring(1)+'">';},
             closeTag:function(p,c){return '</span>';},
         },
+        "banner":{
+            openTag:function(p,c){return '<div style="text-align:center"><img src="'+c+'" width=600 height=200 style="max-width:100%;height:auto"/></div>';},
+            closeTag:function(p,c){return '';},
+            displayContent:false,
+        },
         "banner_as":{
             openTag:function(p,c){return '<div style="text-align:center"><img src="'+c+'" width=420 height=128 style="max-width:100%;height:auto"/></div>';},
             closeTag:function(p,c){return '';},

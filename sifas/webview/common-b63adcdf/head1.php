@@ -26,14 +26,14 @@ if (!empty($pageID)) {
 <meta name="referrer" content="strict-origin-when-cross-origin"/>
 <meta name="viewport" content="width=device-width,user-scalable=no"/>
 <title><?=($title ?? $pages[$pageID]['title']) . (empty($isHome) ? ' - EIS-SIF' : '')?></title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Phosnoiiv/EIS-SIF-CDN@2aee66f6b75fb2b58dc2b767e6fae62e96a2b19f/jqueryui/1.12.1/jquery-ui.structure.min.css" integrity="sha256-rxais37anKUnpL5QzSYte+JnIsmkGmLG+ZhKSkZkwVM=" crossorigin="anonymous" />
 <?php
+echo SIF\HTML::resourceCSS(SIF\RESOURCE_JQUERYUI_CSS);
 echo SIF\HTML::css('common-d42c0d8a');
 echo HTML::css('common-b63adcdf');
 ?>
 <script src="/sif/res/common/jquery/jquery-1.12.4.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Phosnoiiv/EIS-SIF-CDN@2aee66f6b75fb2b58dc2b767e6fae62e96a2b19f/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha256-KM512VNnjElC30ehFwehXjx1YCHPiQkOPmqnrWtpccM=" crossorigin="anonymous"></script>
 <?php
+echo HTML::resourceJS(SIF\RESOURCE_JQUERYUI_JS);
 echo HTML::resourceJS(SIF\RESOURCE_FONTAWESOME);
 echo HTML::resourceJS(SIF\RESOURCE_LAZYLOAD);
 echo HTML::resourceJS(SIF\RESOURCE_STORE);

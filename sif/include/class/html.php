@@ -26,12 +26,22 @@ class HTMLBase {
         $code = '<script src="' . $link . '"></script>';
         return $code . "\n";
     }
-    static function resourceJS(int $resourceId): string {
+    private static function getResource(int $resourceId): array {
         global $config;
         $index = $config['resource_index_override'][$resourceId] ?? $config['resource_index_default'];
         $resource = RESOURCES[$resourceId][$index];
-        $url = (isset($resource[0]) ? $config['resource_hosts'][$resource[0]] : '') . $resource[1];
-        return '<script src="'.$url.'"'.(!empty($resource[2])?' integrity="'.$resource[2].'" crossorigin="anonymous"':'').'></script>'."\n";
+        return [
+            (isset($resource[0]) ? $config['resource_hosts'][$resource[0]] : '') . $resource[1],
+            !empty($resource[2]) ? ' integrity="'.$resource[2].'" crossorigin="anonymous"' : '',
+        ];
+    }
+    static function resourceCSS(int $resourceId): string {
+        $resource = self::getResource($resourceId);
+        return '<link rel="stylesheet" type="text/css" href="'.$resource[0].'"'.$resource[1].'/>'."\n";
+    }
+    static function resourceJS(int $resourceId): string {
+        $resource = self::getResource($resourceId);
+        return '<script src="'.$resource[0].'"'.$resource[1].'></script>'."\n";
     }
 
     static function dict($dictName, $vocName, $tagName = 'span', $attr = ''): string {
