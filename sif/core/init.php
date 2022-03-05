@@ -24,16 +24,18 @@ if (!defined('ROOT_SIF_ASSET'))
 if (!defined('ROOT_SIF_DOC'))
     define('ROOT_SIF_DOC', dirname(dirname(ROOT_SIF_SRC)) . '/doc/sif');
 
-if (!defined('ROOT_SIF_CONFIG')) {
+function defineRoot(string $define, string $target): void {
     $dir = dir(ROOT_SIF_SRC);
     while (($name = $dir->read()) !== false) {
-        if (strncmp($name, 'config-', 7) != 0)
+        if (strncmp($name, $target.'-', strlen($target)+1) != 0)
             continue;
-        define('ROOT_SIF_CONFIG', ROOT_SIF_SRC . '/' . $name);
+        define($define, ROOT_SIF_SRC . '/' . $name);
         break;
     }
     $dir->close();
 }
+defineRoot('ROOT_SIF_ADMIN', 'admin');
+defineRoot('ROOT_SIF_CONFIG', 'config');
 
 function _autoload($namespace, $root, $name) {
     if (strncmp($name, $namespace . '\\', strlen($namespace) + 1))
@@ -61,6 +63,7 @@ require_once ROOT_SIF_CONFIG . '/resources.php';
 require_once ROOT_SIF_CONFIG . '/config.php';
 require_once ROOT_SIF_CONFIG . '/version.php';
 require_once ROOT_SIF_CONFIG . '/pages.php';
+require_once ROOT_SIF_CONFIG . '/datapacks.php';
 
 const DB_EIS_MAIN = 'eis.s3db';
 const DB_EIS_CACHED = 'cached.s3db';

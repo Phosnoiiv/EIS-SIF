@@ -3,6 +3,7 @@ namespace EIS\Lab\SIF;
 require_once __DIR__ . '/core/init.php';
 if (!defined('ROOT_SIFAS_CACHE'))
     define('ROOT_SIFAS_CACHE', dirname(ROOT_SIF_CACHE) . '/sifas');
+V2::load();
 
 $master_rerun_group_jp = (time() - SIF::ROTATION_BEGIN_MASTER_RERUN_JP) / 604800 % SIF::ROTATION_COUNT_MASTER_RERUN_JP + 1;
 $master_rerun_groups = [
@@ -23,6 +24,9 @@ function createButton($pageID, $servers = [], $note = '', $file = '', $options =
     $isAS = $page['game'] == 2;
     $button = '<a' . ($isAS ? ' class="sifas"' : '') . ' href="' . Basic::getPageURL($pageID) . '" target="_blank">';
     if (!empty($file)) {
+        if (is_array($file)) {
+            $fileTime = max(array_map(fn($x)=>V2::getDataTime($x),$file));
+        } else
         $fileTime = filemtime(($isAS ? ROOT_SIFAS_CACHE : ROOT_SIF_CACHE) . '/' . $file);
         $button .= '<div class="update ' . checkUpdateStatus($fileTime) . '"><span class="eis-sif-countup" data-time=' . $fileTime . '></span>前更新</div>';
     }
@@ -141,7 +145,7 @@ foreach (Basic::getAvailableMods() as $mod) {
 <div class="buttons-container">
 <?=createButton(2, [1,3,2], '2018 年 9 月至今', 'login.js')?>
 <?=createButton(7, [4,5], '附背景', 'login.js')?>
-<?=createButton(29, [4], '', 'accessories.js')?>
+<?=createButton(29, [4,6], '', [290101])?>
 <?=createButton(20, [4,5], '', 'live-detail.js')?>
 <?=createButton(13, [1,2,3], '', 'event.rc.js')?>
 <?=createButton(23, [4,5,6], '', 'goals.js')?>

@@ -2,15 +2,17 @@
 namespace EIS\Lab\SIF;
 $pageID = 29;
 require_once dirname(__DIR__).'/core/init.php';
+V2::load();
+$migV2UnitFullIds = [290101];
 
 $useSIFStyle = true;
-$latestFile = ROOT_SIF_CACHE.'/accessories.js';
 
 require ROOT_SIF_WEB.'/common-d42c0d8a/head1.php';
 echo HTML::css('accessories');
 echo HTML::js('accessories');
 ?>
 <script>
+<?=HTML::json2(V2::getData(290101),'accessories')?>
 <?=Cache::read('accessories.js')?>
 </script>
 <?php
