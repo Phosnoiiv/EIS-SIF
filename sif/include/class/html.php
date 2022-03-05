@@ -64,6 +64,9 @@ class HTML extends HTMLBase {
         $json = json_encode($array, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         return (empty($varname) ? $json : 'var ' . $varname . '=' . $json . ";\n");
     }
+    static function json2(string $json, string $name): string {
+        return 'var '.$name.'='.$json.";\n";
+    }
 
     const SERVER_ICON_JP = '<span class="fa-stack"><i class="fas fa-circle fa-stack-2x" style="color:#fff"></i><i class="fas fa-circle fa-stack-1x" style="color:#f00"></i></span>';
     const SERVER_ICON_WW = '<span class="fa-stack"><i class="fas fa-globe-asia fa-stack-2x" style="color:#098"></i></span>';

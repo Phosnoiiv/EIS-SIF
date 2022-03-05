@@ -1,4 +1,3 @@
-const COL_ACCESSORY_FROM_LT = 6, COL_ACCESSORY_LEVELS = 7, COL_ACCESSORY_APPEND = 8;
 commons.c.g[2901] = {
     defaultViewType:2,
     getItems:function(){return accessories;},
@@ -18,16 +17,17 @@ commons.c.g[2901] = {
     optionIDs:[1], optionDefaults:{1:1},
     sortMethods:{
         1:{v:function(itemID,item){return itemID;}},
-        2:{n:"Smile",a:"低",z:"高",v:function(itemID,item){var levelID=commons.r.g[2901].options[1];return item[COL_ACCESSORY_LEVELS][levelID][0];}},
-        3:{n:"Pure",a:"低",z:"高",v:function(itemID,item){var levelID=commons.r.g[2901].options[1];return item[COL_ACCESSORY_LEVELS][levelID][1];}},
-        4:{n:"Cool",a:"低",z:"高",v:function(itemID,item){var levelID=commons.r.g[2901].options[1];return item[COL_ACCESSORY_LEVELS][levelID][2];}},
+        2:{n:"Smile",a:"低",z:"高",v:function(itemID,item){var levelID=commons.r.g[2901].options[1];return accessoryExtends[itemID][0][levelID][0];}},
+        3:{n:"Pure",a:"低",z:"高",v:function(itemID,item){var levelID=commons.r.g[2901].options[1];return accessoryExtends[itemID][0][levelID][1];}},
+        4:{n:"Cool",a:"低",z:"高",v:function(itemID,item){var levelID=commons.r.g[2901].options[1];return accessoryExtends[itemID][0][levelID][2];}},
     }, sortDefault:[1,-1],
     itemClick:function(itemID,item){return "showDetail("+itemID+")"},
     itemSearchWords:function(itemID,item){var a=[];
         a.push(item[0],item[1],item[2]);
     return a;},
     createViewItem:function(itemID,item,viewType){
-        var levelID = commons.r.g[2901].options[1], level = item[COL_ACCESSORY_LEVELS][levelID];
+        var extend = accessoryExtends[itemID];
+        var levelID = commons.r.g[2901].options[1], level = extend[0][levelID];
         var isSpecial = item[5]>0; if (isSpecial) {
             var card = cards[item[5]];
             var $card = card ? gItem(1001,item[5],1,0,{v:78,z:true},gConfig) : "unit/0".toJQImg(1,1,true).addClass("card-unavailable");
@@ -41,7 +41,7 @@ commons.c.g[2901] = {
                 $card,
                 $('<div class="accessory-view-2-detail-effect">').append(
                     isSpecial?$cardSkill:null,
-                    $("<p>").append("edit/7802".toJQImg(1,1),G1C.skillEffectSN[item[COL_ACCESSORY_FROM_LT]]),
+                    $("<p>").append("edit/7802".toJQImg(1,1),G1C.skillEffectSN[item[6]]),
                 ),
             ));
             case 3: return $('<div class="accessory">').append($item,
@@ -103,13 +103,13 @@ function showDetail(accessoryID) {
     _paq.push(["trackEvent", "G1-Accessories", "Show"]);
 }
 function getSkillDesc(accessoryID, levelID) {
-    var accessory = accessories[accessoryID], level = accessory[COL_ACCESSORY_LEVELS][levelID] || accessoryStorage[accessoryID][levelID];
+    var accessory = accessories[accessoryID], extend = accessoryExtends[accessoryID], level = extend[0][levelID] || accessoryStorage[accessoryID][levelID];
     var arg = {a2300:level[6]};
-    if (accessory[COL_ACCESSORY_APPEND]) {
-        var append = accessory[COL_ACCESSORY_APPEND];
+    if (extend[1]) {
+        var append = extend[1];
         arg.e = append.e;
     }
-    return g1SkillDesc(levelID,-1,accessory[COL_ACCESSORY_FROM_LT],0,level[5],level[4],level[3],arg);
+    return g1SkillDesc(levelID,-1,accessory[6],0,level[5],level[4],level[3],arg);
 }
 function qAttr(values) {
     var $div = $('<div class="sif-attr-score-group">');

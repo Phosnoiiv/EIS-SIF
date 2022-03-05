@@ -3,7 +3,7 @@ namespace EIS\Lab\SIF;
 require_once dirname(dirname(__DIR__)).'/core/init.php';
 
 $sql = "SELECT * FROM accessory_m";
-$col = [['i','smile_max'],['i','pure_max'],['i','cool_max'],['i','effect_type']];
+$col = [['i','smile_max'],['i','pure_max'],['i','cool_max']];
 $dAccessories = DB::ltSelect('jp/unit.db_', $sql, $col, 'accessory_id');
 
 $sql = "SELECT * FROM accessory_level_m";
@@ -17,8 +17,8 @@ $sql = "SELECT * FROM accessory_effect_target_m";
 $col = [['i','reference_type'],['i','effect_target']];
 $dEffectTargets = DB::ltSelect('jp/unit.db_', $sql, $col, 'accessory_id', ['m'=>true]);
 
-$sql = "SELECT * FROM item_accessory";
-$col = [['s','jp_name'],['s','en_name'],['s','zhs_name',''],['s','image'],['i','rarity'],['i','card',0]];
+$sql = "SELECT id FROM d_accessory";
+$col = [];
 $cAccessories = DB::mySelect($sql, $col, 'id', ['z'=>true]);
 foreach ($cAccessories as $accessoryID => &$cAccessory) {
     if ($accessoryID==0) continue;
@@ -40,16 +40,16 @@ foreach ($cAccessories as $accessoryID => &$cAccessory) {
 
 $sql = "SELECT unit_id,unit_member,idolized,us.effect_type,us.trigger_type,us.trigger_value_8
         FROM unit u LEFT JOIN unit_skill us ON u.unit_skill=us.id
-        WHERE unit_id IN (SELECT `card` FROM item_accessory) ORDER BY unit_id ASC";
+        WHERE unit_id IN (SELECT `card` FROM d_accessory) ORDER BY unit_id ASC";
 $col = [['i','unit_member'],['i','idolized'],['i','effect_type'],['i','trigger_type'],['i','trigger_value_8']];
 $cCards = DB::mySelect($sql, $col, 'unit_id');
 
-$sql = "SELECT * FROM member_v107 WHERE sif_id IN (SELECT DISTINCT unit_member FROM unit WHERE unit_id IN (SELECT `card` FROM item_accessory))";
+$sql = "SELECT * FROM member_v107 WHERE sif_id IN (SELECT DISTINCT unit_member FROM unit WHERE unit_id IN (SELECT `card` FROM d_accessory))";
 $col = [['s','jp_name'],['s','en_name'],['s','zhs_name']];
 $cMembers = DB::mySelect($sql, $col, 'sif_id');
 
 Cache::writeMultiJson('accessories.js', [
-    'accessories' => $cAccessories,
+    'accessoryExtends' => $cAccessories,
     'cards' => $cCards,
     'members' => $cMembers,
 ]);

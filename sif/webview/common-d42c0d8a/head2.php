@@ -33,6 +33,10 @@ foreach ($instantPageNotices as $notice) {
     echo '<div class="eis-sif-notice"><p><i class="fas fa-exclamation-circle"></i> ' . $notice . "</p></div>\n";
 }
 $barContents = [];
+if (!empty($migV2UnitFullIds)) {
+    $barContents[] = '<i class="fas fa-cube"></i> 当前数据包 '.V2::getDataBundleName();
+    $barContents[] = '<i class="fas fa-clock"></i> 本页面数据更新于 ' . date('m/d H:i', max(array_map(fn($x)=>V2::getDataTime($x),$migV2UnitFullIds)));
+}
 if (isset($latestFile)) {
     $barContents[] = '<i class="fas fa-clock"></i> 本页面数据更新于 ' . date('m/d H:i', filemtime($latestFile));
 }
