@@ -15,6 +15,13 @@
     flex-basis:140px; display:flex; flex-direction:column; align-items:center; padding:2px;
     background:#fff; border:1px solid #bbb;
 }
+[data-gallery-css-view="2"] .accessory-time {
+    display:flex; flex-direction:column; align-items:flex-start;
+    font-size:12px;
+}
+[data-gallery-css-view="2"] .accessory-time .eis-sif-flag {
+    position:unset;
+}
 .accessory-view-2-detail {
     align-self:stretch; display:flex;
 }
@@ -39,6 +46,12 @@
 }
 [data-gallery-css-view="3"] .accessory-image {
     float:left; margin-right:10px;
+}
+[data-gallery-css-view="3"] .accessory-time {
+    font-size:13px;
+}
+[data-gallery-css-view="3"] .accessory-time .eis-sif-flag {
+    position:unset;margin-right:10px;
 }
 .accessory-view-3-card {
     float:right; display:flex; flex-direction:column; align-items:flex-end;

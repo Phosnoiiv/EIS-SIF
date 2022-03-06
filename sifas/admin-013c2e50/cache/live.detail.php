@@ -9,6 +9,7 @@ include ROOT_SIFAS_CACHE . '/drops.php';
 DB::ltAttach('jp/masterdata.db', 'jp/dictionary_ja_k.db', 'k');
 DB::ltAttach('jp/masterdata.db', 'jp/dictionary_ja_m.db', 'm');
 DB::ltAttach('jp/masterdata.db', 'gl/dictionary_zh_k.db', 'kz');
+DB::ltAttach('jp/masterdata.db', 'cn/dictionary_zh_k.db', 'ks');
 DB::ltAttach('jp/masterdata.db', 'cache.s3db', 'c');
 DB::ltAttach('jp/masterdata.db', 'restore.s3db', 'r');
 
@@ -189,19 +190,22 @@ $sql = "SELECT * FROM skill_target_v109";
 $col = [['s','icons',''],['s','icons_reverse','']];
 $cTargets = DB::mySelect($sql, $col, 'id');
 
+$sql = "SELECT ldg.*,k1.message k1m,k2.message k2m,ks1.message ks1m,ks2.message ks2m
+        FROM (SELECT * FROM m_live_difficulty_gimmick UNION SELECT * FROM r.m_live_difficulty_gimmick) ldg
+        LEFT JOIN (SELECT * FROM k.m_dictionary UNION SELECT * FROM r.m_dictionary_k) k1 ON substr(ldg.name,3)=k1.id
+        LEFT JOIN (SELECT * FROM k.m_dictionary UNION SELECT * FROM r.m_dictionary_k) k2 ON substr(ldg.description,3)=k2.id
+        LEFT JOIN ks.m_dictionary ks1 ON substr(ldg.name,3)=ks1.id
+        LEFT JOIN ks.m_dictionary ks2 ON substr(ldg.description,3)=ks2.id";
+$col = [['i','skill_master_id'],['s','k1m',''],['s','k2m',''],['s','ks1m',''],['s','ks2m','']];
+$dLiveGimmicks = DB::ltSelect(DB_GAME_JP_MASTER, $sql, $col, 'live_difficulty_master_id', ['m'=>true]);
+
 $refMaps = [];
 $dictCommonRewards = new SIF\Dict;
-$sql = 'SELECT rld.*,m_live_difficulty_const.*,live_difficulty.*,rldg.skill_master_id,
-    kg.message AS k_gimmick,kzg.message AS kz_gimmick,kh.message AS k_hint,kzh.message AS kz_hint
+$sql = 'SELECT rld.*,m_live_difficulty_const.*,live_difficulty.*
     FROM (SELECT * FROM m_live_difficulty UNION SELECT * FROM r.m_live_difficulty) AS rld
     LEFT JOIN m_live_difficulty_const ON difficulty_const_master_id=m_live_difficulty_const.id
-    LEFT JOIN (SELECT * FROM m_live_difficulty_gimmick UNION SELECT * FROM r.m_live_difficulty_gimmick) AS rldg ON live_difficulty_id=live_difficulty_master_id
-    LEFT JOIN (SELECT * FROM k.m_dictionary UNION SELECT * FROM r.m_dictionary_k) AS kg ON substr(name,3)=kg.id
-    LEFT JOIN kz.m_dictionary AS kzg ON substr(name,3)=kzg.id
-    LEFT JOIN (SELECT * FROM k.m_dictionary UNION SELECT * FROM r.m_dictionary_k) AS kh ON substr(description,3)=kh.id
-    LEFT JOIN kz.m_dictionary AS kzh ON substr(description,3)=kzh.id
     LEFT JOIN c.live_difficulty ON live_difficulty_id=live_difficulty.id
-    WHERE live_id>10000 AND live_difficulty_id<90000000 AND hide IS NULL
+    WHERE live_id>10000 AND live_difficulty_id<60000000 AND hide IS NULL
 ';
 $dbMaps = DB::lt_query('jp/masterdata.db', $sql);
 while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
@@ -265,10 +269,10 @@ while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
         $dbMap['collabo_voltage_upper_limit'],
         $dbMap['skill_voltage_upper_limit'],
         $dbMap['squad_change_voltage_upper_limit'],
-        $dictStrings[$songID]->set($dbMap['k_gimmick']),
-        $dictStrings[$songID]->set($dbMap['kz_gimmick'] ?? ''),
-        $dictStrings[$songID]->set($dbMap['k_hint']),
-        $dictStrings[$songID]->set($dbMap['kz_hint'] ?? ''),
+        array_map(fn($x)=>$dictStrings[$songID]->set($x), array_column($dLiveGimmicks[$mapID],1)),
+        array_map(fn($x)=>$dictStrings[$songID]->set($x), array_column($dLiveGimmicks[$mapID],3)),
+        array_map(fn($x)=>$dictStrings[$songID]->set($x), array_column($dLiveGimmicks[$mapID],2)),
+        array_map(fn($x)=>$dictStrings[$songID]->set($x), array_column($dLiveGimmicks[$mapID],4)),
         [],
         [],
         $dbMap['note_count'] ?? 0,
@@ -289,9 +293,11 @@ while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
     $allSongs[$songID][0][$attribute]++;
     if ($mapType==1 && in_array($difficulty,Constants::EIS_SONG_DIF_NOTEWORTHY) && !($difficulty==4&&$dbMap['note_voltage_upper_limit']<=50000)) {
         $clientSongs[$songID][1][$difficulty] = [$dbMap['default_attribute'], $dbMap['evaluation_s_score'], $dbMap['recommended_score'], $dbMap['recommended_stamina'], $dbMap['note_stamina_reduce'], []];
-        $tEffect = $rEffects[$rSkills[$dbMap['skill_master_id']][0]];
+        foreach ($dLiveGimmicks[$mapID] as $dLiveGimmick) {
+            $tEffect = $rEffects[$rSkills[$dLiveGimmick[0]][0]];
         if (!$tEffect[0] && !$tEffect[1]) {
             $clientSongs[$songID][1][$difficulty][5][] = Constants::EIS_SONG_TAG_3_NEGATE;
+        }
         }
         ${"mMap$difficulty"}[$mapID] = $songID;
     }

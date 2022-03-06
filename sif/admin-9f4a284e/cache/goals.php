@@ -5,6 +5,7 @@ require_once dirname(dirname(__DIR__)) . '/core/init.php';
 $clientCategories = $clientGoals = $clientStrings = $clientUnitGroups = $clientMemberGroups = [null, [], null, []];
 $listTracks = [];
 foreach ([1 => 'jp', 3 => 'cn'] as $server => $serverName) {
+    $sfxGL = $server>1 ? '_en' : '';
     $listTypes = $listUnitGroups = $listMemberGroups = [];
     $sql = 'SELECT * FROM achievement_m';
     $dbGoals = DB::lt_query($serverName . '/achievement.db_', $sql);
@@ -15,10 +16,10 @@ foreach ([1 => 'jp', 3 => 'cn'] as $server => $serverName) {
         $timeClose = strtotime($dbGoal['end_date'] . SIF::getServerTimezone($server));
         $yearClose = date('Y', $timeClose);
         $type = $dbGoal['achievement_type'];
-        if (empty($dbGoal['description']) && !empty($dbGoal['end_date']) && $timeClose >= $now && $yearClose < 2023) {
+        if (empty($dbGoal["description$sfxGL"]) && !empty($dbGoal['end_date']) && $timeClose >= $now && $yearClose < 2023) {
             for ($maxParam = 11; $maxParam > 0 && empty($dbGoal['params' . $maxParam]); $maxParam--);
             $clientGoals[$server][++$clientIndex] = [
-                $dbGoal['title'],
+                $dbGoal["title$sfxGL"],
                 $timeOpen > $now ? $timeOpen : 0,
                 $timeClose,
                 $dbGoal['reset_type'],
@@ -80,7 +81,7 @@ foreach ([1 => 'jp', 3 => 'cn'] as $server => $serverName) {
         if (!in_array($type, $listTypes))
             continue;
         $key = $dbString['common_id'];
-        $clientStrings[$server][$type][$key] = $dbString['description'];
+        $clientStrings[$server][$type][$key] = $dbString["description$sfxGL"];
     }
     $sql = 'SELECT * FROM achievement_unit_group_name_m';
     $dbUnitGroups = DB::lt_query($serverName . '/achievement.db_', $sql);
@@ -88,7 +89,7 @@ foreach ([1 => 'jp', 3 => 'cn'] as $server => $serverName) {
         $id = $dbUnitGroup['achievement_unit_group_id'];
         if (!in_array($id, $listUnitGroups))
             continue;
-        $clientUnitGroups[$server][$id] = $dbUnitGroup['name'];
+        $clientUnitGroups[$server][$id] = $dbUnitGroup["name$sfxGL"];
     }
     $sql = 'SELECT * FROM achievement_unit_type_group_name_m';
     $dbMemberGroups = DB::lt_query($serverName . '/achievement.db_', $sql);
@@ -96,13 +97,13 @@ foreach ([1 => 'jp', 3 => 'cn'] as $server => $serverName) {
         $id = $dbMemberGroup['achievement_unit_type_group_id'];
         if (!in_array($id, $listMemberGroups))
             continue;
-        $clientMemberGroups[$server][$id] = $dbMemberGroup['name'];
+        $clientMemberGroups[$server][$id] = $dbMemberGroup["name$sfxGL"];
     }
     $sql = 'SELECT * FROM achievement_filter_type_m';
     $dbCategories = DB::lt_query($serverName . '/achievement.db_', $sql);
     while ($dbCategory = $dbCategories->fetchArray(SQLITE3_ASSOC)) {
         $id = $dbCategory['achievement_filter_type_id'];
-        $clientCategories[$server][$id] = $dbCategory['name'];
+        $clientCategories[$server][$id] = $dbCategory["name$sfxGL"];
     }
 }
 

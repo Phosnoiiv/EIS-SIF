@@ -108,10 +108,10 @@ require ROOT_SIFAS_WEB . '/common-b63adcdf/head2.php';
 </div>
 <p class="eis-sif-note">※ 关于部分标记＊的数据项，参见本页面帮助中的说明。本页面帮助链接位于页顶信息条中。</p>
 <div class="map-chart-container"><canvas id="map-evaluation"></canvas></div>
-<p class="map-data-string" data-index=20></p>
-<p class="map-data-string" data-index=21></p>
-<p class="map-data-string" data-index=22></p>
-<p class="map-data-string" data-index=23></p>
+<div class="map-data-strings" data-index=20></div>
+<div class="map-data-strings" data-index=21></div>
+<div class="map-data-strings" data-index=22></div>
+<div class="map-data-strings" data-index=23></div>
 <p class="eis-sif-note">※ 以下部分内容支持自动翻译成多种语言，详见页面顶部右上方设置。</p>
 <?=HTML::dict('58','su',tagName:'h4')?>
 <div id="map-notes" class="eis-sif-gallery"></div>

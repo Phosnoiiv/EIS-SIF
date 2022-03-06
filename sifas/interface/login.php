@@ -14,22 +14,23 @@ $prfSrv = SIF\SIF::$prefixServer[$server];
 $prfSrvOpen = $prfSrv.'_open';
 $prfLng = SIF\SIF::$prefixLanguage[$server];
 $prfLngName = $prfLng.'_name';
-$fltBetween = "datetime('$date','-9 days') AND datetime('$date','+1 month')";
+const G2_LOGIN_GIFT_MAX = 12;
+$fltBetweenSince = 1-G2_LOGIN_GIFT_MAX;
+$fltBetween = "datetime('$date','$fltBetweenSince days') AND datetime('$date','+1 month')";
 $sql = "SELECT * FROM d_login_v105 WHERE ($prfSrvOpen BETWEEN $fltBetween) OR ($prfSrvOpen IS NULL AND $prfLngName IS NOT NULL AND jp_open BETWEEN $fltBetween)";
 $col = [
     ['s','jp_name',''],['s','en_name',''],['s','zhs_name',''],
     ['t','jp_open',1],['t','jp_close',1],['t','gl_open',2],['t','gl_close',2],['t','cn_open',3],['t','cn_close',3],
     ['i','project'],['i','type'],
     ['s','jp_image',''],['s','en_image',''],['s','zhs_image',''],
-    ['i','gift1'],['i','gift2'],['i','gift3'],['i','gift4'],['i','gift5'],
-    ['i','gift6'],['i','gift7'],['i','gift8'],['i','gift9'],['i','gift10'],
+    ...array_map(fn($x)=>['i','gift'.$x], range(1,G2_LOGIN_GIFT_MAX)),
 ];
 const COL_LOGIN_GIFT1 = 14;
 $bonuses = DB::ltSelect(DB_EIS_MAIN, $sql, $col, '');
 array_walk($bonuses, function(&$a) {
     global $cacheLoginGifts, $cacheLoginItems, $items;
     $gifts = [];
-    for ($i = 0; $i < 10; $i++) {
+    for ($i = 0; $i < G2_LOGIN_GIFT_MAX; $i++) {
         if (empty($gift = $a[COL_LOGIN_GIFT1+$i]))
             break;
         $gifts[] = $gift;

@@ -286,6 +286,12 @@ function showMap(songID, mapType, mapIndex) {
     $(".map-data-string").html(function() {
         return strings[map[$(this).attr("data-index")]].replace(/\n/g, "");
     });
+    $(".map-data-strings").each(function() {
+        $this = $(this).empty();
+        $.each(map[$(this).attr("data-index")], function(index, strId) {
+            $("<p>").html(strings[strId]).appendTo($this);
+        });
+    })
     $("#map-notes, #map-waves, #map-drops").empty();
     var waveEnds = [], waveEndsLinked = false;
     $.each(map[25], function(waveIndex, wave) {

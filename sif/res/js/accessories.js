@@ -35,6 +35,10 @@ commons.c.g[2901] = {
         }
         var $item = gItem(1002,itemID,1,0,{i:1,v:78,z:true},gConfig).addClass("accessory-image");
         var $attr = qAttr({1:level[0],2:level[1],3:level[2]});
+        var $timeLimited = item[8] ? $('<div class="accessory-time">').append(
+            $('<span class="eis-sif-flag static">').text("限时制作"),
+            item[8].toServerDate(1,1).getUTCDateMedium() + " 截止",
+        ) : null;
         switch (viewType) {
             case 1: return $item;
             case 2: return $('<div class="accessory">').append($item,$attr.addClass("tiny"),$('<div class="accessory-view-2-detail">').append(
@@ -43,12 +47,13 @@ commons.c.g[2901] = {
                     isSpecial?$cardSkill:null,
                     $("<p>").append("edit/7802".toJQImg(1,1),G1C.skillEffectSN[item[6]]),
                 ),
-            ));
+            ),$timeLimited);
             case 3: return $('<div class="accessory">').append($item,
                 isSpecial ? $('<div class="accessory-view-3-card">').append($card,$cardSkill) : null,
                 $('<p class="accessory-view-3-name">').text(item[0]),
                 $attr,
                 $('<p class="accessory-view-3-effect">').append($('<span class="accessory-level-caption">').text("Lv."+levelID),getSkillDesc(itemID,levelID)),
+                $timeLimited,
             );
         }
     },

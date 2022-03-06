@@ -12,20 +12,12 @@ $clientEvent = [
     $dbEvent['member_category'],
     [],
 ];
-$sql = "SELECT item_id FROM event_point_count_reward_m LEFT JOIN event_point_count_m USING (event_point_count_id) WHERE event_id=$eventID AND add_type=1001
-UNION SELECT item_id FROM event_point_ranking_reward_m LEFT JOIN event_point_ranking_m USING (event_point_ranking_id) WHERE event_id=$eventID AND add_type=1001";
-$dbUnits = DB::lt_query('jp/event_common.db_', $sql);
-while ($dbUnit = $dbUnits->fetchArray(SQLITE3_NUM)) {
-    $clientEvent[5][] = $dbUnit[0];
-}
+$sql = "SELECT unit_id FROM unit WHERE (event1=$eventID OR event2=$eventID) AND unit_type=2";
+$clientEvent[5] = DB::mySelect($sql, [['i','unit_id']], '', ['s'=>true]);
 
 $previousEventID = $eventID - 2;
-$sql = "SELECT item_id FROM event_point_count_reward_m LEFT JOIN event_point_count_m USING (event_point_count_id) WHERE event_id=$previousEventID AND add_type=1001
-UNION SELECT item_id FROM event_point_ranking_reward_m LEFT JOIN event_point_ranking_m USING (event_point_ranking_id) WHERE event_id=$previousEventID AND add_type=1001";
-$dbUnits = DB::lt_query('jp/event_common.db_', $sql);
-while ($dbUnit = $dbUnits->fetchArray(SQLITE3_NUM)) {
-    $clientPreviousEvent[0][] = $dbUnit[0];
-}
+$sql = "SELECT unit_id FROM unit WHERE (event1=$previousEventID OR event2=$previousEventID) AND unit_type=2";
+$clientPreviousEvent[0] = DB::mySelect($sql, [['i','unit_id']], '', ['s'=>true]);
 
 $listUnits = [];
 $sql = 'SELECT * FROM event_yell_unit WHERE event=' . $eventID . ' ORDER BY amount2 DESC, amount1 DESC, unit ASC';
