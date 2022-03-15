@@ -15,6 +15,7 @@ abstract class DBBase {
 
     private static $ltWritableDBs = [];
 
+    const FLAG_MY_FILL_NULL = 1;
     private static function myConnect() {
         global $config;
         $con = new mysqli(
@@ -38,7 +39,7 @@ abstract class DBBase {
         self::myCheck();
         return static::$myCon->query($query);
     }
-    static function mySelect($query, $columns, $key, $options = []) {
+    static function mySelect($query, $columns, $key, $options = [], int $flags = 0) {
         $dbResult = self::my_query($query);
         if (!empty($options['z'])) {
             $result = [null];
@@ -80,6 +81,16 @@ abstract class DBBase {
             } else {
                 $result[$dbRow[$key]] = $row;
             }
+        }
+        if ($flags & self::FLAG_MY_FILL_NULL) {
+            $i=max(array_keys($result)); $j=$i-count($result);
+            for (; $i>=0 && $j>=0; $i--) {
+                if (!array_key_exists($i,$result)) {
+                    $result[$i] = null;
+                    $j--;
+                }
+            }
+            ksort($result);
         }
         return $result ?? [];
     }

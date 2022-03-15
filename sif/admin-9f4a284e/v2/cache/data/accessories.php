@@ -12,6 +12,6 @@ $v2DefData[1] = [
             ['s','image'],['i','rarity'],['i','card',0],['i','effect_type'],
             ['t','jp_on',1],['t','jp_off',1],['t','cn_on',3],['t','cn_off',3],
         ];
-        return DB::mySelect($sql, $col, 'id', ['z'=>true]);
+        return DB::mySelect($sql, $col, 'id', flags:DB::FLAG_MY_FILL_NULL);
     },
 ];

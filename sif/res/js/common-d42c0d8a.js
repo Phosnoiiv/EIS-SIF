@@ -83,8 +83,54 @@ function sifEXP(rank) {
     return rank <= 1000 ? f(rank) - f(rank - 33) : 34435 + (rank - 1001) * (35 + 1550 * (rank - 1000));
 }
 
+// --------------------------------------------------
+// G1
+// --------------------------------------------------
+var eisG1 = function(){
+    var C = {
+        skillTriggerD:{
+            201:"每发动「{{te}}」技能 {{tv}} 次，",
+        },
+        skillEffectN:{
+            4:"判定强化·小", 5:"判定强化·大", 9:"体力回复", 11:"得分提升",
+            2000:"技能发动率提升", 2100:"技能重复", 2201:"PERFECT 得分提升", 2300:"Combo Fever", 2400:"属性同步",
+            2500:"技能等级提升", 2600:"属性强化", 2800:"Charged Spark",
+        },
+        skillEffectD:{
+            4:"在 {{eD}} 秒内小幅强化判定",
+            5:"在 {{eD}} 秒内强化判定",
+            9:"回复 {{ev}} 体力",
+            11:"增加 {{ev}} 分",
+            2000:"在 {{eD}} 秒内将其它技能的发动概率提升至 {{ev}} 倍",
+            2100:"发动上一个技能效果（技能重复除外）",
+            2201:"在 {{eD}} 秒内使 PERFECT 点击的得分增加 {{ev}}",
+            2300:"在 {{eD}} 秒内根据连击数增加点击得分（在 {{ev}}～{{evm}} 之间变动）",
+            2400:"在 {{eD}} 秒内使属性与随机一位{{eT}}成员相同",
+            2500:"使下一个发动的技能等级提高 {{ev}}",
+            2600:"在 {{eD}} 秒内使{{eT}}的属性提高 {{eV}}%",
+            2800:"在 {{eD}} 秒内使点击得分增加 {{ev}}（当累积次数多于所需次数时的效果暂未判明）",
+        },
+    };
+    var descSkill = function(args) {
+        if (args.evm) args.evm *= args.ev;
+        if (args.eT) args.eT = G1P.target2Str(args.eT);
+        if (args.et==2800) args.ev *= args.tv;
+        args.eV = Math.round((args.ev-1)*100000)/1000;
+        if (args.te) args.te = C.skillEffectN[args.te];
+        var td = C.skillTriggerD[args.tt]||"", ed = C.skillEffectD[args.et];
+        if (args.l>8) return ed.G1template(args);
+        var sd = td + "有 {{r}}% 的概率" + ed;
+        if (args.a) {
+            sd = "满足条件的技能未发动时，" + sd;
+        }
+        return sd.G1template(args);
+    };
+    return {
+        descSkill:descSkill,
+    };
+}();
 var G1C = {
-    skillEffectSN:{5:"判",9:"奶",11:"分",2000:"技率↑",2100:"复读",2201:"PP",2300:"CF",2400:"属性同",2500:"Lv↑",2600:"属性↑"},
+    skillEffectSN:{5:"判",9:"奶",11:"分",2000:"技率↑",2100:"复读",2201:"PP",2300:"CF",2400:"属性同",2500:"Lv↑",2600:"属性↑",2800:"Spark"},
     skillSN:{
         1:{5:"#s 时判",9:"#s 时奶",11:"#s 时分"},
         3:{5:"#N 判",9:"#N 奶",11:"#N 分",2000:"#N 技率↑",2100:"#N 复读",2500:"#N Lv↑",2600:"#N 属性↑"},
@@ -92,43 +138,10 @@ var G1C = {
         6:{9:"#P 奶",11:"#P 分",2201:"#PP"},
         100:{11:"连锁分"},
     },
-    skillTriggerD:{
-        "-1":"满足条件的技能未发动时，",
-        3:"每 {i} 个节奏图标",
-        4:"每完成 {i} 连击",
-        6:"每获得 {i} 次 PERFECT ",
-    },
-    skillRateD:"就有 {r}% 的概率",
-    skillEffectD:{
-        4:"使判定在 {t} 秒内得到小幅强化",
-        5:"强化判定 {t} 秒",
-        9:"恢复体力 {v} 点",
-        11:"增加分数 {v} 点",
-        2000:"在 {t} 秒内将发动其它技能的概率提升至 {v} 倍",
-        2100:"发动之前发动的除重复以外的特技效果",
-        2201:"在 {t} 秒内将获得 PERFECT 时的点击分数增加 {v} 点",
-        2300:"在 {t} 秒内根据连击数提升点击分数（在 {v}～{2300} 之间变动）",
-        "e23001":"在 {t} 秒内提升点击分数 {v} 点",
-        2400:"在 {t} 秒内使属性变得与随机一位{e}成员相同",
-        2500:"将下次发动的技能等级提升 {v} 级",
-        2600:"在 {t} 秒内使{e}的属性提升 {v2}%",
-    },
 };
 var G1E = {
     serverSN:[null,"JP","GL","CN"],
 };
-function g1SkillDesc(levelId, triggerType, effectType, triggerValue, rate, effectTime, effectValue, args) {
-    if (effectType==2300 && !args.a2300) effectType = "e23001";
-    var effectDesc = G1C.skillEffectD[effectType].replace("{r}",rate).replace("{t}",effectTime).replace("{v}",effectValue).replace("{v2}",Math.round((effectValue-1)*100000)/1000);
-    if (effectDesc.indexOf("{e}")>=0) effectDesc = effectDesc.replace("{e}",G1P.target2Str(args.e));
-    if (effectType==2300) effectDesc = effectDesc.replace("{2300}", effectValue*10);
-    if (levelId<=8) {
-        var triggerDesc = G1C.skillTriggerD[triggerType].replace("{i}",triggerValue);
-        var rateDesc = G1C.skillRateD.replace("{r}",rate);
-        return triggerDesc + rateDesc + effectDesc;
-    }
-    return effectDesc;
-}
 var G1P = {
     target2Str:function(targets) {
         var r = "";
@@ -491,7 +504,7 @@ function changeGallerySearch(selector, searchWord) {
 function openGallerySort(selector) {
     var configID = $(selector).attr("data-gallery-config"), config = commons.c.g[configID];
     $methods = $('<div id="eis-sif-common-gallery-sort-methods" class="eis-sif-gallery eis-sif-button-group" data-click="selectGallerySortMethod(\''+selector+'\',$)">');
-    $.each(config.sortMethods, function(sortID, method) {
+    $.each(config.sortIDs || Object.keys(config.sortMethods), function(sortIndex, sortID) {
         $('<span data-click-arg='+sortID+'>').text(commonGallery.sortMethodName(configID,sortID)).appendTo($methods);
     });
     $div = $('<div class="eis-sif-common-gallery-sort" title="排序选项" data-width=500>').append(
@@ -566,7 +579,7 @@ function refreshGallery(selector) {
     IDs.sort(function(ID1, ID2) {
         var v1 = sortMethod.v(ID1,items[ID1]), v2 = sortMethod.v(ID2,items[ID2]);
         if (v1<=-99) v1 = 2e9*sortConfig.d; if (v2<=-99) v2 = 2e9*sortConfig.d;
-        return (v1-v2)*sortConfig.d || (ID1-ID2)*sortConfig.d;
+        return (v1-v2)*sortConfig.d || (ID1-ID2)*(sortMethod.i?1:sortConfig.d);
     });
     $.each(IDs, function(index, itemID) {
         var item = items[itemID];

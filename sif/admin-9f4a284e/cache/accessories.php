@@ -3,13 +3,14 @@ namespace EIS\Lab\SIF;
 require_once dirname(dirname(__DIR__)).'/core/init.php';
 
 $sql = "SELECT * FROM accessory_m";
-$col = [['i','smile_max'],['i','pure_max'],['i','cool_max']];
+$col = [['i','smile_max'],['i','pure_max'],['i','cool_max'],['i','trigger_type'],['i','trigger_effect_type']];
 $dAccessories = DB::ltSelect('jp/unit.db_', $sql, $col, 'accessory_id');
 
 $sql = "SELECT * FROM accessory_level_m";
 $col = [
     ['i','smile_diff'],['i','pure_diff'],['i','cool_diff'],
     ['i','effect_value'],['i','discharge_time'],['i','activation_rate'],['i','unit_skill_combo_pattern_id',0],
+    ['i','trigger_value',0],['i','spark_count_limit',0],
 ];
 $dAccessoryLevels = DB::ltSelect('jp/unit.db_', $sql, $col, 'accessory_id', ['k'=>'level']);
 
@@ -31,7 +32,9 @@ foreach ($cAccessories as $accessoryID => &$cAccessory) {
         ];
     }
     if (isset($dEffectTargets[$accessoryID])) $tAppend['e'] = $dEffectTargets[$accessoryID];
-    $cAccessory = array_merge($cAccessory, array_slice($dAccessory, 3), [array_filter($tLevels, function($k) {
+    if (!empty($dAccessory[3])) $tAppend['t'] = $dAccessory[3];
+    if (!empty($dAccessory[4])) $tAppend['te'] = $dAccessory[4];
+    $cAccessory = array_merge($cAccessory, [array_filter($tLevels, function($k) {
         return in_array($k, [1,4,8]);
     }, ARRAY_FILTER_USE_KEY)]);
     if (!empty($tAppend)) array_push($cAccessory, $tAppend);

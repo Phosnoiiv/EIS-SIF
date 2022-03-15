@@ -20,7 +20,8 @@ commons.c.g[2901] = {
         2:{n:"Smile",a:"低",z:"高",v:function(itemID,item){var levelID=commons.r.g[2901].options[1];return accessoryExtends[itemID][0][levelID][0];}},
         3:{n:"Pure",a:"低",z:"高",v:function(itemID,item){var levelID=commons.r.g[2901].options[1];return accessoryExtends[itemID][0][levelID][1];}},
         4:{n:"Cool",a:"低",z:"高",v:function(itemID,item){var levelID=commons.r.g[2901].options[1];return accessoryExtends[itemID][0][levelID][2];}},
-    }, sortDefault:[1,-1],
+        5:{n:"初登场",a:"较早",z:"较新",v:function(itemID,item){return item[7];},i:true},
+    }, sortDefault:[5,-1], sortIDs:[5,2,3,4,1],
     itemClick:function(itemID,item){return "showDetail("+itemID+")"},
     itemSearchWords:function(itemID,item){var a=[];
         a.push(item[0],item[1],item[2]);
@@ -109,12 +110,15 @@ function showDetail(accessoryID) {
 }
 function getSkillDesc(accessoryID, levelID) {
     var accessory = accessories[accessoryID], extend = accessoryExtends[accessoryID], level = extend[0][levelID] || accessoryStorage[accessoryID][levelID];
-    var arg = {a2300:level[6]};
+    var args = {a:true,l:levelID,tv:level[7],et:accessory[6],r:level[5],eD:level[4],ev:level[3]};
+    if (level[6]) args.evm = 10;
     if (extend[1]) {
         var append = extend[1];
-        arg.e = append.e;
+        if (append.e) args.eT = append.e;
+        if (append.t) args.tt = append.t;
+        if (append.te) args.te = append.te;
     }
-    return g1SkillDesc(levelID,-1,accessory[6],0,level[5],level[4],level[3],arg);
+    return eisG1.descSkill(args);
 }
 function qAttr(values) {
     var $div = $('<div class="sif-attr-score-group">');
@@ -128,7 +132,12 @@ $(document).ready(function() {
     $.each(members, function(memberId, member) {
         $("<option>").attr("value",memberId).text(member[2]).appendTo("#filter-members");
     });
+    var hideEffectIds = [];
+    if (SD.g1_accessory_effect_hide) {
+        hideEffectIds = SD.g1_accessory_effect_hide.split(",");
+    }
     $.each(G1C.skillEffectSN, function(effectId, effect) {
+        if (hideEffectIds.indexOf(""+effectId)>=0) return;
         $("<option>").attr("value",effectId).text(effect).appendTo("#filter-effects");
     });
     $("#filter-members").change(function() {
