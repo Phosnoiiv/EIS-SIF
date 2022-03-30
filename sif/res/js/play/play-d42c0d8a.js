@@ -230,9 +230,9 @@ $(document).ready(function() {
                 if (code=="c") $("#play-customize").show(); else $("#play-customize").hide();
             });
         }
-        $.each(["s","f","c"], function(modeIndex, modeCode) {
+        $.each(["s","f","c","e1"], function(modeIndex, modeCode) {
             if (pConfig.m[modeCode] && !(pConfig.mo&&pConfig.mo[modeCode]&&!CI[pConfig.mo[modeCode]])) {
-                buttonTemplate(modeCode, playModeNames[modeCode]).appendTo("#play-mode-buttons");
+                buttonTemplate(modeCode, pConfig.m[modeCode].Cn?CS[pConfig.m[modeCode].Cn]:playModeNames[modeCode]).appendTo("#play-mode-buttons");
             }
         });
         $("#play-mode-buttons :first-child").click();

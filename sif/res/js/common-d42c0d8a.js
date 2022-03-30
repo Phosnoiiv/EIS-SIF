@@ -40,13 +40,16 @@ Number.prototype.toServerDate = function(game, server) {
     if (game==1 && server==2 && this>=serverMerge121) diff = serverTimeDiffs[1][1];
     return new Date((this+diff)*1000);
 }
-String.prototype.toJQImg = function(site, game, isLazy) {
+String.prototype.toImgPath = function(site, game) {
     var s = this, r;
     if (r = s.match(/^((?:[g]\d:)*)s(\d):(.*)$/)) {site = r[2]; s = r[1]+r[3];}
     if (r = s.match(/^()g(\d):(.*)$/)) {game = r[2]; s = r[1]+r[3];}
-    var src = (site<2 ? ["/","/vio/"][site] : resourceHosts[site-2])
+    return (site<2 ? ["/","/vio/"][site] : resourceHosts[site-2])
             + ([2].indexOf(site)<0 ? ["","sif/","sifas/"][game] : "")
             + s + ([".jpg"].indexOf(s.substring(s.length-4))<0 ? ".png" : "");
+}
+String.prototype.toJQImg = function(site, game, isLazy) {
+    var src = this.toImgPath(site, game);
     if (isLazy) return $('<img class="lazyload">').attr("data-src",src);
     return $("<img>").attr("src",src);
 }

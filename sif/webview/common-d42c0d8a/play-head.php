@@ -38,9 +38,11 @@ require ROOT_SIF_WEB . '/common-d42c0d8a/head2.php';
 <section id="play-mode" class="eis-sif-section">
 <h4>开始</h4>
 <div class="eis-sif-button-line"><div id="play-mode-buttons" class="eis-sif-button-group"></div></div>
-<p class="play-mode-desc" data-mode="s"><?=$CPC[1]?></p>
-<p class="play-mode-desc" data-mode="f"><?=$CPC[2]?></p>
-<p class="play-mode-desc" data-mode="c"><?=$CPC[3]?></p>
+<?php
+foreach ($playModes ?? [['s',1],['f',2],['c',3]] as $mode) {
+    echo '<p class="play-mode-desc" data-mode="',$mode[0],'">',$CPC[$mode[1]],"</p>\n";
+}
+?>
 <div id="play-customize" class="eis-jq-accordion" data-expand=1></div>
 <div class="eis-sif-button-line"><span class="eis-jq-button" onclick="playStart()"><i class="fas fa-play"></i> 开始！</span></div>
 </section>

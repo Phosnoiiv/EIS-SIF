@@ -12,19 +12,10 @@ var Match3 = function(elementId, options) {
         x:250, y:113, columns:8, rows:8, tilewidth:40, tileheight:40,
         tiles:[], selectedtile:{selected:false, column:0, row:0},
     };
-    var tilecolors = [
-        [255, 128, 128],
-        [128, 255, 128],
-        [128, 128, 255],
-        [255, 255, 128],
-        [255, 128, 255],
-        [128, 255, 255],
-        [255, 255, 255],
-    ];
     var clusters = [];
     var moves = [];
-    var currentmove = {column1:0, row1:0, column2:0, row2:0};
-    var gamestates = {init:0, ready:1, resolve:2};
+    var currentmove = {column1:0, row1:0, column2:0, row2:0, chain:0};
+    var gamestates = {init:0, ready:1, resolve:2, loading:3};
     var gamestate = gamestates.init;
     var score = 0;
     var animationstate = 0;
@@ -34,10 +25,27 @@ var Match3 = function(elementId, options) {
     var aibot = false;
     var gameover = false;
     var buttons = [
-        {x:30, y:240, width:150, height:50, text:"New Game"},
-        {x:30, y:300, width:150, height:50, text:"Show Moves"},
-        {x:30, y:360, width:150, height:50, text:"Enable AI Bot"},
+        {x:30, y:360, width:150, height:50, text:"退出", f:playQuitConfirm},
+        {x:0, y:-99, width:0, height:0, text:"Show Moves", f:function() {
+            showmoves = !showmoves;
+            buttons[1].text = (showmoves?"Hide":"Show")+" Moves";
+        }},
+        {x:0, y:-99, width:0, height:0, text:"Enable AI Bot", f:function() {
+            aibot = !aibot;
+            buttons[2].text = (aibot?"Disable":"Enable")+" AI Bot";
+        }},
     ];
+    var stage = 0;
+    var stageGoals = [];
+    var stageGoalTypes = [
+        ["无尽挑战"],
+        ["获得 # 分", "达到 # 分"],
+        ["消除^方块 # 个", "消除^方块 # 个"],
+        ["消除^方块 # 个", "消除^方块 # 个"],
+        ["获得 # ^", "获得 # ^"],
+    ];
+    var images = {}, loadingImageIds = [], isLoadingImages = false;
+    var fontFamily = '"Microsoft Yahei", sans-serif';
     function init() {
         canvas.addEventListener("mousemove", onMouseMove);
         canvas.addEventListener("mousedown", onMouseDown);
@@ -53,9 +61,24 @@ var Match3 = function(elementId, options) {
         main(0);
     }
     function main(tframe) {
+        if (stage==-2) return;
         window.requestAnimationFrame(main);
+        load();
         update(tframe);
         render();
+    }
+    function load() {
+        if (gamestate!=gamestates.loading || isLoadingImages) return;
+        isLoadingImages = true;
+        var imageId = loadingImageIds.shift();
+        images[imageId] = new Image();
+        images[imageId].addEventListener("load", function() {
+            isLoadingImages = false;
+            if (!loadingImageIds.length) {
+                gamestate = gamestates.ready;
+            }
+        });
+        images[imageId].src = options.tileImages[imageId][2].toImgPath(options.tileImages[imageId][0], options.tileImages[imageId][1]);
     }
     function update(tframe) {
         var dt = (tframe-lastframe)/1000;
@@ -83,8 +106,15 @@ var Match3 = function(elementId, options) {
                 if (animationtime>animationtimetotal) {
                     findClusters();
                     if (clusters.length>0) {
+                        currentmove.chain++;
                         for (var i=0; i<clusters.length; i++) {
-                            score += 100*(clusters[i].length-2);
+                            if (currentmove.chain==1) {
+                                score += options.stageScores[stage][0]*(clusters[i].length-2);
+                            } else switch (options.stageScores[stage][1]) {
+                                case 1:
+                                    score += options.stageScores[stage][2];
+                                    break;
+                            }
                         }
                         removeClusters();
                         animationstate = 1;
@@ -127,6 +157,7 @@ var Match3 = function(elementId, options) {
             findMoves();
             findClusters();
         }
+        checkStage();
     }
     function updateFps(dt) {
         if (fpstime>0.25) {
@@ -143,10 +174,7 @@ var Match3 = function(elementId, options) {
     }
     function render() {
         drawFrame();
-        context.fillStyle = "#000000";
-        context.font = "24px Verdana";
-        drawCenterText("Score:", 30, level.y+40, 150);
-        drawCenterText(score, 30, level.y+70, 150);
+        drawMattribuxStage();
         drawButtons();
         var levelwidth = level.columns*level.tilewidth;
         var levelheight = level.rows*level.tileheight;
@@ -164,6 +192,13 @@ var Match3 = function(elementId, options) {
             context.font = "24px Verdana";
             drawCenterText("Game Over!", level.x, level.y+levelheight/2+10, levelwidth);
         }
+        if (gamestate==gamestates.loading) {
+            context.fillStyle = "rgba(0,0,0,0.8)";
+            context.fillRect(level.x, level.y, levelwidth, levelheight);
+            context.fillStyle = "#fff";
+            context.font = "24px "+fontFamily;
+            drawCenterText("正在加载图片资源…", level.x, level.y+levelheight/2+10, levelwidth);
+        }
     }
     function drawFrame() {
         context.fillStyle = "#d0d0d0";
@@ -174,10 +209,31 @@ var Match3 = function(elementId, options) {
         context.fillRect(0, 0, canvas.width, 65);
         context.fillStyle = "#ffffff";
         context.font = "24px Verdana";
-        context.fillText("Match3 Example - Rembound.com", 10, 30);
+        context.fillText(options.title, 10, 30);
         context.fillStyle = "#ffffff";
         context.font = "12px Verdana";
         context.fillText("Fps: "+fps, 13, 50);
+    }
+    function drawMattribuxStage() {
+        context.fillStyle = "#000";
+        context.font = "20px "+fontFamily;
+        drawCenterText(options.stageNames[stage], 30, level.y+20, 150);
+        context.font = "16px "+fontFamily;
+        drawCenterText("得分", 30, level.y+50, 150);
+        context.font = "24px "+fontFamily;
+        drawCenterText(score, 30, level.y+80, 150);
+        context.font = "16px "+fontFamily;
+        context.fillText(options.stageGoals[stage][0][0]==0?"无尽挑战":"目标", 30, level.y+120);
+        for (var i=0; i<stageGoals.length; i++) {
+            var desc = stageGoalTypes[stageGoals[i].t][stageGoals[i].p?1:0].replace("^", stageGoals[i].n);
+            if (stageGoals[i].p) {
+                context.fillStyle = "#388e3c";
+                context.fillText("> 已"+desc.replace("#", stageGoals[i].g), 30, level.y+140+20*i);
+            } else {
+                context.fillStyle = "#e64a19";
+                context.fillText("> "+desc.replace("#", stageGoals[i].g-stageGoals[i].c), 30, level.y+140+20*i);
+            }
+        }
     }
     function drawButtons() {
         for (var i=0; i<buttons.length; i++) {
@@ -195,8 +251,7 @@ var Match3 = function(elementId, options) {
                 var shift = level.tiles[i][j].shift;
                 var coord = getTileCoordinate(i, j, 0, (animationtime/animationtimetotal)*shift);
                 if (level.tiles[i][j].type>=0) {
-                    var col = tilecolors[level.tiles[i][j].type];
-                    drawTile(coord.tilex, coord.tiley, col[0], col[1], col[2]);
+                    drawMattribuxTile(coord.tilex, coord.tiley, level.tiles[i][j].design);
                 }
                 if (level.selectedtile.selected) {
                     if (level.selectedtile.column==i && level.selectedtile.row==j) {
@@ -210,18 +265,18 @@ var Match3 = function(elementId, options) {
             var shifty = currentmove.row2-currentmove.row1;
             var coord1 = getTileCoordinate(currentmove.column1, currentmove.row1, 0, 0);
             var coord1shift = getTileCoordinate(currentmove.column1, currentmove.row1, (animationtime/animationtimetotal)*shiftx, (animationtime/animationtimetotal)*shifty);
-            var col1 = tilecolors[level.tiles[currentmove.column1][currentmove.row1].type];
+            var designId1 = level.tiles[currentmove.column1][currentmove.row1].design;
             var coord2 = getTileCoordinate(currentmove.column2, currentmove.row2, 0, 0);
             var coord2shift = getTileCoordinate(currentmove.column2, currentmove.row2, (animationtime/animationtimetotal)* -shiftx, (animationtime/animationtimetotal)* -shifty);
-            var col2 = tilecolors[level.tiles[currentmove.column2][currentmove.row2].type];
+            var designId2 = level.tiles[currentmove.column2][currentmove.row2].design;
             drawTile(coord1.tilex, coord1.tiley, 0, 0, 0);
             drawTile(coord2.tilex, coord2.tiley, 0, 0, 0);
             if (animationstate==2) {
-                drawTile(coord1shift.tilex, coord1shift.tiley, col1[0], col1[1], col1[2]);
-                drawTile(coord2shift.tilex, coord2shift.tiley, col2[0], col2[1], col2[2]);
+                drawMattribuxTile(coord1shift.tilex, coord1shift.tiley, designId1);
+                drawMattribuxTile(coord2shift.tilex, coord2shift.tiley, designId2);
             } else {
-                drawTile(coord2shift.tilex, coord2shift.tiley, col2[0], col2[1], col2[2]);
-                drawTile(coord1shift.tilex, coord1shift.tiley, col1[0], col1[1], col1[2]);
+                drawMattribuxTile(coord2shift.tilex, coord2shift.tiley, designId2);
+                drawMattribuxTile(coord1shift.tilex, coord1shift.tiley, designId1);
             }
         }
     }
@@ -234,14 +289,30 @@ var Match3 = function(elementId, options) {
         context.fillStyle = "rgb("+r+","+g+","+b+")";
         context.fillRect(x+2, y+2, level.tilewidth-4, level.tileheight-4);
     }
+    function drawMattribuxTile(x, y, designId) {
+        var design = options.tileDesigns[designId];
+        if (design[1]==1) {
+            var color = options.tileColors[design[2]];
+            drawTile(x, y, color[0], color[1], color[2]);
+        } else if (design[1]==2) {
+            if (options.tileImages[design[2]][3]) {
+                var color = options.tileColors[options.tileImages[design[2]][3]];
+                drawTile(x, y, color[0], color[1], color[2]);
+            } else {
+                drawTile(x, y, 255, 255, 255);
+            }
+            if (!images[design[2]]) return;
+            context.drawImage(images[design[2]], x+2, y+2, level.tilewidth-4, level.tileheight-4);
+        }
+    }
     function renderClusters() {
         for (var i=0; i<clusters.length; i++) {
             var coord = getTileCoordinate(clusters[i].column, clusters[i].row, 0, 0);
             if (clusters[i].horizontal) {
-                context.fillStyle = "#00ff00";
+                context.fillStyle = "#333";
                 context.fillRect(coord.tilex+level.tilewidth/2, coord.tiley+level.tileheight/2-4, (clusters[i].length-1)*level.tilewidth, 8);
             } else {
-                context.fillStyle = "#0000ff";
+                context.fillStyle = "#333";
                 context.fillRect(coord.tilex+level.tilewidth/2-4, coord.tiley+level.tileheight/2, 8, (clusters[i].length-1)*level.tileheight);
             }
         }
@@ -259,18 +330,62 @@ var Match3 = function(elementId, options) {
     }
     function newGame() {
         score = 0;
+        stage = 0;
         gamestate = gamestates.ready;
         gameover = false;
+        nextStage();
         createLevel();
         findMoves();
         findClusters();
+    }
+    function nextStage() {
+        stage++;
+        stageGoals = [];
+        for (var i=0; i<options.stageGoals[stage].length; i++) {
+            var goal = {
+                t:options.stageGoals[stage][i][0], g:options.stageGoals[stage][i][1]||1,
+                a:options.stageGoals[stage][i][2], n:options.stageGoals[stage][i][3],
+                c:0, p:false,
+            };
+            stageGoals.push(goal);
+        }
+        for (var i=0; i<options.stageTiles[stage].length; i++) {
+            var design = options.tileDesigns[options.stageTiles[stage][i]];
+            if (design[1]!=2) continue;
+            if (images[design[2]]) continue;
+            loadingImageIds.push(design[2]);
+        }
+        if (loadingImageIds.length) {
+            gamestate = gamestates.loading;
+        }
+    }
+    function checkStage() {
+        var allPassed = true;
+        for (var i=0; i<stageGoals.length; i++) {
+            if (stageGoals[i].p) continue;
+            if (stageGoals[i].t==0) {
+                allPassed = false;
+                continue;
+            }
+            switch (stageGoals[i].t) {
+                case 1: stageGoals[i].c = score; break;
+            }
+            if (stageGoals[i].c>=stageGoals[i].g) {
+                stageGoals[i].p = true;
+            } else {
+                allPassed = false;
+            }
+        }
+        if (allPassed && gamestate==gamestates.ready) {
+            nextStage();
+        }
     }
     function createLevel() {
         var done = false;
         while (!done) {
             for (var i=0; i<level.columns; i++) {
                 for (var j=0; j<level.rows; j++) {
-                    level.tiles[i][j].type = getRandomTile();
+                    createMattribuxTile(i, j);
                 }
             }
             resolveClusters();
@@ -280,8 +395,9 @@ var Match3 = function(elementId, options) {
             }
         }
     }
-    function getRandomTile() {
-        return Math.floor(Math.random()*tilecolors.length);
+    function createMattribuxTile(i, j) {
+        level.tiles[i][j].design = options.stageTiles[stage][Math.floor(Math.random()*options.stageTiles[stage].length)];
+        level.tiles[i][j].type = options.tileDesigns[level.tiles[i][j].design][0];
     }
     function resolveClusters() {
         findClusters();
@@ -377,6 +493,14 @@ var Match3 = function(elementId, options) {
     }
     function removeClusters() {
         loopClusters(function(index, column, row, cluster) {
+            for (var i=0; i<stageGoals.length; i++) {
+                if (stageGoals[i].t==2 && level.tiles[column][row].type==stageGoals[i].a)
+                    stageGoals[i].c++;
+                if (stageGoals[i].t==3 && stageGoals[i].a.indexOf(level.tiles[column][row].design)>=0)
+                    stageGoals[i].c++;
+                if (stageGoals[i].t==4 && stageGoals[i].a[level.tiles[column][row].design])
+                    stageGoals[i].c += stageGoals[i].a[level.tiles[column][row].design];
+            }
             level.tiles[column][row].type = -1;
         });
         for (var i=0; i<level.columns; i++) {
@@ -395,7 +519,7 @@ var Match3 = function(elementId, options) {
         for (var i=0; i<level.columns; i++) {
             for (var j=level.rows-1; j>=0; j--) {
                 if (level.tiles[i][j].type==-1) {
-                    level.tiles[i][j].type = getRandomTile();
+                    createMattribuxTile(i, j);
                 } else {
                     var shift = level.tiles[i][j].shift;
                     if (shift>0) {
@@ -424,9 +548,12 @@ var Match3 = function(elementId, options) {
         var typeswap = level.tiles[x1][y1].type;
         level.tiles[x1][y1].type = level.tiles[x2][y2].type;
         level.tiles[x2][y2].type = typeswap;
+        typeswap = level.tiles[x1][y1].design;
+        level.tiles[x1][y1].design = level.tiles[x2][y2].design;
+        level.tiles[x2][y2].design = typeswap;
     }
     function mouseSwap(c1, r1, c2, r2) {
-        currentmove = {column1:c1, row1:r1, column2:c2, row2:r2};
+        currentmove = {column1:c1, row1:r1, column2:c2, row2:r2, chain:0};
         level.selectedtile.selected = false;
         animationstate = 2;
         animationtime = 0;
@@ -434,7 +561,7 @@ var Match3 = function(elementId, options) {
     }
     function onMouseMove(e) {
         var pos = getMousePos(canvas, e);
-        if (drag && level.selectedtile.selected) {
+        if (drag && level.selectedtile.selected && gamestate==gamestates.ready) {
             mt = getMouseTile(pos);
             if (mt.valid) {
                 if (canSwap(mt.x, mt.y, level.selectedtile.column, level.selectedtile.row)) {
@@ -445,7 +572,7 @@ var Match3 = function(elementId, options) {
     }
     function onMouseDown(e) {
         var pos = getMousePos(canvas, e);
-        if (!drag) {
+        if (!drag && gamestate==gamestates.ready) {
             mt = getMouseTile(pos);
             if (mt.valid) {
                 var swapped = false;
@@ -471,15 +598,7 @@ var Match3 = function(elementId, options) {
         }
         for (var i=0; i<buttons.length; i++) {
             if (pos.x>=buttons[i].x && pos.x<buttons[i].x+buttons[i].width && pos.y>=buttons[i].y && pos.y<buttons[i].y+buttons[i].height) {
-                if (i==0) {
-                    newGame();
-                } else if (i==1) {
-                    showmoves = !showmoves;
-                    buttons[i].text = (showmoves?"Hide":"Show")+" Moves";
-                } else if (i==2) {
-                    aibot = !aibot;
-                    buttons[i].text = (aibot?"Disable":"Enable")+" AI Bot";
-                }
+                buttons[i].f();
             }
         }
     }
@@ -496,7 +615,20 @@ var Match3 = function(elementId, options) {
             y:Math.round((e.clientY-rect.top)/(rect.bottom-rect.top)*canvas.height),
         };
     }
+    function getScore() {return score;}
+    function end() {
+        stage = -2;
+    }
+    function dev(command) {
+        switch (command) {
+            case "ai":
+                buttons[2].f();
+                break;
+        }
+    }
     return {
-        init:init,
+        init:init, end:end,
+        getScore:getScore,
+        _dev:dev,
     };
 };
