@@ -78,6 +78,7 @@ function changeType() {
         }
         if (l.i) {
             qFormSlider("icon", "收集活动图标数", [], 0, 0.1).appendTo("#config-play");
+            qFormCheck("icon-setlist", "Setlist", null).appendTo("#config-play");
             $("#collected").removeAttr("disabled");
         }
         if (l.b) {
@@ -234,6 +235,9 @@ function calculate() {
                 var expGet = Math.round((l.x ? chainResult.exp : d.e || difficultyEXPs[difficulty]) * (eventConfig.g && eventConfig.g.e && $("#g-e:checked").length ? eventConfig.g.e : 1) * (getLuckyBonus(type, "e", situation) || 1) * $("#campaign-exp").val()) * multiple;
                 var iconGet = l.i ? parseInt($("#icon").val()) : 0;
                 var ptGet = l.i ? iconGet : l.x ? chainResult.pt : d.p;
+                if (l.i && $("#icon-setlist:checked").length) {
+                    iconGet = Math.round(iconGet * yellEffect);
+                }
                 $.each(l.b || [], function(bIndex, b) {
                     ptGet *= $("#bonus-" + lIndex + "-" + bIndex).val();
                 });
