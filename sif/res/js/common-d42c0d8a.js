@@ -116,7 +116,7 @@ var eisG1 = function(){
     };
     var descSkill = function(args) {
         if (args.evm) args.evm *= args.ev;
-        if (args.eT) args.eT = G1P.target2Str(args.eT);
+        args.eT = G1P.target2Str(args.eT||[]);
         if (args.et==2800) args.ev *= args.tv;
         args.eV = Math.round((args.ev-1)*100000)/1000;
         if (args.te) args.te = C.skillEffectN[args.te];

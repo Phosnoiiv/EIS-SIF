@@ -14,6 +14,7 @@ echo HTML::js('tool-event');
 ?>
 <script>
 <?=Cache::read('event-current.js')?>
+<?=Cache::read('tool-event.js')?>
 </script>
 <?php
 require ROOT_SIF_WEB . '/common-d42c0d8a/head2.php';

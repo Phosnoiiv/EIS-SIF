@@ -37,7 +37,6 @@ var bonusSeriesConfigs = {
     4:{n:"贡献度",b:[["1 位",1.08],["2 位",1.05],["3 位",1.02],["4 位",1]]},
     5:{n:"任务",b:[["SSS",1.45],["SS",1.35],["S",1.25],["A",1.15],["B",1.1],["C",1.05],["D",1]]},
 };
-var yellChoices = [100,60,50,30,20,10,5,1];
 var difficultyLPs = [null, 5, 10, 15, 25, 25, 25];
 var difficultyEXPs = [null, 12, 26, 46, 83, 83, 83];
 var gBonusNames = {e:"购买经验提升", p:"购买 pt 提升"};
