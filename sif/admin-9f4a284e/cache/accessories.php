@@ -41,20 +41,25 @@ foreach ($cAccessories as $accessoryID => &$cAccessory) {
     $sAccessoryLevels[$accessoryID] = Util::toJSON($tLevels);
 }
 
-$sql = "SELECT unit_id,unit_member,idolized,us.effect_type,us.trigger_type,us.trigger_value_8
+$sql = "SELECT unit_id,unit_member,idolized,unit_seal,us.effect_type,us.trigger_type,us.trigger_value_8
         FROM unit u LEFT JOIN unit_skill us ON u.unit_skill=us.id
         WHERE unit_id IN (SELECT `card` FROM d_accessory) ORDER BY unit_id ASC";
-$col = [['i','unit_member'],['i','idolized'],['i','effect_type'],['i','trigger_type'],['i','trigger_value_8']];
+$col = [['i','unit_member'],['i','idolized'],['i','effect_type'],['i','trigger_type'],['i','trigger_value_8'],['i','unit_seal']];
 $cCards = DB::mySelect($sql, $col, 'unit_id');
 
 $sql = "SELECT * FROM member_v107 WHERE sif_id IN (SELECT DISTINCT unit_member FROM unit WHERE unit_id IN (SELECT `card` FROM d_accessory))";
 $col = [['s','jp_name'],['s','en_name'],['s','zhs_name']];
 $cMembers = DB::mySelect($sql, $col, 'sif_id');
 
+$sql = "SELECT * FROM item_v106 WHERE `type`=3006 AND `key` IN (4,6)";
+$col = [['s','jp_image2']];
+$cSeals = DB::mySelect($sql, $col, 'type', ['k'=>'key']);
+
 Cache::writeMultiJson('accessories.js', [
     'accessoryExtends' => $cAccessories,
     'cards' => $cCards,
     'members' => $cMembers,
+    'items' => $cSeals,
 ]);
 Cache::writePhp('accessories.php', [
     'cacheAccessoryLevels' => $sAccessoryLevels,

@@ -33,6 +33,7 @@ commons.c.g[2901] = {
             var card = cards[item[5]];
             var $card = card ? gItem(1001,item[5],1,0,{v:78,z:true},gConfig) : "unit/0".toJQImg(1,1,true).addClass("card-unavailable");
             var $cardSkill = card ? $("<p>").append("edit/7801".toJQImg(1,1),G1C.skillSN[card[3]][card[2]].replace("#",card[4])) : null;
+            var $cardSeal = card && card[5] ? gItem(3006,card[5]==2?6:4,1,0,{},gConfig).addClass("card-seal") : null;
         }
         var $item = gItem(1002,itemID,1,0,{i:1,v:78,z:true},gConfig).addClass("accessory-image");
         var $attr = qAttr({1:level[0],2:level[1],3:level[2]});
@@ -43,14 +44,14 @@ commons.c.g[2901] = {
         switch (viewType) {
             case 1: return $item;
             case 2: return $('<div class="accessory">').append($item,$attr.addClass("tiny"),$('<div class="accessory-view-2-detail">').append(
-                $card,
+                $card&&$card.append($cardSeal),
                 $('<div class="accessory-view-2-detail-effect">').append(
                     isSpecial?$cardSkill:null,
                     $("<p>").append("edit/7802".toJQImg(1,1),G1C.skillEffectSN[item[6]]),
                 ),
             ),$timeLimited);
             case 3: return $('<div class="accessory">').append($item,
-                isSpecial ? $('<div class="accessory-view-3-card">').append($card,$cardSkill) : null,
+                isSpecial ? $('<div class="accessory-view-3-card">').append($card,$cardSkill,$cardSeal) : null,
                 $('<p class="accessory-view-3-name">').text(item[0]),
                 $attr,
                 $('<p class="accessory-view-3-effect">').append($('<span class="accessory-level-caption">').text("Lv."+levelID),getSkillDesc(itemID,levelID)),
@@ -151,6 +152,7 @@ $(document).ready(function() {
 });
 
 var gConfig = $.extend({}, gConfigDefault, {
+    itemImages:[null,0,0,0],
     accessoryImage:3,
     fUnit:function(cardID){return null;},
 });
