@@ -147,6 +147,7 @@ foreach (Basic::getAvailableMods() as $mod) {
 <?=createButton(7, [4,5], '附背景', 'login.js')?>
 <?=createButton(29, [4,6], '', [290101])?>
 <?=createButton(20, [4,5], '', 'live-detail.js')?>
+<?=createButton(31, [1,2,3])?>
 <?=createButton(13, [1,2,3], '', 'event.rc.js')?>
 <?=createButton(23, [4,5,6], '', 'goals.js')?>
 <?=createButton(10, [1,3,2], '2020 年 1 月至今', 'trades.js')?>

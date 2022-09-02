@@ -32,4 +32,5 @@ $pages = [
       28 => ['key'=>'sim/gacha', 'title'=>'SIF 招募模拟', 'game'=>1, 'path'=>'sim/gacha'],
       29 => ['key'=>'list/accessories', 'title'=>'SIF 饰品一览', 'game'=>1, 'path'=>'list/accessories'],
       30 => ['key'=>'play/mattribux', 'game'=>0, 'path'=>'play/mattribux'],
+      31 => ['key'=>'museum/arena', 'title'=>'Live ♪ Arena 开闭幕词', 'game'=>1, 'path'=>'migrate/arena'],
 ];

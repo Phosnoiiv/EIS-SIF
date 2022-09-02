@@ -12,6 +12,7 @@ $config[CONFIG_SHEET_SIF]['sqlite_dir'] = dirname(dirname(ROOT_SIF_SRC)) . '/db/
 
 $config['matomo_host'] = '';
 $config['matomo_scheme'] = 'https';
+$config['v2_host'] = '';
 $config['resource_host_1'] = '';
 $config['resource_hosts'] = [];
 $config['resource_index_default'] = 0;

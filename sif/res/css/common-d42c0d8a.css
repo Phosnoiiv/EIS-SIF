@@ -456,6 +456,9 @@ span[data-gallery-role=sort] {
 .eis-sif-hidden {
     display: none;
 }
+#eis-sif-migrate-iframe {
+    width:100%; height:calc(100vh - 260px);
+}
 .eis-sif-map .level {
     color: #ff5722; font-weight: bold;
 }
