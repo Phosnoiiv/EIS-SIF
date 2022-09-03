@@ -483,7 +483,8 @@ function recoveryGalleryItem(fullSelector, value) {
 function changeGalleryView(selector, viewType) {
     var configID = $(selector).attr("data-gallery-config"), config = commons.c.g[configID];
     commons.r.g[configID].viewType = viewType;
-    $(selector).attr("data-gallery-css-view", viewType);
+    var inheritedViewType = (config.viewInherit||{})[viewType] || viewType;
+    $(selector).attr("data-gallery-css-view", inheritedViewType);
     setMemory("commons", "g.v."+configID, viewType);
     if (commons.r.g[configID].ready) refreshGallery(selector);
 }
@@ -584,9 +585,30 @@ function refreshGallery(selector) {
         if (v1<=-99) v1 = 2e9*sortConfig.d; if (v2<=-99) v2 = 2e9*sortConfig.d;
         return (v1-v2)*sortConfig.d || (ID1-ID2)*(sortMethod.i?1:sortConfig.d);
     });
+    var viewType = commons.r.g[configID].viewType, groupIds = [], groupOutput = {};
+    if (config.group2Items && (config.viewDisableGrouping||[]).indexOf(viewType)<0) {
+        $.each(config.group2Items, function(groupId, itemIds) {
+            var pass = true;
+            $.each(itemIds, function(index, itemId) {
+                if (IDs.indexOf(itemId)<0) return (pass = false);
+            });
+            if (!pass) return;
+            groupIds.push(+groupId);
+            groupOutput[groupId] = false;
+        });
+    }
+    var inheritedViewType = (config.viewInherit||{})[viewType] || viewType;
     $.each(IDs, function(index, itemID) {
-        var item = items[itemID];
-        config.createViewItem(itemID,item,commons.r.g[configID].viewType).attr("onclick",config.itemClick(itemID,item)).appendTo(selector+" [data-gallery-role=gallery]");
+        var item = items[itemID], groupId = (config.item2Group||[])[itemID];
+        if (groupId) {
+            if (groupOutput[groupId]) return;
+            if (groupIds.indexOf(groupId)>=0) {
+                config.createViewGroup(groupId,itemID,viewType).attr("onclick",config.groupClick(groupId,itemID)).appendTo(selector+" [data-gallery-role=gallery]");
+                groupOutput[groupId] = true;
+                return;
+            }
+        }
+        config.createViewItem(itemID,item,inheritedViewType).attr("onclick",config.itemClick(itemID,item)).appendTo(selector+" [data-gallery-role=gallery]");
     });
     if (config.eRefreshed) config.eRefreshed();
     lazyload();

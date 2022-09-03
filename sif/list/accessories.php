@@ -27,6 +27,7 @@ require ROOT_SIF_WEB.'/common-d42c0d8a/head2.php';
 <span>视图：<span class="eis-sif-button-group tiny" data-click="changeGalleryView('#g-main',$)" data-gallery-role=views>
     <span data-click-arg=1><i class="fas fa-th"></i></span>
     <span data-click-arg=2><i class="fas fa-th-large"></i></span>
+    <span data-click-arg=4><i class="fas fa-th-large"></i></span>
     <span data-click-arg=3><i class="fas fa-th-list"></i></span>
 </span></span>
 <span>数据：<span class="eis-sif-button-group tiny" data-click="changeGalleryOption('#g-main',1,$)" data-gallery-role=option data-gallery-option=1>
@@ -46,6 +47,7 @@ require ROOT_SIF_WEB.'/common-d42c0d8a/head2.php';
 </div>
 <div class="eis-sif-hidden">
 <div id="dialog-accessory" title="饰品详情" data-full=1>
+<div id="dialog-accessory-switch"></div>
 <div id="dialog-accessory-title"></div>
 <div id="accessory-levels"></div>
 </div>

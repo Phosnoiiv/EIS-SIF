@@ -23,9 +23,11 @@ commons.c.g[2901] = {
         5:{n:"初登场",a:"较早",z:"较新",v:function(itemID,item){return item[7];},i:true},
     }, sortDefault:[5,-1], sortIDs:[5,2,3,4,1],
     itemClick:function(itemID,item){return "showDetail("+itemID+")"},
+    groupClick:function(groupId,itemId){return "showDetail("+itemId+","+groupId+")"},
     itemSearchWords:function(itemID,item){var a=[];
         a.push(item[0],item[1],item[2]);
     return a;},
+    item2Group:{}, group2Items:{}, viewDisableGrouping:[1,3,4], viewInherit:{4:2},
     createViewItem:function(itemID,item,viewType){
         var extend = accessoryExtends[itemID];
         var levelID = commons.r.g[2901].options[1], level = extend[0][levelID];
@@ -59,6 +61,14 @@ commons.c.g[2901] = {
             );
         }
     },
+    createViewGroup:function(groupId,itemId,viewType){
+        switch (viewType) {
+            case 2: return $('<div class="accessory-group">').append($('<div>').append(
+                ("accessory/design1/"+designs[groupId][0]).toJQImg(4,1,true).addClass("accessory-group-image"),
+                $('<div class="accessory-view-2-group-effect">').append("edit/7802".toJQImg(1,1),G1C.skillEffectSN[accessories[itemId][6]]),
+            ));
+        }
+    },
 };
 commons.p = {
     a:{
@@ -74,14 +84,30 @@ function loadAccessory(accessoryID, callback) {
     });
 }
 
-function showDetail(accessoryID) {
+function showDetail(accessoryID, designId) {
     if (!accessoryStorage[accessoryID]) {
-        loadAccessory(accessoryID, function(){showDetail(accessoryID);});
+        loadAccessory(accessoryID, function(){showDetail(accessoryID,designId);});
         return;
     }
     var accessory = accessories[accessoryID], accessoryLevels = accessoryStorage[accessoryID];
     var isSpecial = accessory[5]>0; if (isSpecial) {
         var cardID = accessory[5], card = cards[cardID];
+    }
+    $("#dialog-accessory-switch").empty();
+    if (designId) {
+        $.each(designs[designId][1], function(index, designAccessoryId) {
+            var designCardId = accessories[designAccessoryId][5], designCard = cards[designCardId];
+            var $switch = $('<div class="accessory-switch">').append(
+                gItem(1002,designAccessoryId,1,0,{i:1,v:78},gConfig),
+                designCard ? gItem(1001,designCardId,1,0,{v:78},gConfig) : "unit/0".toJQImg(1,1),
+            );
+            if (designAccessoryId==accessoryID) {
+                $switch.addClass("current");
+            } else {
+                $switch.attr("onclick", "switchDetail("+designAccessoryId+","+designId+")");
+            }
+            $switch.appendTo("#dialog-accessory-switch");
+        });
     }
     $("#dialog-accessory-title").empty().append(
         gItem(1002,accessoryID,1,0,{i:1,v:78},gConfig).addClass("accessory-image"),
@@ -109,6 +135,10 @@ function showDetail(accessoryID) {
     _paq.push(["setCustomVariable", 1, "Accessory ID", accessoryID, "page"]);
     _paq.push(["trackEvent", "G1-Accessories", "Show"]);
 }
+function switchDetail(accessoryId, designId) {
+    $("#dialog-accessory").dialog("close");
+    showDetail(accessoryId, designId);
+}
 function getSkillDesc(accessoryID, levelID) {
     var accessory = accessories[accessoryID], extend = accessoryExtends[accessoryID], level = extend[0][levelID] || accessoryStorage[accessoryID][levelID];
     var args = {a:true,l:levelID,tv:level[7],et:accessory[6],r:level[5],eD:level[4],ev:level[3]};
@@ -130,6 +160,12 @@ function qAttr(values) {
 }
 
 $(document).ready(function() {
+    $.each(designs, function(designId, design) {
+        commons.c.g[2901].group2Items[designId] = design[1];
+        $.each(design[1], function(accessoryIndex, accessoryId) {
+            commons.c.g[2901].item2Group[accessoryId] = +designId;
+        });
+    });
     $.each(members, function(memberId, member) {
         $("<option>").attr("value",memberId).text(member[2]).appendTo("#filter-members");
     });
