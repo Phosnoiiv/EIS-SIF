@@ -47,8 +47,11 @@ h3 {
 .song-link-attribute-2 {
     position: absolute; height: 20px; left: 22px; top: -8px;
 }
+.song-link-attribute-3 {
+    position: absolute; height: 20px; left: 42px; top: -8px;
+}
 .song-link-info {
-    position: absolute; left: 45px; top: -8px; padding: 1px 5px;
+    position: absolute; left: 65px; top: -8px; padding: 1px 5px;
     font-size: 12px;
 }
 .song-link-tags {
@@ -248,6 +251,12 @@ h3 {
 .map-note.debuff, .map-wave.debuff {
     background: #ffebee;
 }
+.map-note.debuff-auto {
+    background: #fff8e1;
+}
+.map-note-debuff-auto-hint {
+    color: #ff6f00;
+}
 .map-note {
     margin-bottom: 5px;
 }
@@ -354,7 +363,7 @@ h3 {
 }
 
 .eis-sif-tag.map-default {background:#bc8c52;}
-.eis-sif-tag.route-1 { background: #0288d1; }
+.eis-sif-tag.route-1, .eis-sif-tag.route-10 { background: #0288d1; }
 .eis-sif-tag.route-3 { background: #c2185b; }
 .eis-sif-tag.event-1 { background: #ab47bc; }
 .eis-sif-tag.event-2 { background: #26a69a; }

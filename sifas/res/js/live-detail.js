@@ -315,7 +315,7 @@ function showMap(songID, mapType, mapIndex) {
                 noteIDs.push(i);
             });
         }
-        $("<div>").addClass("map-note" + (note[3] != 2 ? (effects[note[6]][0] ? " buff" : " debuff") : "")).append(
+        $("<div>").addClass("map-note" + (note[3] != 2 ? (effects[note[6]][0] ? " buff" : note[3]==1?" debuff-auto":" debuff") : "")).append(
             $("<h6>").append(
                 qASImg("gimmick/" + gimmicks[r2.exec(strings[note[2]])[1]]),
                 strings[note[2]].replace(r2, ""),
@@ -324,6 +324,7 @@ function showMap(songID, mapType, mapIndex) {
             $("<p>").html(strings[note[4]].replace(/\n/g, "<br>")),
             $("<p>").html(aNoteDesc(settingLang, note[6], note[7], note[8], note[9], note[5], note[3])),
             noteIDs.length ? $("<p>").text(noteIDs.join(", ") + (untrusted||waveEndsLinked?" (?)":"")) : "",
+            !effects[note[6]][0] && note[3]==1 ? $('<p class="map-note-debuff-auto-hint">').text("仅在成功时触发此负面效果。可考虑关闭 AUTO 游玩本歌曲。") : "",
             $("<div>").addClass("map-note-tag count").text(note[1].length),
             targets[note[5]] ? $("<div>").addClass("map-note-icons").html(targets[note[5]][effects[note[6]][0]].replace(/\[(.+?)\]/g, function(match, p1) {
                 return $("<div>").append(qASImg(p1)).html();
@@ -497,7 +498,8 @@ function qSongLink(songID, onclick, noTag, text) {
     return $('<div class="eis-sif-gallery-item song-link category-'+getSongCategory(songID)+'" data-song='+songID+' onclick="'+onclick+'">').append(
         $("<span>").html(text||song[11]),
         song[1][3] ? qASImg("icon/a"+song[1][3][0]).addClass("song-link-attribute") : null,
-        (song[1][4]||song[1][5]) ? qASImg("icon/a"+(song[1][4]?song[1][4][0]:song[1][5][0])).addClass("song-link-attribute-2") : null,
+        song[1][4] ? qASImg("icon/a"+song[1][4][0]).addClass("song-link-attribute-2") : null,
+        song[1][5] ? qASImg("icon/a"+song[1][5][0]).addClass("song-link-attribute-3") : null,
         noTag ? null : $('<span class="eis-sif-tag song-link-info '+(song[0]?'default':'route-'+song[9])+'">').text(getRouteDesc(songID)),
         $('<div class="song-link-tags">'),
     );

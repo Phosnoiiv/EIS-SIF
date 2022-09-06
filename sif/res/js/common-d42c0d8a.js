@@ -117,6 +117,7 @@ var eisG1 = function(){
     var descSkill = function(args) {
         if (args.evm) args.evm *= args.ev;
         args.eT = G1P.target2Str(args.eT||[]);
+        if (args.et==2600 && args.eT=="") args.eT = "全员";
         if (args.et==2800) args.ev *= args.tv;
         args.eV = Math.round((args.ev-1)*100000)/1000;
         if (args.te) args.te = C.skillEffectN[args.te];
@@ -289,7 +290,7 @@ function gItemImage(type, key, server, options, config) {
         case 1001:
             var unit = config.fUnit(key);
             var folder = Math.ceil(key / 100);
-            if (options.v>=78) return "s3:card/icon1/"+folder+"/"+key + (options.g?"s":options.i?"i":"");
+            if (options.v>=78) return "s4:card/icon1/"+folder+"/"+key + (options.g?"s":options.i?"i":"");
             return options.s ? "icon/" + rarityShortNames[unit[config.unitRarity]] : "unit/icon1/" + folder + "/" + key + (options.g ? "s" : options.i ? "i" : "");
         case 1002:
             var accessory = config.fAccessory(key);
@@ -806,7 +807,7 @@ function codeInit() {
             displayContent:false,
         },
         "c11":{
-            openTag:function(p,c){return '<img class="eis-sif-code-card-1" src="/vio/sif/unit/icon1/'+Math.ceil(parseInt(c)/100)+'/'+c+'.png"/>';},
+            openTag:function(p,c){return '<img class="eis-sif-code-card-1" src="'+resourceHosts[2]+'sif/card/icon1/'+Math.ceil(parseInt(c)/100)+'/'+c+'.png"/>';},
             closeTag:function(p,c){return '';},
             displayContent:false,
         },

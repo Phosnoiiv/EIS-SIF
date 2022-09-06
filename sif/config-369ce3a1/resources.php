@@ -5,6 +5,7 @@ const RESOURCE_JQUERYUI_CSS = 1;
 const RESOURCE_JQUERYUI_JS = 2;
 const RESOURCE_FONTAWESOME = 3;
 const RESOURCE_CHART = 4;
+const RESOURCE_CHART_MOMENT = 9;
 const RESOURCE_JSCOOKIE = 5;
 const RESOURCE_LAZYLOAD = 6;
 const RESOURCE_STORE = 7;
@@ -26,6 +27,10 @@ const RESOURCES = array(
     RESOURCE_CHART => array(
         array(null, 'https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js', 'sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI='),
         array(2, 'common/static/chartjs/chart-2.9.3.min.js', 'sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI='),
+    ),
+    RESOURCE_CHART_MOMENT => array(
+        array(null, 'https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.bundle.min.js', 'sha256-TQq84xX6vkwR0Qs1qH5ADkP+MvH0W+9E7TdHJsoIQiM='),
+        array(2, 'common/static/chartjs/chart-2.9.3.bundle.min.js', 'sha256-TQq84xX6vkwR0Qs1qH5ADkP+MvH0W+9E7TdHJsoIQiM='),
     ),
     RESOURCE_JSCOOKIE => array(
         array(null, 'https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js', null),

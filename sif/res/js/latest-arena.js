@@ -14,7 +14,7 @@ function produce() {
             $("<td>").append(unit && (cheer[1] == 3 || cheer[3] >= 4) && !unit[5] ? gItem(1001, unitID, 1, 0, {d:true}, gConfig) : ""),
             $("<td>").append(unit && unit[5] ? $("<div>").append(qImg("icon/is")) : "+" + cheer[2] + (cheer[1] == 3 ? "" : "%")).addClass(cheer[2] ? "" : "zero"),
             $("<td>").append(unit && (cheer[1] == 3 || cheer[3] >= 4) ? gItem(1001, unitID, 1, 0, {i:!unit[5], d:true}, gConfig) : ""),
-            $("<td>").text("+" + cheer[3] + (cheer[1] == 3 ? "" : "%")),
+            $("<td>").text("+" + cheer[3] + "%"),
         ).addClass(cheer[1] == 3 ? "arena-cheer-extra" : "").appendTo("#cheers>tbody");
     });
     $.each(lps, function(rangeIndex, range) {
