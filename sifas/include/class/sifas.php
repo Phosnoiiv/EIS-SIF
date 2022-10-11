@@ -42,8 +42,8 @@ class SIFAS {
         else if (preg_match('/^1回で([\d,]+)ボルテージを獲得する$/', $text, $matches)) {$type=5;$value=$matches[1];}
         else if (preg_match('/^SP特技で合計([\d,]+)ボルテージを獲得する$/', $text, $matches)) {$type=6;$value=$matches[1];}
         else if (preg_match('/^(\d+)人のスクールアイドルでアピールする$/', $text, $matches)) {$type=7;$value=$matches[1];}
-        else if (preg_match('/^クリティカル判定を(\d+)回出す$/', $text, $matches)) {$type=8;$value=$matches[1];}
-        else if (preg_match('/^特技を(\d+)回発動する$/', $text, $matches)) {$type=9;$value=$matches[1];}
+        else if (preg_match('/^クリティカル判定を([\d,]+)回出す$/', $text, $matches)) {$type=8;$value=$matches[1];}
+        else if (preg_match('/^特技を([\d,]+)回発動する$/', $text, $matches)) {$type=9;$value=$matches[1];}
         else if (preg_match('/^スタミナを(\d+)%以上維持する$/', $text, $matches)) {$type=16;$value=$matches[1];}
         return [$type, Util::removeIntComma($value)];
     }

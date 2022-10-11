@@ -218,7 +218,7 @@ function showMap(songID, mapType, mapIndex) {
     var hasLinkedMap = map[38].d, linkedMap = [], untrusted = map[38].u;
     if (hasLinkedMap) {
         $.each(data.maps[1], function(linkIndex, linkMap) {
-            if (linkMap[0]==map[38].d && ((linkMap[16]<=50000&&map[16]<=50000)||(linkMap[16]>50000&&map[16]>50000))) {
+            if (linkMap[0]==map[38].d && ((linkMap[16]==100000&&map[16]==50000)||(linkMap[16]>100000&&map[16]>50000))) {
                 linkedMap = linkMap;
                 return false;
             }
