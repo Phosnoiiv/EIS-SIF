@@ -1,7 +1,7 @@
 var cheerTypes = [null, null, "掉落概率", "额外报酬"];
 
 function produce() {
-    $("h2").text(arena[1]);
+    $("#arena-title").text(arena[1]);
     $(".eis-sif-timetip").text(serverDate(arena[2], 1).getUTCDateTime() + "～" + serverDate(arena[3], 1).getUTCDateTime());
     $.each(arena[4], function(cheerIndex, cheer) {
         var unitID = cheer[0], unit = units[unitID];

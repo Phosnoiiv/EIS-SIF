@@ -52,6 +52,7 @@ if (!empty($pageID)) {
 <title><?=($title ?? $pages[$pageID]['title']) . (empty($isHome) ? ' - EIS-SIF' : '')?></title>
 <?php
 echo HTML::resourceCSS(RESOURCE_JQUERYUI_CSS);
+V2::includeV2FrontCss();
 echo HTML::css('common-d42c0d8a');
 if ($useSIFStyle ?? false) {
     echo HTML::css('common-9fec4fcf');

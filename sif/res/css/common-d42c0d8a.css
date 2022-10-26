@@ -762,3 +762,11 @@ span[data-gallery-role=sort] {
     margin: 0 0 0 20px;
     font-size: 11px;
 }
+
+.v2-container-main {
+    width: 100%;
+}
+
+.v2-body h1 {
+    font-weight: bold; font-size: 2em; line-height: unset;
+}

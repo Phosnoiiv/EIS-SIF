@@ -9,7 +9,10 @@ foreach (Basic::getAvailableMods() as $mod) {
 }
 ?>
 </head>
-<body data-id="<?=$pageID ?? ''?>">
+<body data-id="<?=$pageID ?? ''?>"<?=V2::$useV2Front ? ' class="v2-body"' : ''?>>
+<?php
+V2::includeV2FrontJs();
+?>
 <div id="eis-sif-header">
 <span id="eis-sif-name">EIS-SIF</span>
 <?php

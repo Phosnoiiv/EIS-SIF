@@ -33,4 +33,5 @@ $pages = [
       29 => ['key'=>'list/accessories', 'title'=>'SIF 饰品一览', 'game'=>1, 'path'=>'list/accessories'],
       30 => ['key'=>'play/mattribux', 'game'=>0, 'path'=>'play/mattribux'],
       31 => ['key'=>'museum/arena', 'title'=>'Live ♪ Arena 剧情合集', 'game'=>1, 'path'=>'migrate/arena'],
+      32 => ['key'=>'museum/yell', 'title'=>'SIF 活动加成一览', 'game'=>1, 'path'=>'list/event-cheers'],
 ];

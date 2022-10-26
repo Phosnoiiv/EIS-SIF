@@ -14,8 +14,10 @@ echo HTML::js('latest-arena');
 </script>
 <?php
 require ROOT_SIF_WEB . '/common-d42c0d8a/head2.php';
+$movedMessage = '<p>本页面的活动加成版块已与庆典活动加成合并。</p><p><a href="' . Basic::getPageURL(32) . '">前往新页面</a></p>';
+require ROOT_SIF_WEB.'/common-d42c0d8a/moved.php';
 ?>
-<h2 class="eis-sif-text"></h2>
+<h2 id="arena-title" class="eis-sif-text"></h2>
 <div class="eis-sif-timetip on-background"></div>
 <section class="eis-sif-section-noborder">
 <h4><i class="fas fa-user-plus fa-lg"></i> 活动应援社员</h4>

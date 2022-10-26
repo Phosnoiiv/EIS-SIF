@@ -1,6 +1,9 @@
 *.min.css
 *.min.js
 !jquery-*.min.js
+*.css.gz
+*.js.gz
+*.dev.js
 
 /config-*/*.php
 !/config-*/*.default.php

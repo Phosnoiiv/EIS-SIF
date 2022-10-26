@@ -1,5 +1,5 @@
 function produce() {
-    $("h2").addClass("category-" + event[3]).text(event[1]);
+    $("#event-title").addClass("category-" + event[3]).text(event[1]);
     $(".eis-sif-timetip").text(serverDate(event[2], 1).getUTCDateTime() + " 截止");
     var seriesCount = [];
     $.each(event[4], function(cheerIndex, cheer) {

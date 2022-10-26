@@ -5,7 +5,7 @@ if (!defined('ROOT_SIFAS_CACHE'))
     define('ROOT_SIFAS_CACHE', dirname(ROOT_SIF_CACHE) . '/sifas');
 V2::load();
 
-$master_rerun_group_jp = (time() - SIF::ROTATION_BEGIN_MASTER_RERUN_JP) / 604800 % SIF::ROTATION_COUNT_MASTER_RERUN_JP + 1;
+$master_rerun_group_jp = floor((time() - SIF::ROTATION_BEGIN_MASTER_RERUN_JP) / 604800) % SIF::ROTATION_COUNT_MASTER_RERUN_JP + 1;
 $master_rerun_groups = [
     0 => [
         '本周' => $master_rerun_group_jp,
@@ -121,8 +121,7 @@ foreach (Basic::getAvailableMods() as $mod) {
 </section>
 <section class="eis-sif-section buttons">
 <h4><i class="fas fa-newspaper"></i> 动态</h4>
-<?=createButton(18, [1], '活动加成社员等', 'latest-event.js', ['title'=>'最新活动资讯'])?>
-<?=createButton(22, [1], '活动应援社员', 'latest-arena.js')?>
+<?=createButton(32, [1], '庆典活动（SM、MF 等，2022/04 至今）<br>Live ♪ Arena（2020/11 至今）', 'event-yell.json')?>
 <?=createButton(14, [1,3], '仅限查卡器无文字的课题', 'goals.js')?>
 </section>
 <section class="eis-sif-section buttons">

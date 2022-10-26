@@ -4,6 +4,7 @@ if (!defined('EIS_ENV')) exit;
 
 class V2 {
     static bool $isDevServer = false;
+    static bool $isDevBundle = false;
     static array $dataPacks;
 
     static function load(): void {
@@ -51,5 +52,15 @@ class V2 {
     }
     static function getDataTime(int $unitFullId): int {
         return self::findData($unitFullId)['bundle'][3];
+    }
+
+    static bool $useV2Front = false;
+    static function includeV2FrontCss(): void {
+        if (!self::$useV2Front) return;
+        echo HTML::css('v2.4154467');
+    }
+    static function includeV2FrontJs(): void {
+        if (!self::$useV2Front) return;
+        echo HTML::js(self::$isDevBundle ? 'v2.dev' : 'v2.4154467');
     }
 }
