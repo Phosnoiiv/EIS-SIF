@@ -2,6 +2,10 @@
 namespace EIS\Lab\SIFAS;
 use EIS\Lab\SIF;
 use EIS\Lab\SIF\Util;
+use EverISay\SIF\V1\AS\Data\LiveExtendDataManager;
+use EverISay\SIF\V1\AS\Data\SuyoooLiveExtendDataProvider;
+use EverISay\SIF\V1\AS\Data\V1LiveExtendDataProvider;
+
 require_once dirname(dirname(__DIR__)) . '/core/init.php';
 
 include ROOT_SIFAS_CACHE . '/drops.php';
@@ -199,6 +203,11 @@ $sql = "SELECT ldg.*,k1.message k1m,k2.message k2m,ks1.message ks1m,ks2.message 
 $col = [['i','skill_master_id'],['s','k1m',''],['s','k2m',''],['s','ks1m',''],['s','ks2m','']];
 $dLiveGimmicks = DB::ltSelect(DB_GAME_JP_MASTER, $sql, $col, 'live_difficulty_master_id', ['m'=>true]);
 
+$extendDataManager = new LiveExtendDataManager([
+    new V1LiveExtendDataProvider,
+    new SuyoooLiveExtendDataProvider($config['SIFAS_live_extend_suyooo']),
+]);
+
 $refMaps = [];
 $dictCommonRewards = new SIF\Dict;
 $sql = 'SELECT rld.*,m_live_difficulty_const.*,live_difficulty.*
@@ -213,6 +222,7 @@ while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
     $mapID = $dbMap['live_difficulty_id'];
     $mapType = intdiv($dbMap['live_difficulty_id'], 10000000);
     $attribute = $dbMap['default_attribute'];
+    $liveExtendData = $extendDataManager->get($mapID);
     $extendData = [];
     if ($mapType == 5) {
         $towerFloor = $towerFloors[array_search($mapID, $towerFloorsByMap)];
@@ -248,6 +258,9 @@ while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
     if (isset($dbMap['coop_power'])) {
         $extendData['w'] = $dbMap['coop_power'];
     }
+    if (isset($liveExtendData) && $liveExtendData->provider != V1LiveExtendDataProvider::class) {
+        $extendData['x'] = 's';
+    }
     $detailSongs[$songID]['maps'][$mapType][] = [
         $mapType == 3 ? $allStories[$dbMap['live_difficulty_id']] ?? [$dbMap['old_story_chapter'], $dbMap['old_story_episode'], 0] : ($mapType == 5 ? $mapReference : ($difficulty = intdiv($dbMap['live_difficulty_id'] % 1000, 100))),
         $dbMap['default_attribute'],
@@ -275,7 +288,7 @@ while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
         array_map(fn($x)=>$dictStrings[$songID]->set($x), array_column($dLiveGimmicks[$mapID],4)),
         [],
         [],
-        $dbMap['note_count'] ?? 0,
+        $liveExtendData?->noteCount ?? 0,
         /* 27 */ $dictDrops[$songID]->set($dbMap['note_drop_group_id']),
         $dictDrops[$songID]->set($dbMap['drop_content_group_id']),
         $dictDrops[$songID]->set($dbMap['rare_drop_content_group_id']),
@@ -350,7 +363,7 @@ while ($dbNote = $dbNotes->fetchArray(SQLITE3_ASSOC)) {
         }
     }
 }
-$sql = 'SELECT t.live_difficulty_id,state,live_wave.*,skill_target_master_id1,
+$sql = 'SELECT t.live_difficulty_id,t.wave_id,state,skill_target_master_id1,
     effect1.effect_type AS type1,effect1.effect_value AS value1,effect1.finish_type AS finish1,effect1.finish_value AS finishv1,
     kn.message AS k_name,kzn.message AS kz_name,kd.message AS k_desc,kzd.message AS kz_desc
     FROM (SELECT * FROM m_live_note_wave_gimmick_group UNION SELECT * FROM r.m_live_note_wave_gimmick_group) AS t
@@ -360,7 +373,6 @@ $sql = 'SELECT t.live_difficulty_id,state,live_wave.*,skill_target_master_id1,
     LEFT JOIN kz.m_dictionary AS kzn ON substr(name,3)=kzn.id
     LEFT JOIN (SELECT * FROM k.m_dictionary UNION SELECT * FROM r.m_dictionary_k) AS kd ON substr(description,3)=kd.id
     LEFT JOIN kz.m_dictionary AS kzd ON substr(description,3)=kzd.id
-    LEFT JOIN c.live_wave ON t.live_difficulty_id=live_wave.live_difficulty AND t.wave_id=wave
     WHERE live_difficulty_id NOT IN (SELECT id FROM c.live_difficulty WHERE hide IS NOT NULL)
 ';
 $dbWaves = DB::lt_query('jp/masterdata.db', $sql);
@@ -368,15 +380,16 @@ while ($dbWave = $dbWaves->fetchArray(SQLITE3_ASSOC)) {
     $mapID = $dbWave['live_difficulty_id'];
     $ref = $refMaps[$dbWave['live_difficulty_id']];
     $tExtract = SIFAS::extractWaveMission($dbWave['k_name']);
+    $extendData = $extendDataManager->get($mapID)?->waves[$dbWave['wave_id'] - 1] ?? [];
     $detailSongs[$ref[0]]['maps'][$ref[1]][$ref[2]][25][] = [
         $dictStrings[$ref[0]]->set($dbWave['k_name']),
         $dbWave['state'],
         $dictStrings[$ref[0]]->set($dbWave['k_desc']),
         $dbWave['skill_target_master_id1'],
-        $dbWave['start'] ?? 0,
-        $dbWave['finish'] ?? 0,
-        $dbWave['voltage'],
-        $dbWave['damage'],
+        $extendData['start'] ?? 0,
+        $extendData['finish'] ?? 0,
+        $extendData['voltage'] ?? 0,
+        $extendData['damage'] ?? 0,
         $dbWave['type1'],
         $dbWave['value1'],
         $dbWave['finish1'],

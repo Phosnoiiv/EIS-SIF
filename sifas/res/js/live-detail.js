@@ -372,6 +372,11 @@ function showMap(songID, mapType, mapIndex) {
     } else {
         $("#map-waves-none").show();
     }
+    if (map[38].x) {
+        $("#map-extend-provider-s").show();
+    } else {
+        $("#map-extend-provider-s").hide();
+    }
     if (charts.evaluation) {
         charts.evaluation.destroy();
     }

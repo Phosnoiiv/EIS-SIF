@@ -31,3 +31,4 @@ $config['mods'] = [];
 
 $config['event_live_prev'] = [null, 0, 0, 0, 0, 0, 0];
 $config['event_db_prev'] = [null, null, null, null, null, null, null];
+$config['SIFAS_live_extend_suyooo'] = '';

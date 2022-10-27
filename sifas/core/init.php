@@ -36,10 +36,6 @@ if (!defined('ROOT_SIFAS_CONFIG')) {
 
 require_once dirname(ROOT_SIFAS_SRC) . '/sif/core/init.php';
 
-spl_autoload_register(function($name) {
-    SIF\_autoload(__NAMESPACE__, ROOT_SIFAS_INC, $name);
-});
-
 require_once ROOT_SIFAS_CONFIG . '/config.php';
 
 const DB_EIS_MAIN = 'eis.s3db';

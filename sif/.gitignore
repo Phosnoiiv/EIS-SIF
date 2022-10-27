@@ -11,4 +11,5 @@
 !/config-*/version.php
 !/config-*/datapacks.php
 
-/res/img/u/
+/vendor
+/res/img/u

@@ -126,6 +126,7 @@ require ROOT_SIFAS_WEB . '/common-b63adcdf/head2.php';
 <div class="eis-sif-notice"><p><i class="fas fa-exclamation-circle"></i> 除上述情况外，以下所列的掉落道具仅适用于日语版当前版本。</p></div>
 <span id="map-drops-button" onclick="showDrops()"><i class="fas fa-cubes"></i> 显示掉落道具</span>
 <table id="map-drops" class="eis-sif-table"></table>
+<p id="map-extend-provider-s" class="eis-sif-note"><i class="fab fa-github"></i> s</p>
 </section>
 </div>
 <div class="eis-sif-hidden">

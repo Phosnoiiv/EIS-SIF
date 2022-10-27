@@ -1,0 +1,9 @@
+{
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "EverISay\\SIF\\V1\\AS\\": "../sifas/include/src/"
+        },
+        "classmap": ["include/class/", "../sifas/include/class/"]
+    }
+}

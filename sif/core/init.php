@@ -37,27 +37,7 @@ function defineRoot(string $define, string $target): void {
 defineRoot('ROOT_SIF_ADMIN', 'admin');
 defineRoot('ROOT_SIF_CONFIG', 'config');
 
-function _autoload($namespace, $root, $name) {
-    if (strncmp($name, $namespace . '\\', strlen($namespace) + 1))
-        return;
-    foreach (['base'] as $suffix) {
-        if (strtolower(substr($name, 0 - strlen($suffix))) == $suffix) {
-            $name = substr($name, 0, 0 - strlen($suffix));
-            break;
-        }
-    }
-    $path = strtolower(substr($name, strlen($namespace) + 1));
-    foreach (['class', 'interface'] as $prefix) {
-        $file = $root . '/' . $prefix . '/' . $path . '.php';
-        if (file_exists($file)) {
-            require_once $file;
-        }
-    }
-}
-
-spl_autoload_register(function($name) {
-    _autoload(__NAMESPACE__, ROOT_SIF_INC, $name);
-});
+require __DIR__.'/../vendor/autoload.php';
 
 require_once ROOT_SIF_CONFIG . '/resources.php';
 require_once ROOT_SIF_CONFIG . '/config.php';
