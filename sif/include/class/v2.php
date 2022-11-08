@@ -57,10 +57,10 @@ class V2 {
     static bool $useV2Front = false;
     static function includeV2FrontCss(): void {
         if (!self::$useV2Front) return;
-        echo HTML::css('v2.4154467');
+        echo HTML::css('v2.cabc8cc');
     }
     static function includeV2FrontJs(): void {
         if (!self::$useV2Front) return;
-        echo HTML::js(self::$isDevBundle ? 'v2.dev' : 'v2.4154467');
+        echo HTML::js(self::$isDevBundle ? 'v2.dev' : 'v2.cabc8cc');
     }
 }

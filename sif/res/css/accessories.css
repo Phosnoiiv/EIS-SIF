@@ -94,6 +94,9 @@
 [data-gallery-css-view="2"] .accessory-group-image {
     width:286px; height:166px; vertical-align:bottom;
 }
+[data-gallery-css-view="2"] .accessory-group-image.size-3 {
+    width:432px; max-width:100%; height:auto;
+}
 .accessory-view-2-group-effect {
     position:absolute; left:18px; bottom:10px; width:70px; padding:5px 0;
     background:#ffffff99; border-radius:5px;
