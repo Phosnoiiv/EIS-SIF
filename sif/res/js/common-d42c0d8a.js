@@ -665,6 +665,7 @@ function readNotice(noticeID) {
         $("<p>").html(paragraph).addClass(paragraph.substring(0, 1) == "※" ? "eis-sif-note" : "").appendTo("#eis-sif-dialog-notice-contents");
     });
     showDialogMessage("#eis-sif-dialog-notice", $.noop, "关闭");
+    if (typeof hookNoticeDialog === 'function') hookNoticeDialog(noticeID);
     var readNoticeIDs = (Cookies.get("readNotices") || "").split("s"), newIDs = [];
     $.each(readNoticeIDs.concat(noticeID), function(index, id) {
         if ((notices[id] || autoNotices[id]) && newIDs.indexOf(parseInt(id)) < 0) {

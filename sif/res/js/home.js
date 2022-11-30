@@ -58,11 +58,15 @@ function refreshNotices() {
     $("#notices").empty();
     for (var i = 0; i < noticeIDs.length; i++) {
         var noticeID = noticeIDs[i], notice = notices[noticeID], isFixed = noticeID > FIXED;
-        $("<li>").addClass("notice" + (isFixed ? " fixed" : readNoticeIDs.indexOf(noticeID) < 0 ? " new" : "")).append(
+        var $li = $("<li>").addClass("notice" + (isFixed ? " fixed" : readNoticeIDs.indexOf(noticeID) < 0 ? " new" : "")).append(
             $("<span>").addClass("fa-li").append('<i class="fas fa-' + (notice[0] || "bullhorn") + '"></i>'),
             isFixed ? "" : $("<span>").addClass("notice-date").text(serverDate(notice[1], 3).getUTCDateShort()),
             $("<div>").addClass(isFixed ? "" : "notice-clickable").text(notice[2]).attr("onclick", isFixed ? null : "readNotice(" + noticeID + ");refreshNotices()"),
-        ).appendTo("#notices");
+        );
+        if (typeof hookHomeNoticeItem === 'function') {
+            $li = hookHomeNoticeItem(noticeID, $li);
+        }
+        $("#notices").append($li);
     }
     refreshPageBar(null, true);
 }

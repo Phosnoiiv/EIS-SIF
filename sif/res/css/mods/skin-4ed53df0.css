@@ -1,0 +1,22 @@
+body[data-id="home"] #top {
+    background: #454545;
+}
+body {
+    background: #ebebeb;
+}
+body[data-id="home"] .buttons-container {
+    background: linear-gradient(#fff 0%,#fff 40%,#ebebeb 100%);
+}
+#eis-sif-header {
+    filter: grayscale(100%);
+}
+h1 {
+    color: #454545;
+}
+
+.skin-8-notice-dialog {
+    filter: grayscale(100%);
+}
+.skin-8-notice-item {
+    filter: grayscale(100%);
+}
