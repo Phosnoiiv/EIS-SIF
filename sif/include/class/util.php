@@ -22,7 +22,16 @@ class Util {
             $array[] = $value;
         }
     }
+    static function arrayIncrement(array &$array, int|string $key): void {
+        $array[$key] = ($array[$key] ?? 0) + 1;
+    }
 
+    static function fromJSON(string $json): mixed {
+        return json_decode($json, true);
+    }
+    static function fromJSONFile(string $filename): mixed {
+        return self::fromJSON(file_get_contents($filename));
+    }
     static function toJSON(array $array): string {
         return json_encode($array, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }

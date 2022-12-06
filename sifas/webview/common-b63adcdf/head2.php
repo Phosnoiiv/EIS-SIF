@@ -1,6 +1,7 @@
 <?php
 namespace EIS\Lab\SIFAS;
 use EIS\Lab\SIF;
+use EIS\Lab\SIF\V2;
 if (!defined('EIS_ENV'))
     exit;
 
@@ -10,7 +11,10 @@ foreach (SIF\Basic::getAvailableMods() as $mod) {
 }
 ?>
 </head>
-<body class="eis-sifas" data-id="<?=$pageID ?? ''?>">
+<body class="eis-sifas<?=V2::$useV2Front ? ' v2-body' : ''?>" data-id="<?=$pageID ?? ''?>">
+<?php
+V2::includeV2FrontJs();
+?>
 <div id="eis-sif-header">
 <span id="eis-sif-name">EIS-SIF<small>(AS)</small></span>
 <?php

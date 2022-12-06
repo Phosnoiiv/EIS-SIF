@@ -1,5 +1,8 @@
 {
     "type": "project",
+    "require": {
+        "sekjun9878/request-parser": "^1.0"
+    },
     "autoload": {
         "psr-4": {
             "EverISay\\SIF\\V1\\AS\\": "../sifas/include/src/"

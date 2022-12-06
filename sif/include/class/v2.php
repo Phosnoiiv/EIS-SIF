@@ -61,6 +61,6 @@ class V2 {
     }
     static function includeV2FrontJs(): void {
         if (!self::$useV2Front) return;
-        echo HTML::js(self::$isDevBundle ? 'v2.dev' : 'v2.cabc8cc');
+        echo HTML::js(self::$isDevBundle ? 'v2.dev' : 'v2.9265d80');
     }
 }

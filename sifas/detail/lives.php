@@ -1,12 +1,14 @@
 <?php
 namespace EIS\Lab\SIFAS;
 use EIS\Lab\SIF;
+use EIS\Lab\SIF\V2;
 $pageID = 20;
 require_once dirname(__DIR__) . '/core/init.php';
 include ROOT_SIFAS_CACHE.'/live-detail.php';
 
 $helpArticle = 30;
 $latestFile = ROOT_SIFAS_CACHE . '/live-detail.js';
+V2::$useV2Front = true;
 require ROOT_SIFAS_WEB . '/common-b63adcdf/head1.php';
 echo HTML::resourceJS(SIF\RESOURCE_CHART);
 echo HTML::css('live-detail');
@@ -77,6 +79,10 @@ require ROOT_SIFAS_WEB . '/common-b63adcdf/head2.php';
 <section class="eis-sif-section">
 <h4><i class="fas fa-hand-point-right fa-lg"></i> 选择难度</h4>
 <div id="maps" class="eis-sif-gallery"></div>
+</section>
+<section id="map-deck" class="eis-sif-section">
+<h4><i class="fas fa-crown"></i> 排名统计</h4>
+<div id="v2-voltage-deck-container" class="v2-container"></div>
 </section>
 <section id="map-detail" class="eis-sif-section">
 <h4><i class="far fa-list-alt fa-lg"></i> LIVE 资料</h4>

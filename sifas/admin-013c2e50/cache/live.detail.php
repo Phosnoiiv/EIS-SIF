@@ -70,6 +70,10 @@ $sql = 'SELECT * FROM tag_song WHERE display_order>0';
 $columns = [['i','display_order'],['i','display_class'],['s','name'],['s','short_name'],['i','type'],['s','intro']];
 $cSongTags = DB::mySelect($sql, $columns, 'id');
 
+$sql = 'SELECT * FROM m_card';
+$col = [['i','school_idol_no']];
+$tCards = DB::ltSelect(DB_GAME_JP_MASTER, $sql, $col, 'id');
+
 $sql = 'SELECT * FROM m_tower_clear_reward';
 $columns = [['i','tower_clear_reward_id'],['i','content_type'],['i','content_id'],['i','content_amount']];
 $dbRewards = DB::ltSelect('jp/masterdata.db', $sql, $columns, '');
@@ -223,6 +227,7 @@ while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
     $mapType = intdiv($dbMap['live_difficulty_id'], 10000000);
     $attribute = $dbMap['default_attribute'];
     $liveExtendData = $extendDataManager->get($mapID);
+    /** @var mixed[] Keys: c, d, f, k, n, o, p, r, w, x  */
     $extendData = [];
     if ($mapType == 5) {
         $towerFloor = $towerFloors[array_search($mapID, $towerFloorsByMap)];
@@ -260,6 +265,20 @@ while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
     }
     if (isset($liveExtendData) && $liveExtendData->provider != V1LiveExtendDataProvider::class) {
         $extendData['x'] = 's';
+    }
+    if (file_exists($filename = ROOT_SIFAS_CACHE."/decks/$mapID.json")) {
+        $deckData = Util::fromJSONFile(ROOT_SIFAS_CACHE."/decks/$mapID.json");
+        $extendData['k'] = [];
+        foreach ($deckData['reports'] as $reportTime => $report) {
+            $result = ['timestamp' => $reportTime];
+            foreach ($report['cardCounts'] as $cardId => $count) {
+                if ($count < $report['userCount'] / 2) break; // Assuming already sorted in descending order
+                $result['cardCounts'][] = [$tCards[$cardId][0], $count];
+            }
+            $result += $report;
+            array_unshift($extendData['k'], $result);
+        }
+        unset($deckData);
     }
     $detailSongs[$songID]['maps'][$mapType][] = [
         $mapType == 3 ? $allStories[$dbMap['live_difficulty_id']] ?? [$dbMap['old_story_chapter'], $dbMap['old_story_episode'], 0] : ($mapType == 5 ? $mapReference : ($difficulty = intdiv($dbMap['live_difficulty_id'] % 1000, 100))),
@@ -305,7 +324,7 @@ while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
     $refMaps[$dbMap['live_difficulty_id']] = [$songID, $mapType, count($detailSongs[$songID]['maps'][$mapType]) - 1];
     $allSongs[$songID][0][$attribute]++;
     if ($mapType==1 && in_array($difficulty,Constants::EIS_SONG_DIF_NOTEWORTHY) && !($difficulty==4&&$dbMap['note_voltage_upper_limit']<=50000)) {
-        $clientSongs[$songID][1][$difficulty] = [$dbMap['default_attribute'], $dbMap['evaluation_s_score'], $dbMap['recommended_score'], $dbMap['recommended_stamina'], $dbMap['note_stamina_reduce'], []];
+        $clientSongs[$songID][1][$difficulty] = [$dbMap['default_attribute'], $dbMap['evaluation_s_score'], $dbMap['recommended_score'], $dbMap['recommended_stamina'], $dbMap['note_stamina_reduce'], [], intval(!empty($extendData['k']))];
         foreach ($dLiveGimmicks[$mapID] as $dLiveGimmick) {
             $tEffect = $rEffects[$rSkills[$dLiveGimmick[0]][0]];
         if (!$tEffect[0] && !$tEffect[1]) {

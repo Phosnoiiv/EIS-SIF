@@ -51,6 +51,7 @@ commons.c.g[2001] = {
                         dif ? $('<div>').append(
                             $('<span class="eis-sif-tag" data-g2-dif='+difID+'>').text(G2C.difficultyN[difID]),
                             ("icon/a"+dif[0]).toJQImg(1,2).addClass("g-song-view-2-attr"),
+                            dif[6] ? $('<i class="fas fa-crown map-deck-icon">') : null,
                         ) : $('<span>'),
                         $('<div>').append(
                             $('<span>').text(sortMethod==3 ? "#"+itemID : getRouteDesc(itemID)),
@@ -156,6 +157,7 @@ function produceFin(songID, target) {
                 $("<span>").text(getMapName(i, map[0])),
                 qASImg("icon/a" + map[1]).addClass("map-link-attribute"),
                 map[38].w!=undefined ? $('<span class="map-link-power">').text(map[38].w) : null,
+                map[38].k ? $('<i class="fas fa-crown map-deck-icon">') : null,
             ).attr("onclick", "showMap(" + songID + "," + i + "," + mapIndex + ")");
             if (i==4) {
                 $link.attr("data-map-cat", inferMapCat(map));
@@ -165,7 +167,7 @@ function produceFin(songID, target) {
     }
     $(window).scrollTop(0);
     $("#missions-container").trigger("eFold");
-    $("#map-detail").hide();
+    $("#map-deck, #map-detail").hide();
     $("#detail").removeClass().addClass("category-" + getSongCategory(songID));
     showEvents();
     if (target) {
@@ -395,6 +397,13 @@ function showMap(songID, mapType, mapIndex) {
         tooltips:{enabled:false},
         maintainAspectRatio:false,
     }});
+    if (map[38].k) {
+        eisIF2.setV1Ref('VoltageDeckView_title', '「' + song[11] + '」' + getMapName(mapType, map[0]))
+        eisIF2.setV1Ref('VoltageDeckView_reports', map[38].k)
+        $("#map-deck").show();
+    } else {
+        $("#map-deck").hide();
+    }
     $(".map-link").removeClass("active");
     $(".map-link[data-map='" + mapType + "-" + mapIndex + "']").addClass("active");
     $("#map-detail, #map-drops-button").show();
@@ -524,6 +533,9 @@ $(document).ready(function() {
     }
     showDialogSongs();
     $("#map-drops-button").button();
+    eisIF2.setV1Ref('VoltageDeckView_title', '')
+    eisIF2.setV1Ref('VoltageDeckView_reports', [])
+    eisIF2.mountVoltageDeckView('#v2-voltage-deck-container')
 });
 
 var gConfig = $.extend({}, gConfigDefault, {

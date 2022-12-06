@@ -1,6 +1,7 @@
 <?php
 namespace EIS\Lab\SIFAS;
 use EIS\Lab\SIF;
+use EIS\Lab\SIF\V2;
 if (!defined('EIS_ENV'))
     exit;
 
@@ -28,6 +29,7 @@ if (!empty($pageID)) {
 <title><?=($title ?? $pages[$pageID]['title']) . (empty($isHome) ? ' - EIS-SIF' : '')?></title>
 <?php
 echo SIF\HTML::resourceCSS(SIF\RESOURCE_JQUERYUI_CSS);
+V2::includeV2FrontCss();
 echo SIF\HTML::css('common-d42c0d8a');
 echo HTML::css('common-b63adcdf');
 ?>
