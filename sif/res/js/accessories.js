@@ -96,7 +96,7 @@ function showDetail(accessoryID, designId) {
     }
     $("#dialog-accessory-switch").empty();
     if (designId) {
-        $.each(designs[designId][2], function(index, designAccessoryId) {
+        $.each(designs[designId][3], function(index, designAccessoryId) {
             var designCardId = accessories[designAccessoryId][5], designCard = cards[designCardId];
             var $switch = $('<div class="accessory-switch">').append(
                 gItem(1002,designAccessoryId,1,0,{i:1,v:78},gConfig),
