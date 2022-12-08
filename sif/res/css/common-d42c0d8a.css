@@ -121,7 +121,7 @@ p.eis-sif-note {
 .eis-sif-subsection h4 {
     margin: -11px -11px 0 -11px; padding: 1px 10px;
     background: #4746c1;
-    color: #fff; font-size: 17px;
+    color: #fff; font-size: 17px !important;
 }
 .eis-sif-doc h6 {
     margin: 10px 0;

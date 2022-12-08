@@ -60,7 +60,7 @@
     position:unset;margin-right:10px;
 }
 .accessory-view-3-card {
-    float:right; display:flex; flex-direction:column; align-items:flex-end;
+    position:relative; float:right; display:flex; flex-direction:column; align-items:flex-end;
     font-size:13px;
 }
 .accessory-view-3-card p {
@@ -84,6 +84,22 @@
     margin:5px 0 0;
     font-size:14px;
 }
+@media (max-width:500px) {
+    [data-gallery-css-view="3"] .accessory-image img {
+        height:80px;
+    }
+    .accessory-view-3-card .eis-sif-item.card-seal {
+        position:absolute; right:-3px; top:33px;
+    }
+    .accessory-view-3-effect {
+        clear:both;
+    }
+    [data-gallery-css-view="3"] .sif-attr-score-group .sif-attr-score {
+        width:unset; padding:1px 5px;
+        border-radius:7px;
+        font-size:13px;
+    }
+}
 [data-gallery-css-view="2"] .accessory-group {
     display:flex; align-items:center; padding:2px;
     background:#fff; border:1px solid #bbb;
@@ -104,6 +120,11 @@
 }
 .accessory-view-2-group-effect img {
     height:16px; margin-right:2px; vertical-align:bottom;
+}
+.accessory-view-2-group-name {
+    position:absolute; right:24px; bottom:80px; max-width:138px; padding:0 5px 0 15px;
+    background:linear-gradient(270deg,#ffffff99 0% 90%,#ffffff00 100%); border-radius:5px;
+    line-height:18px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 #dialog-accessory-switch {
     display:flex;

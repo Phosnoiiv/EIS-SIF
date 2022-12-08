@@ -42,12 +42,12 @@ foreach ($cAccessories as $accessoryID => &$cAccessory) {
 }
 
 $sql = "SELECT * FROM accessory_design";
-$col = [['s','image'],['i','size']];
+$col = [['s','image'],['i','size'],['s','name']];
 $cDesigns = DB::mySelect($sql, $col, 'id');
 $sql = "SELECT * FROM accessory_extend WHERE design IS NOT NULL";
 $tDesigns = DB::mySelect($sql, [['i','design']], 'id', ['s'=>true]);
 foreach ($tDesigns as $accessoryID => $designId) {
-    $cDesigns[$designId][2][] = $accessoryID;
+    $cDesigns[$designId][3][] = $accessoryID;
 }
 
 $sql = "SELECT unit_id,unit_member,idolized,unit_seal,us.effect_type,us.trigger_type,us.trigger_value_8

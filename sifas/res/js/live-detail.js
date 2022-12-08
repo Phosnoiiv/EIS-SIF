@@ -220,7 +220,7 @@ function showMap(songID, mapType, mapIndex) {
     var hasLinkedMap = map[38].d, linkedMap = [], untrusted = map[38].u;
     if (hasLinkedMap) {
         $.each(data.maps[1], function(linkIndex, linkMap) {
-            if (linkMap[0]==map[38].d && ((linkMap[16]==100000&&map[16]==50000)||(linkMap[16]>100000&&map[16]>50000))) {
+            if (linkMap[0]==map[38].d && (linkMap[16]==map[16]||(mapType==5&&map[16]==50000&&linkMap[16]==100000))) {
                 linkedMap = linkMap;
                 return false;
             }
@@ -497,7 +497,7 @@ function getItemImg(type, key) {
     return items[type] && items[type][key] ? items[type][key][0] : "";
 }
 function inferMapCat(map) {
-    if (map[16]<=50000) return 3;
+    if (map[16]<=100000) return 3;
     return 4;
 }
 function qItem(type, key, amount) {

@@ -22,7 +22,7 @@ if ($article[2]) {
 require ROOT_SIF_WEB . '/common-d42c0d8a/head1.php';
 echo HTML::css('article');
 require ROOT_SIF_WEB . '/common-d42c0d8a/head2.php';
-if ($article[5]) {
+if ($article[5] && $config['article_watermark_doc']) {
 ?>
 <div class="eis-sif-fold">
 <h5>【重要】关于文章水印</h5>
@@ -30,6 +30,10 @@ if ($article[5]) {
 require ROOT_SIF_DOC . '/agreements/watermark.html';
 ?>
 </div>
+<?php
+}
+if ($article[5]) {
+?>
 <div class="watermark-wrapper">
 <?php
 }

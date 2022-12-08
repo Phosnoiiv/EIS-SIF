@@ -66,6 +66,7 @@ commons.c.g[2901] = {
             case 2: return $('<div class="accessory-group">').append($('<div>').append(
                 ("accessory/design1/"+designs[groupId][0]).toJQImg(4,1,true).addClass("accessory-group-image").addClass(designs[groupId][1]?"size-"+designs[groupId][1]:null),
                 $('<div class="accessory-view-2-group-effect">').append("edit/7802".toJQImg(1,1),G1C.skillEffectSN[accessories[itemId][6]]),
+                $('<div class="accessory-view-2-group-name">').text(designs[groupId][2]).attr("title",designs[groupId][2]),
             ));
         }
     },
@@ -161,8 +162,8 @@ function qAttr(values) {
 
 $(document).ready(function() {
     $.each(designs, function(designId, design) {
-        commons.c.g[2901].group2Items[designId] = design[2];
-        $.each(design[2], function(accessoryIndex, accessoryId) {
+        commons.c.g[2901].group2Items[designId] = design[3];
+        $.each(design[3], function(accessoryIndex, accessoryId) {
             commons.c.g[2901].item2Group[accessoryId] = +designId;
         });
     });

@@ -23,6 +23,8 @@ $config['matomo_token'] = '';
 $config['maintenances'] = [];
 $config['pages'] = [];
 
+$config['article_watermark_doc'] = false;
+
 $config['aprilfools_start'] = 1585666800;
 $config['aprilfools_end'] = 1585785599;
 $config['mourning_cn_start'] = 1585929600;

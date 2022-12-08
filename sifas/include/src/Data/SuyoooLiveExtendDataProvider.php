@@ -13,8 +13,8 @@ final class SuyoooLiveExtendDataProvider implements LiveExtendDataProviderInterf
         $return = new LiveExtendData(self::class);
         $return->noteCount = count($data['notes']);
         $return->waves = array_map(fn($x) => [
-            'start' => $x['range_note_ids'][0],
-            'finish' => $x['range_note_ids'][1],
+            'start' => $x['range_note_ids'][0] + 1,
+            'finish' => $x['range_note_ids'][1] + 1,
             'voltage' => $x['reward_voltage'],
             'damage' => $x['penalty_damage'],
         ], $data['appeal_chances']);
