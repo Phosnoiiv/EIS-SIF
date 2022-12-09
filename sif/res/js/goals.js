@@ -1,10 +1,5 @@
 function produce(ignoreRecord) {
     var server = $("#server").val();
-    if (inMourningCN && parseInt(server) == 3) {
-        $("body").addClass("eis-sif-mourning");
-    } else {
-        $("body").removeClass("eis-sif-mourning");
-    }
     $("#goals").empty();
     $.each(goals[server], function(index, goal) {
         var isExpired = goal[2] && goal[2] < Date.now() / 1000;

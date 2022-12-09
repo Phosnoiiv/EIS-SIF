@@ -118,9 +118,6 @@ article h4 {
 .eis-sif-message-notice a:hover {
     color: #259fc1;
 }
-.eis-sif-mourning-half {
-    filter: grayscale(70%);
-}
 .eis-sif-tag {
     display: inline-block; margin-right: 5px; padding: 2px 5px;
     border-radius: 5px;

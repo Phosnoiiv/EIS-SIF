@@ -40,11 +40,6 @@ function produce(ignoreRecord) {
         return;
     var dateBegin = new Date(year, month - 1);
     server = parseInt($("#server").val());
-    if (inMourningCN && server == 3) {
-        $("body").addClass("eis-sif-mourning");
-    } else {
-        $("body").removeClass("eis-sif-mourning");
-    }
     if (year == "" || month == "" || server == "")
         return;
     calendar("#calendar", year, parseInt(month), calendarArg);

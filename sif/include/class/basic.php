@@ -66,11 +66,6 @@ class Basic {
         $time = time();
         return $time >= $config['aprilfools_start'] && $time <= $config['aprilfools_end'];
     }
-    static function inMourningCN() {
-        global $config;
-        $time = time();
-        return $time >= $config['mourning_cn_start'] && $time <= $config['mourning_cn_end'];
-    }
     static function getAvailableMods() {
         global $config;
         return array_column(array_filter($config['mods'], function($mod) {

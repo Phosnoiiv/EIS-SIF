@@ -20,11 +20,6 @@ function init() {
 function produce(tradeId) {
     var trade = trades[tradeId];
     server = trade[0];
-    if (inMourningCN && server == 3) {
-        $("body").addClass("eis-sif-mourning");
-    } else {
-        $("body").removeClass("eis-sif-mourning");
-    }
     $("#trade-detail").empty().append(
         $("<h2>").text(trade[1]),
         server != 3 ? $("<p>").text(trade[2]) : "",

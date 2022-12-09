@@ -468,9 +468,6 @@ span[data-gallery-role=sort] {
 .eis-sif-map .note {
     font-size: 13px;
 }
-.eis-sif-mourning {
-    filter: grayscale(100%);
-}
 .eis-sif-common-gallery-search-empty {
     flex-grow:1;
     text-align:center;

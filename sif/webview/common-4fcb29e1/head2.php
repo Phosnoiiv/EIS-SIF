@@ -4,7 +4,7 @@ if (!defined('EIS_ENV'))
     exit;
 ?>
 </head>
-<body <?php if(Basic::inMourningCN()) echo 'class="eis-sif-mourning-half"'; ?> >
+<body>
 <div id="eis-sif-header">
 <h1><?=($title ?? $pages[$pageID]['title'])?></h1>
 <?php

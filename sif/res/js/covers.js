@@ -1,8 +1,5 @@
 var coverTypes = [null, "常规", "活动", "商品", "线下", "周年"];
 function produce() {
-    if (inMourningCN) {
-        $("body").addClass("eis-sif-mourning");
-    }
     $.each(covers, function(coverId, cover) {
         if (!cover)
             return;

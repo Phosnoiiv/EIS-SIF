@@ -104,9 +104,6 @@ function popupCarnival(id, server, highlightTrackId) {
     var dateOpen = serverDate(carnival[8 + server], server);
     var dateClose = serverDate(carnival[11 + server], server);
     var dialog = $("#dialog-carnival").clone().attr("id", "");
-    if (inMourningCN && server == 3) {
-        $(dialog).addClass("eis-sif-mourning");
-    }
     $(dialog).find(".dialog-title").append(
         $("<span>").addClass("eis-sif-tag server-" + server).text(serverNameAShort[server]),
         $("<span>").addClass("eis-sif-text category-" + carnival[1]).text(carnival[2 + server] || carnivalDefaultName[server]),
