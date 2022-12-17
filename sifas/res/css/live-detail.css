@@ -136,7 +136,7 @@ h3 {
 }
 .mission-campaign {
     border-bottom: 1px dashed #aaa;
-    color: var(--eis-primary-6); font-weight: bold; font-size: 14px;
+    color: var(--eis-primary-7); font-weight: bold; font-size: 14px;
 }
 .mission-time {
     clear: left; margin: 0;
@@ -202,7 +202,7 @@ h3 {
 }
 .map-link-power {
     position:absolute; bottom:-12px; padding:0 5px;
-    background:var(--eis-primary-1); border-radius:8px; color:var(--eis-primary-8);
+    background:var(--eis-primary-1); border-radius:8px; color:var(--eis-primary-7);
     font-size:12px;
 }
 .map-link .map-deck-icon {
@@ -215,7 +215,7 @@ h3 {
     width: 100%;
 }
 .map-detail-info th {
-    color: var(--eis-primary-6);
+    color: var(--eis-primary-7);
 }
 .map-detail-info td {
     text-align: center; vertical-align: top;

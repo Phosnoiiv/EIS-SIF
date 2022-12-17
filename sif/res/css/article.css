@@ -13,10 +13,10 @@ article h3+.note {
 }
 article h4 {
     margin: 20px 0 10px;
-    color: var(--eis-primary-6); font-size: 18px;
+    color: var(--eis-primary-7); font-size: 18px;
 }
 article a {
-    color: var(--eis-primary-6);
+    color: var(--eis-primary-5);
 }
 article a:hover {
     color: var(--eis-primary-3); text-decoration: none;

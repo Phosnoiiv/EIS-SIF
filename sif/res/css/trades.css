@@ -12,9 +12,6 @@ h3 {
 h4 {
     clear: left;
 }
-tr {
-    border: 1px solid var(--eis-primary-2);
-}
 aside {
     position: relative; z-index: 10;
 }

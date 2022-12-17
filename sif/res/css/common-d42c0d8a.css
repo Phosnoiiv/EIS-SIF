@@ -4,11 +4,8 @@
     --eis-primary-1: #c9caf2;
     --eis-primary-2: #a5a9e9;
     --eis-primary-3: #8086e0;
-    --eis-primary-4: #656ad8;
     --eis-primary-5: #4d4fcc;
-    --eis-primary-6: #4746c1;
     --eis-primary-7: #3f3cb5;
-    --eis-primary-8: #3831a8;
     --eis-primary-9: #2c1c92;
 }
 .eis-theme-sifas {
@@ -16,11 +13,8 @@
     --eis-primary-1: #e0ccb3;
     --eis-primary-2: #ccac84;
     --eis-primary-3: #bc8c52;
-    --eis-primary-4: #b4762d;
     --eis-primary-5: #aa6210;
-    --eis-primary-6: #a65a0f;
     --eis-primary-7: #a04d0c;
-    --eis-primary-8: #994007;
     --eis-primary-9: #8e2901;
 }
 body {
@@ -123,7 +117,7 @@ p.eis-sif-note {
 .eis-sif-section h4 {
     margin: 15px 0;
     border-bottom: 1px solid var(--eis-primary-7);
-    color: var(--eis-primary-6); font-size: 18px !important; font-weight: normal !important;
+    color: var(--eis-primary-7); font-size: 18px !important; font-weight: normal !important;
 }
 .eis-sif-section.disabled {
     background: #ccc; border-color: #666;
@@ -140,11 +134,11 @@ p.eis-sif-note {
 }
 .eis-sif-subsection {
     padding: 10px;
-    border: 1px solid var(--eis-primary-6); border-radius: 10px;
+    border: 1px solid var(--eis-primary-7); border-radius: 10px;
 }
 .eis-sif-subsection h4 {
     margin: -11px -11px 0 -11px; padding: 1px 10px;
-    background: var(--eis-primary-6);
+    background: var(--eis-primary-7);
     color: #fff; font-size: 17px !important;
 }
 .eis-sif-doc h6 {
@@ -310,7 +304,7 @@ span[data-gallery-role=sort] {
 }
 .eis-sif-item-amount {
     position: absolute; width: 100%; left: 0; bottom: -4px;
-    color: var(--eis-primary-8); font-weight: bold; font-size: 13px; text-align: center;
+    color: var(--eis-primary-7); font-weight: bold; font-size: 13px; text-align: center;
 }
 .eis-sif-item-amount::before, .eis-sif-item-block-amount::before {
     content: "×";
@@ -356,7 +350,7 @@ span[data-gallery-role=sort] {
 }
 .eis-sif-item-diff svg {
     margin: 0 10px;
-    color: var(--eis-primary-6);
+    color: var(--eis-primary-5);
 }
 .eis-sif-item-diff .eis-sif-item {
     display: flex;
@@ -417,7 +411,7 @@ span[data-gallery-role=sort] {
     animation: none;
 }
 .eis-sif-dialog a {
-    color: var(--eis-primary-6);
+    color: var(--eis-primary-5);
 }
 .eis-sif-dialog-head {
     border-bottom: 1px solid;
@@ -442,11 +436,11 @@ span[data-gallery-role=sort] {
 .eis-sif-dialog-section-header {
     margin: 10px 0 0; clear: both;
     border-bottom: 1px solid var(--eis-primary-7);
-    color: var(--eis-primary-6);
+    color: var(--eis-primary-7);
 }
 .eis-sif-notice-content h4 {
     border-bottom: 1px solid var(--eis-primary-7);
-    color: var(--eis-primary-6);
+    color: var(--eis-primary-7);
 }
 .eis-sif-notice-content em {
     color: #f57c00; font-weight: bold; font-style: normal;
@@ -458,10 +452,10 @@ span[data-gallery-role=sort] {
     color: #1976d2; text-decoration: none;
 }
 .eis-sif-code-hb {
-    color: var(--eis-primary-6);
+    color: var(--eis-primary-7);
 }
 .eis-sif-code-hi {
-    color: var(--eis-primary-6); font-weight: bold;
+    color: var(--eis-primary-7); font-weight: bold;
 }
 .eis-sif-code-card-1 {
     height: 50px;
@@ -656,7 +650,7 @@ span[data-gallery-role=sort] {
 }
 .ui-widget-header {
     background: var(--eis-primary-2);
-    color: var(--eis-primary-8); font-weight: bold;
+    color: var(--eis-primary-9); font-weight: bold;
 }
 .ui-widget-overlay {
     background: #333;

@@ -131,7 +131,7 @@ section.disabled p {
     font-size: 13px;
 }
 .section-toolbar a {
-    color: var(--eis-primary-6); text-decoration: none;
+    color: var(--eis-primary-5); text-decoration: none;
 }
 .section-toolbar a:hover {
     color: var(--eis-primary-3);
@@ -168,7 +168,7 @@ section.disabled p {
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .reminder-name {
-    color: var(--eis-primary-6); font-weight: bold;
+    color: var(--eis-primary-7); font-weight: bold;
 }
 #articles {
     padding: 0;
@@ -179,7 +179,7 @@ section.disabled p {
 }
 .article-item svg {
     margin-right: 5px; float: left;
-    color: var(--eis-primary-6);
+    color: var(--eis-primary-5);
 }
 .article-item .eis-sif-tag {
     padding: 1px 5px; float: left;
@@ -187,7 +187,7 @@ section.disabled p {
 }
 .article-link {
     display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    color: var(--eis-primary-6);
+    color: var(--eis-primary-5);
 }
 .article-link:hover {
     color: var(--eis-primary-3);
@@ -217,7 +217,7 @@ section.disabled p {
 }
 .notice-clickable {
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    color: var(--eis-primary-6); cursor: pointer;
+    color: var(--eis-primary-5); cursor: pointer;
 }
 .notice-clickable:hover {
     color: var(--eis-primary-3); text-decoration: underline;
@@ -277,10 +277,10 @@ section.disabled p {
 }
 #home-banner-links>span {
     display: inline-block; margin-right: 10px;
-    color: var(--eis-primary-8);
+    color: var(--eis-primary-7);
 }
 #home-banner-links a {
-    color: var(--eis-primary-8); text-decoration: none;
+    color: var(--eis-primary-7); text-decoration: none;
 }
 .home-banner-link-text:hover {
     color: var(--eis-primary-3); cursor: pointer;

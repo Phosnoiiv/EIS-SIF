@@ -54,8 +54,8 @@
 
 .eis-sif-tag.term-1 { background: #c2185b; }
 
-.category-0 a { color: var(--eis-primary-6); }
-.category-0 a:hover { color: var(--eis-primary-4); }
+.category-0 a { color: var(--eis-primary-5); }
+.category-0 a:hover { color: var(--eis-primary-3); }
 
 .ui-state-active {
     background: #ffab91; border-color: #e64a19;
