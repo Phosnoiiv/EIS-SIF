@@ -52,7 +52,7 @@ section {
 }
 #top {
     margin-bottom: 30px; padding: 20px 0;
-    background: #3f3cb5; box-shadow: 0 5px 10px #666;
+    background: var(--eis-primary-7); box-shadow: 0 5px 10px #666;
     color: #fff; text-align: center;
 }
 #top h1 {
@@ -78,8 +78,8 @@ section {
 }
 section.buttons a {
     display: block; position: relative; margin-top: 5px;
-    background: #c9caf2; border: 1px solid #3f3cb5; border-radius: 5px;
-    color: #2c1c92; text-decoration: none;
+    background: var(--eis-primary-1); border: 1px solid var(--eis-primary-7); border-radius: 5px;
+    color: var(--eis-primary-9); text-decoration: none;
 }
 section.buttons a:not([href]) {
     background: #ddd; border-color: #666;
@@ -106,7 +106,7 @@ section.buttons a .server {
 }
 section.buttons a .update {
     position: absolute; top: -3px; right: -3px; padding: 1px 3px;
-    background: #3f3cb5; border-radius: 2px;
+    background: var(--eis-primary-7); border-radius: 2px;
     color: #fff; font-size: 12px;
 }
 section.buttons a .update.new {
@@ -117,7 +117,7 @@ section.buttons a .update.old {
 }
 section.buttons a .note {
     padding: 1px 5px;
-    background: #f3f3fc; border-top: 1px solid #3f3cb5; border-radius: 0 0 5px 5px;
+    background: #f3f3fc; border-top: 1px solid var(--eis-primary-7); border-radius: 0 0 5px 5px;
     color: #333; font-size: 12px;
 }
 section.buttons a.sifas .note {
@@ -131,14 +131,14 @@ section.disabled p {
     font-size: 13px;
 }
 .section-toolbar a {
-    color: #4746c1; text-decoration: none;
+    color: var(--eis-primary-6); text-decoration: none;
 }
 .section-toolbar a:hover {
-    color: #8086e0;
+    color: var(--eis-primary-3);
 }
 .buttons-container {
     display: flex; margin-top: -15px; padding: 10px 10px 10px 30px; flex-wrap: wrap;
-    background: linear-gradient(#fff 0%, #fff 40%, #eaeafa 100%);
+    background: linear-gradient(#fff 0%, #fff 40%, var(--eis-primary-0) 100%);
 }
 .buttons-container a {
     width: 250px; margin: 5px 10px;
@@ -168,7 +168,7 @@ section.disabled p {
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .reminder-name {
-    color: #4746c1; font-weight: bold;
+    color: var(--eis-primary-6); font-weight: bold;
 }
 #articles {
     padding: 0;
@@ -179,7 +179,7 @@ section.disabled p {
 }
 .article-item svg {
     margin-right: 5px; float: left;
-    color: #4746c1;
+    color: var(--eis-primary-6);
 }
 .article-item .eis-sif-tag {
     padding: 1px 5px; float: left;
@@ -187,10 +187,10 @@ section.disabled p {
 }
 .article-link {
     display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    color: #4746c1;
+    color: var(--eis-primary-6);
 }
 .article-link:hover {
-    color: #8086e0;
+    color: var(--eis-primary-3);
 }
 .article-date {
     margin: 1px 0 1px 5px; float: right;
@@ -217,10 +217,10 @@ section.disabled p {
 }
 .notice-clickable {
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    color: #4746c1; cursor: pointer;
+    color: var(--eis-primary-6); cursor: pointer;
 }
 .notice-clickable:hover {
-    color: #8086e0; text-decoration: underline;
+    color: var(--eis-primary-3); text-decoration: underline;
 }
 .notice-date {
     margin-top: 1px; float: right;
@@ -277,13 +277,13 @@ section.disabled p {
 }
 #home-banner-links>span {
     display: inline-block; margin-right: 10px;
-    color: #3831a8;
+    color: var(--eis-primary-8);
 }
 #home-banner-links a {
-    color: #3831a8; text-decoration: none;
+    color: var(--eis-primary-8); text-decoration: none;
 }
 .home-banner-link-text:hover {
-    color: #8086e0; cursor: pointer;
+    color: var(--eis-primary-3); cursor: pointer;
 }
 #home-banner-dots {
     display: flex; justify-content: center; margin-top: 3px;

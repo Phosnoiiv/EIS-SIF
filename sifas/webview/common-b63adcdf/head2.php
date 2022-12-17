@@ -11,7 +11,7 @@ foreach (SIF\Basic::getAvailableMods() as $mod) {
 }
 ?>
 </head>
-<body class="eis-sifas<?=V2::$useV2Front ? ' v2-body' : ''?>" data-id="<?=$pageID ?? ''?>">
+<body class="eis-sifas eis-theme-sifas<?=V2::$useV2Front ? ' v2-body' : ''?>" data-id="<?=$pageID ?? ''?>">
 <?php
 V2::includeV2FrontJs();
 ?>

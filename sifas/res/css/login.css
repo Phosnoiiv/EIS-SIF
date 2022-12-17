@@ -22,7 +22,7 @@ input {
     filter: grayscale(100%);
 }
 .count-amount {
-    color: #aa6210; font-weight: bold; text-align: center;
+    color: var(--eis-primary-5); font-weight: bold; text-align: center;
 }
 .bonus-table {
     width: 100%; margin-top: 10px;
@@ -116,7 +116,7 @@ input {
 }
 .bonus-table td:nth-child(5) {
     width: 30px;
-    color: #8e2901; text-align: right;
+    color: var(--eis-primary-9); text-align: right;
 }
 .bonus-bg-thumb {
     float: left; margin-right: 10px;

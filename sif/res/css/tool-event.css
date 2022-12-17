@@ -1,6 +1,6 @@
 @charset "utf-8";
 #result td {
-    color: #3f3cb5; text-align: right;
+    color: var(--eis-primary-7); text-align: right;
 }
 #result tr>*:nth-child(3) { display: none; }
 #result .enough {
@@ -41,7 +41,7 @@
     cursor: pointer;
 }
 #yell-choices .eis-sif-gallery-item {
-    background: #c9caf2;
+    background: var(--eis-primary-1);
 }
 #yell-chosen .eis-sif-gallery-item {
     background: #c8e6c9;

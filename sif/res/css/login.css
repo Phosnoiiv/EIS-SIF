@@ -35,20 +35,6 @@ th {
 .unit img {
     width: 39px;
 }
-.unit .calendar-item {
-    position: relative;
-}
-.unit .calendar-amount {
-    position: absolute; width: 31px; left: 4px; bottom: -3px;
-    background: #c9caf2aa; border-radius: 15px;
-    color: #4d4fcc; font-weight: bold; font-size: 13px; text-align: center;
-}
-.unit .calendar-amount::before {
-    content: "×";
-}
-.unit .calendar-amount.single {
-    display: none;
-}
 .stamp {
     float: right; clear: right;
 }
@@ -82,7 +68,7 @@ th {
 }
 .item3 .calendar-amount {
     position: absolute; width: 36px; left: 0; bottom: -3px;
-    color: #4d4fcc; font-weight: bold; font-size: 13px; text-align: center;
+    color: var(--eis-primary-5); font-weight: bold; font-size: 13px; text-align: center;
 }
 .item3 .calendar-amount::before {
     content: "×";
@@ -97,10 +83,10 @@ th {
     filter: grayscale(100%);
 }
 .count-amount {
-    color: #4d4fcc; font-weight: bold; text-align: center;
+    color: var(--eis-primary-5); font-weight: bold; text-align: center;
 }
 .bonus-clickable {
-    color: #4d4fcc;
+    color: var(--eis-primary-5);
 }
 .bonus-clickable:hover {
     cursor: pointer; text-decoration: underline;
@@ -140,7 +126,7 @@ th {
     text-align: right;
 }
 .bonus-table td:nth-child(4) .ui-icon {
-    border: 1px solid #2c1c92; border-radius: 50%;
+    border: 1px solid var(--eis-primary-9); border-radius: 50%;
 }
 #month {
     font-family: "Microsoft Yahei", sans-serif;

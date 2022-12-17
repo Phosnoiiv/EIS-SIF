@@ -30,7 +30,7 @@
 }
 #play-dialog-exchange-img svg {
     margin: 0 30px;
-    color: #4746c1; font-size: 30px;
+    color: var(--eis-primary-6); font-size: 30px;
 }
 #play-dialog-exchange-amount {
     width: 150px;

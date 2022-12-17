@@ -1,16 +1,6 @@
 @charset "utf-8";
-body {
-    background: #f2ebe1;
-}
-h1 {
-    color: #a04d0c;
-}
 #eis-sif-header {
     background: #fdfdfb;
-}
-#eis-sif-nav-home {
-    background: #e0ccb3; border-color: #a04d0c;
-    color: #8e2901;
 }
 #eis-sif-nav-home:hover {
     background: #b2dfdb; border-color: #00796b;
@@ -24,13 +14,6 @@ h1 {
     background: #f0f4c3; border-color: #afb42b;
     color: #827717;
 }
-.eis-sif-header-button {
-    background: #f2ebe1; border-color: #a04d0c;
-    color: #a04d0c;
-}
-#eis-sif-footer {
-    background: #e0ccb3; border-color: #aa6210;
-}
 #eis-sif-footer a {
     color: #795548;
 }
@@ -41,25 +24,8 @@ h1 {
     background: #dca7a5; border-color: #a24536;
     color: #a24536;
 }
-.eis-sif-content {
-    border-color: #8e2901;
-}
 .eis-sif-section {
-    background: #fdfdfb; border-color: #a04d0c;
-}
-.eis-sif-section>h4 {
-    border-bottom-color: #a04d0c;
-    color: #a65a0f;
-}
-.eis-sif-section-noborder h4 {
-    border-bottom-color: #a04d0c;
-    color: #a04d0c;
-}
-.eis-sif-subsection {
-    border-color: #a65a0f;
-}
-.eis-sif-subsection h4 {
-    background-color: #a65a0f;
+    background: #fdfdfb;
 }
 .eis-sif-notice {
     background: #b5c8e1; border-color: #0050a6;
@@ -73,82 +39,24 @@ h1 {
 .eis-sif-notice svg {
     color: #002674;
 }
-.eis-sif-bar {
-    background: #e0ccb3; border-color: #aa6210;
-}
 .eis-sif-bar a {
     color: #0050a6;
 }
 .eis-sif-bar a:hover {
     color: #4c82ba;
 }
-.eis-sif-bar svg {
-    color: #8e2901;
-}
-.eis-sif-table {
-    border-color: #a04d0c;
-}
-.eis-sif-table tr {
-    border-color: #bc8c52;
-}
-.eis-sif-table th {
-    background: #ccac84; border-color: #8e2901;
-    color: #8e2901;
-}
-.eis-sif-calendar {
-    border-color: #a04d0c;
-}
-.eis-sif-calendar th {
-    background: #a04d0c;
-}
 .eis-sif-calendar tbody {
     background: #fdfdfb;
 }
-.eis-sif-caption {
-    border-color: #f2ebe1;
-    color: #a04d0c;
-}
-.eis-sif-info-gallery>div>div:last-child {
-    color: #8e2901;
-}
-.eis-sif-item-amount {
-    color: #994007;
-}
-.eis-sif-item-block-name {
-    color: #a04d0c;
-}
-.eis-sif-timetip.on-background {
-    background: linear-gradient(90deg, #f2ebe1 0%, #444 20%, #444 80%, #f2ebe1 100%);
-}
 .eis-sif-dialog-head {
-    border-bottom-color: #8e2901;
-}
-.eis-sif-dialog-section-header {
-    border-bottom-color: #a04d0c;
-    color: #a65a0f;
+    border-bottom-color: var(--eis-primary-9);
 }
 
 .eis-sif-tag.term-1 { background: #c2185b; }
 
-.eis-sif-text.category-0 { color: #aa6210; }
+.category-0 a { color: var(--eis-primary-6); }
+.category-0 a:hover { color: var(--eis-primary-4); }
 
-.category-0 a { color: #a65a0f; }
-.category-0 a:hover { color: #b4762d; }
-
-.ui-widget-content {
-    border-color: #8e2901;
-}
-.ui-widget-header {
-    background: #ccac84;
-    color: #994007;
-}
-.ui-button, .ui-state-default {
-    background: #e0ccb3; border-color: #a04d0c;
-    color: #8e2901;
-}
-.ui-state-default a {
-    color: #8e2901;
-}
 .ui-state-active {
     background: #ffab91; border-color: #e64a19;
     color: #bf360c;
@@ -160,23 +68,6 @@ h1 {
     background-image: url("/sif/res/common/jquery/icons/8e2901.png");
 }
 
-.ui-dialog {
-    border-color: #8e2901;
-}
-.ui-dialog-titlebar {
-    border-bottom-color: #8e2901;
-}
-
-.ui-tabs .ui-tabs-panel {
-    border-color: #8e2901;
-}
-
 .ui-tooltip {
     background: #f0e7db;
-}
-.ui-tooltip h5 {
-    color: #8e2901;
-}
-.ui-tooltip h6 {
-    color: #8e2901;
 }
