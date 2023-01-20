@@ -231,6 +231,9 @@ img.eis-sif-switch[data-switch="0"] {
     padding: 2px 5px;
     font-size: 14px;
 }
+.eis-sif-form-block {
+    break-inside: avoid;
+}
 @media (max-width:500px) {
     .eis-sif-form label {
         display: block; width: auto; margin: 0;
