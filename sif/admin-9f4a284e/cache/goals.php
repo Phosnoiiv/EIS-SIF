@@ -16,7 +16,7 @@ foreach ([1 => 'jp', 3 => 'cn'] as $server => $serverName) {
         $timeClose = strtotime($dbGoal['end_date'] . SIF::getServerTimezone($server));
         $yearClose = date('Y', $timeClose);
         $type = $dbGoal['achievement_type'];
-        if (empty($dbGoal["description$sfxGL"]) && !empty($dbGoal['end_date']) && $timeClose >= $now && $yearClose < 2023) {
+        if (empty($dbGoal["description$sfxGL"]) && !empty($dbGoal['end_date']) && $timeClose >= $now && $yearClose < 2024) {
             for ($maxParam = 11; $maxParam > 0 && empty($dbGoal['params' . $maxParam]); $maxParam--);
             $clientGoals[$server][++$clientIndex] = [
                 $dbGoal["title$sfxGL"],

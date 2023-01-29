@@ -6,7 +6,7 @@ if (!defined('EIS_ENV'))
 </div>
 <div id="eis-sif-footer">
 <p>EIS-SIF 版本 <?=$config['version']?> <?php if(!Basic::inMaintenance()) echo '<a href="/sif/history.php" target="_blank">查看更新记录</a>';?></p>
-<p>Page by 2020 RS/EIS/PNI.</p>
+<p>Page by 2023 RS/EIS/PNI.</p>
 </div>
 <div id="eis-sif-loading" class="eis-sif-hidden">
 <div class="ui-widget-overlay"></div>

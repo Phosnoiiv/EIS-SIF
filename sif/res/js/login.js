@@ -36,7 +36,7 @@ function init() {
 function produce(ignoreRecord) {
     year = $("#month").val().substr(0, 4);
     month = $("#month").val().substr(5, 2);
-    if (year < 2018 || year > 2022 || month < 1 || month > 12)
+    if (year < 2018 || year > 2023 || month < 1 || month > 12)
         return;
     var dateBegin = new Date(year, month - 1);
     server = parseInt($("#server").val());

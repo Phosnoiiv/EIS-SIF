@@ -35,7 +35,7 @@ function produce(ignoreRecord) {
     server = parseInt($("#server").val());
     year = $("#month").val().substr(0, 4);
     month = $("#month").val().substr(5, 2);
-    if (server < 1 || server > 3 || year < 2019 || year > 2022 || month < 1 || month > 12)
+    if (server < 1 || server > 3 || year < 2019 || year > 2023 || month < 1 || month > 12)
         return;
     calendar("#calendar>tbody", year, parseInt(month), calendarArg);
     $("#bonuses").empty();
