@@ -82,10 +82,17 @@ function switchBanner() {
         }
     };
     var index = $(".home-banner-dot.active").index();
-    var banner = banners[index], buttons = banner[1];
+    var banner = banners[index], buttons = banner[1], decoration = banner[2];
     $("#home-banner").empty().append($('<img src="/sif/res/img/u/banner/'+banner[0]+'.jpg">'));
     if (buttons.length) {
         iLink("#home-banner>img", buttons[0][0], buttons[0][1], buttons[0][2]);
+    }
+    switch (decoration[0]) {
+        case 1:
+            $('<span id="home-banner-decoration-count-large" class="eis-sif-countup" data-countup-day-ceil="1">')
+                .attr("data-time", decoration[1]).text("--").attr("style", "color:" + decoration[5])
+                .appendTo("#home-banner");
+            break;
     }
     $("#home-banner-links").empty();
     $.each(buttons, function(buttonIndex, button) {

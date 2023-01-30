@@ -270,6 +270,10 @@ section.disabled p {
 #home-banner-arrow-right {
     right: 3px;
 }
+#home-banner-decoration-count-large {
+    position: absolute; top: 25px; left: 20%; width: 60%;
+    font-size: 40px; font-weight: bold; text-align: center;
+}
 #home-banner-links {
     margin: 0 17px; padding: 0 5px;
     background: linear-gradient(90deg, #fff 40%, #fff0 90%);
