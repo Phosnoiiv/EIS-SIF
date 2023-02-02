@@ -206,7 +206,7 @@ section.disabled p {
 .alert .eis-sif-countdown {
     color: #e64a19; font-weight: bold;
 }
-#notices {
+.notices {
     padding-bottom: 1px;
 }
 .notice {
