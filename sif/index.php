@@ -96,7 +96,7 @@ foreach (Basic::getAvailableMods() as $mod) {
 <body data-id="home">
 <div id="top">
 <h1>EIS-SIF</h1>
-<h2>一些资料和实验性页面</h2>
+<h2><?=Basic::getStyleHomeSubtitle()??'一些资料和实验性页面'?></h2>
 </div>
 <div id="eis-sif-container">
 <div id="sections-main">

@@ -87,10 +87,38 @@ class Basic {
 
     private static $banners = [];
     static function getBanners($location) {
-        if (isset(self::$banner[$location])) return self::$banner[$location];
+        if (isset(self::$banners[$location])) return self::$banners[$location];
         $sql = "SELECT * FROM s_banner WHERE `location`=$location AND time_open<=datetime('now','localtime') AND time_close>=datetime('now','localtime')";
         $columns = [['s','img'],['i','type'],['i','target']];
         self::$banners[$location] = DB::ltSelect('eis.s3db', $sql, $columns, '');
         return self::$banners[$location];
+    }
+
+    private static ?array $style = null;
+    private static function readStyle(): void {
+        if (isset(self::$style)) return;
+        $sql = "SELECT * FROM s_style_schedule WHERE ".DB::ltSQLTimeIn('time_open','time_close');
+        $col = [['i','theme'],['s','home_subtitle']];
+        $dStyles = DB::ltSelect(DB_EIS_MAIN, $sql, $col, '');
+        self::$style = empty($dStyles) ? null : $dStyles[0];
+    }
+    private static function composeStyleThemeCss(array $colors): string {
+        return implode('', array_map(fn($color, $shade) => "--eis-primary-$shade:$color;", $colors, [0,1,2,3,5,7,9]));
+    }
+    public static function getStyleThemeCss(): string {
+        self::readStyle();
+        if (empty(self::$style[0])) return '';
+        $sql = "SELECT * FROM s_theme WHERE id=".self::$style[0];
+        $col = [
+            ['s','sif0'  ],['s','sif1'  ],['s','sif2'  ],['s','sif3'  ],['s','sif5'  ],['s','sif7'  ],['s','sif9'  ],
+            ['s','sifas0'],['s','sifas1'],['s','sifas2'],['s','sifas3'],['s','sifas5'],['s','sifas7'],['s','sifas9'],
+        ];
+        $dTheme = DB::ltSelect(DB_EIS_MAIN, $sql, $col, '')[0];
+        return (empty($dTheme[0]) ? '' : ':root,.eis-theme-sif{'.self::composeStyleThemeCss(array_slice($dTheme,0,7)).'}')
+            .  (empty($dTheme[7]) ? '' : '.eis-theme-sifas{'    .self::composeStyleThemeCss(array_slice($dTheme,7,7)).'}');
+    }
+    public static function getStyleHomeSubtitle(): ?string {
+        self::readStyle();
+        return self::$style[1] ?? null;
     }
 }

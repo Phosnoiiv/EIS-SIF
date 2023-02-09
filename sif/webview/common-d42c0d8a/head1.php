@@ -57,6 +57,9 @@ echo HTML::css('common-d42c0d8a');
 if ($useSIFStyle ?? false) {
     echo HTML::css('common-9fec4fcf');
 }
+if (!empty($styleThemeCss = Basic::getStyleThemeCss())) {
+    echo '<style>', $styleThemeCss, "</style>\n";
+}
 ?>
 <script src="/sif/res/common/jquery/jquery-1.12.4.min.js"></script>
 <?php

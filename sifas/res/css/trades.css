@@ -1,13 +1,13 @@
 @charset "utf-8";
 h2 {
-    color: #a04d0c; text-align: center;
+    color: var(--eis-primary-7); text-align: center;
 }
 h2+p {
     color: #666; text-align: center;
 }
 h3 {
     margin: 15px 0;
-    color: #a04d0c; text-align: center;
+    color: var(--eis-primary-7); text-align: center;
 }
 aside {
     position: relative; z-index: 10;
@@ -101,7 +101,7 @@ td.cost {
 }
 
 .eis-sif-gallery-item {
-    background: #f2ebe1; border: 1px dashed #a04d0c; border-radius: 15px;
+    background: var(--eis-primary-0); border: 1px dashed var(--eis-primary-7); border-radius: 15px;
 }
 .eis-sif-gallery-item:hover {
     background: #fff;

@@ -16,7 +16,7 @@
     padding-left: 226px;
 }
 #dialog-gallery-limit {
-    color: #2c1c92; font-weight: bold; text-align: center;
+    color: var(--eis-primary-9); font-weight: bold; text-align: center;
 }
 #dialog-gallery-free {
     position: relative; margin-top: 15px;
@@ -33,7 +33,7 @@
 
 .eis-sif-gallery-item {
     display: block; position: relative; padding: 2px 5px; width: 216px;
-    background: #eaeafa; border: 1px solid #3f3cb5; border-radius: 5px;
+    background: var(--eis-primary-0); border: 1px solid var(--eis-primary-7); border-radius: 5px;
 }
 .eis-sif-gallery-item img {
     display: block; margin: 2px auto;

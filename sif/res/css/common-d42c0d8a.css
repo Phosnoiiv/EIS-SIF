@@ -1,11 +1,29 @@
 @charset "utf-8";
+:root, .eis-theme-sif {
+    --eis-primary-0: #eaeafa;
+    --eis-primary-1: #c9caf2;
+    --eis-primary-2: #a5a9e9;
+    --eis-primary-3: #8086e0;
+    --eis-primary-5: #4d4fcc;
+    --eis-primary-7: #3f3cb5;
+    --eis-primary-9: #2c1c92;
+}
+.eis-theme-sifas {
+    --eis-primary-0: #f2ebe1;
+    --eis-primary-1: #e0ccb3;
+    --eis-primary-2: #ccac84;
+    --eis-primary-3: #bc8c52;
+    --eis-primary-5: #aa6210;
+    --eis-primary-7: #a04d0c;
+    --eis-primary-9: #8e2901;
+}
 body {
     margin: 0;
-    background: #eaeafa;
+    background: var(--eis-primary-0);
     font-family: "Microsoft Yahei", sans-serif; font-size: 16px;
 }
 h1 {
-    color: #3f3cb5;
+    color: var(--eis-primary-7);
 }
 p {
     margin: 10px 0;
@@ -27,8 +45,8 @@ p.eis-sif-note {
 }
 #eis-sif-nav-home {
     display: inline-block; padding: 2px 10px;
-    background: #c9caf2; border: 1px solid #3f3cb5; border-radius: 5px;
-    color: #2c1c92; text-decoration: none;
+    background: var(--eis-primary-1); border: 1px solid var(--eis-primary-7); border-radius: 5px;
+    color: var(--eis-primary-9); text-decoration: none;
 }
 #eis-sif-nav-home:hover {
     background: #f0f4c3; border-color: #afb42b;
@@ -48,15 +66,15 @@ p.eis-sif-note {
 }
 .eis-sif-header-button {
     display: inline-flex; width: 50px; height: 30px; justify-content: center; align-items: center;
-    background: #eaeafa; border: 1px solid #3f3cb5; border-radius: 5px;
-    color: #3f3cb5; cursor: pointer;
+    background: var(--eis-primary-0); border: 1px solid var(--eis-primary-7); border-radius: 5px;
+    color: var(--eis-primary-7); cursor: pointer;
 }
 #eis-sif-container {
     padding: 10px 5%;
 }
 #eis-sif-footer {
     width: 250px; margin: 20px auto; padding: 5px; clear: both;
-    background: #c9caf2; border: 1px solid #4d4fcc; border-radius: 5px;
+    background: var(--eis-primary-1); border: 1px solid var(--eis-primary-5); border-radius: 5px;
     font-size: 12px; text-align: center;
 }
 #eis-sif-footer p {
@@ -90,16 +108,16 @@ p.eis-sif-note {
 }
 .eis-sif-content {
     margin: 20px 0; padding: 10px;
-    background: #fff; border: 2px solid #2c1c92; border-radius: 10px;
+    background: #fff; border: 2px solid var(--eis-primary-9); border-radius: 10px;
 }
 .eis-sif-section {
     margin: 20px 0; padding: 0 15px 10px;
-    background: #fbfbfe; border: 2px solid #3f3cb5; border-radius: 15px;
+    background: #fbfbfe; border: 2px solid var(--eis-primary-7); border-radius: 15px;
 }
 .eis-sif-section h4 {
     margin: 15px 0;
-    border-bottom: 1px solid #3f3cb5;
-    color: #4746c1; font-size: 18px !important; font-weight: normal !important;
+    border-bottom: 1px solid var(--eis-primary-7);
+    color: var(--eis-primary-7); font-size: 18px !important; font-weight: normal !important;
 }
 .eis-sif-section.disabled {
     background: #ccc; border-color: #666;
@@ -111,21 +129,21 @@ p.eis-sif-note {
 }
 .eis-sif-section-noborder h4 {
     margin: 15px 0;
-    border-bottom: 1px solid #3f3cb5;
-    color: #3f3cb5; font-size: 18px;
+    border-bottom: 1px solid var(--eis-primary-7);
+    color: var(--eis-primary-7); font-size: 18px;
 }
 .eis-sif-subsection {
     padding: 10px;
-    border: 1px solid #4746c1; border-radius: 10px;
+    border: 1px solid var(--eis-primary-7); border-radius: 10px;
 }
 .eis-sif-subsection h4 {
     margin: -11px -11px 0 -11px; padding: 1px 10px;
-    background: #4746c1;
+    background: var(--eis-primary-7);
     color: #fff; font-size: 17px !important;
 }
 .eis-sif-doc h6 {
     margin: 10px 0;
-    color: #4d4fcc; font-size: 17px;
+    color: var(--eis-primary-5); font-size: 17px;
 }
 .eis-sif-notice {
     margin: 5px 0; padding: 0 3px;
@@ -146,7 +164,7 @@ p.eis-sif-note {
 }
 .eis-sif-bar {
     padding: 1px 0 1px 3px;
-    background: #c9caf2; border: 1px solid #4d4fcc; border-radius: 5px;
+    background: var(--eis-primary-1); border: 1px solid var(--eis-primary-5); border-radius: 5px;
     font-size: 14px;
 }
 .eis-sif-bar>span {
@@ -156,7 +174,7 @@ p.eis-sif-note {
     text-decoration: none;
 }
 .eis-sif-bar svg {
-    color: #2c1c92;
+    color: var(--eis-primary-9);
 }
 .eis-sif-pagebar {
     text-align: center;
@@ -190,22 +208,22 @@ img.eis-sif-switch[data-switch="0"] {
     filter: grayscale(100%);
 }
 .eis-sif-table {
-    border: 3px solid #3f3cb5; border-collapse: collapse;
+    border: 3px solid var(--eis-primary-7); border-collapse: collapse;
 }
 .eis-sif-table tr {
-    border: 1px solid #8086e0;
+    border: 1px solid var(--eis-primary-3);
 }
 .eis-sif-table th {
     padding: 1px 5px;
-    background: #a5a9e9; border: 1px solid #2c1c92;
-    color: #2c1c92;
+    background: var(--eis-primary-2); border: 1px solid var(--eis-primary-9);
+    color: var(--eis-primary-9);
 }
 .eis-sif-table td {
     padding: 1px 5px;
 }
 .eis-sif-table-section-header {
-    background: #c9caf2;
-    color: #3f3cb5; font-weight: bold; text-align: left;
+    background: var(--eis-primary-1);
+    color: var(--eis-primary-7); font-weight: bold; text-align: left;
 }
 .eis-sif-form {
     margin: 20px auto; columns: 500px;
@@ -241,10 +259,10 @@ img.eis-sif-switch[data-switch="0"] {
     }
 }
 .eis-sif-calendar {
-    border: 3px solid #3f3cb5; border-collapse: collapse;
+    border: 3px solid var(--eis-primary-7); border-collapse: collapse;
 }
 .eis-sif-calendar th {
-    background: #3f3cb5;
+    background: var(--eis-primary-7);
     color: #fff;
 }
 .eis-sif-calendar tbody {
@@ -252,8 +270,8 @@ img.eis-sif-switch[data-switch="0"] {
 }
 .eis-sif-caption {
     padding-bottom: 5px;
-    border: 3px solid #eaeafa;
-    color: #3f3cb5; font-size: 22px; text-align: center;
+    border: 3px solid var(--eis-primary-0);
+    color: var(--eis-primary-7); font-size: 22px; text-align: center;
 }
 .eis-sif-row {
     display:flex; justify-content:space-between; align-items:center;
@@ -274,7 +292,7 @@ img.eis-sif-switch[data-switch="0"] {
     color: #666; font-size: 14px;
 }
 .eis-sif-info-gallery>div>div:last-child {
-    color: #2c1c92; font-family: "Century Gothic", "Segoe UI", sans-serif; font-weight: bold; font-size: 18px;
+    color: var(--eis-primary-9); font-family: "Century Gothic", "Segoe UI", sans-serif; font-weight: bold; font-size: 18px;
 }
 span[data-gallery-role=sort] {
     margin:0; padding:1px 5px;
@@ -286,7 +304,7 @@ span[data-gallery-role=sort] {
 }
 .eis-sif-item-amount {
     position: absolute; width: 100%; left: 0; bottom: -4px;
-    color: #3831a8; font-weight: bold; font-size: 13px; text-align: center;
+    color: var(--eis-primary-7); font-weight: bold; font-size: 13px; text-align: center;
 }
 .eis-sif-item-amount::before, .eis-sif-item-block-amount::before {
     content: "×";
@@ -306,7 +324,7 @@ span[data-gallery-role=sort] {
 .eis-sif-item-block-name {
     margin-bottom: 5px;
     border-bottom: 1px dashed #aaa;
-    color: #3f3cb5;
+    color: var(--eis-primary-7);
 }
 .with-desc .eis-sif-item-block-name {
     font-size: 17px;
@@ -324,7 +342,7 @@ span[data-gallery-role=sort] {
 }
 .eis-sif-item-diff {
     display: flex; align-items: center; padding: 0 10px 0 3px;
-    border: 1px solid #a5a9e9; border-radius: 10px;
+    border: 1px solid var(--eis-primary-2); border-radius: 10px;
     font-size: 14px;
 }
 .eis-sif-item-diff img {
@@ -332,7 +350,7 @@ span[data-gallery-role=sort] {
 }
 .eis-sif-item-diff svg {
     margin: 0 10px;
-    color: #4746c1;
+    color: var(--eis-primary-5);
 }
 .eis-sif-item-diff .eis-sif-item {
     display: flex;
@@ -355,10 +373,10 @@ span[data-gallery-role=sort] {
     max-width: 500px; margin: 0 auto;
 }
 .eis-sif-simple-icon {
-    color: #3f3cb5; font-size: 128px; text-align: center;
+    color: var(--eis-primary-7); font-size: 128px; text-align: center;
 }
 .eis-sif-simple-title {
-    color: #3f3cb5; text-align: center;
+    color: var(--eis-primary-7); text-align: center;
 }
 .eis-sif-simple-text {
     margin-top: 20px; padding: 10px;
@@ -370,7 +388,7 @@ span[data-gallery-role=sort] {
     color: #eee; font-size: 14px; text-align: center;
 }
 .eis-sif-timetip.on-background {
-    background: linear-gradient(90deg, #eaeafa 0%, #444 20%, #444 80%, #eaeafa 100%);
+    background: linear-gradient(90deg, var(--eis-primary-0) 0%, #444 20%, #444 80%, var(--eis-primary-0) 100%);
 }
 .eis-sif-button-line {
     text-align: center;
@@ -393,11 +411,11 @@ span[data-gallery-role=sort] {
     animation: none;
 }
 .eis-sif-dialog a {
-    color: #4746c1;
+    color: var(--eis-primary-5);
 }
 .eis-sif-dialog-head {
     border-bottom: 1px solid;
-    color: #2c1c92; font-size: 18px;
+    color: var(--eis-primary-9); font-size: 18px;
 }
 .eis-sif-dialog-logo {
     height: 45px; float: left;
@@ -417,12 +435,12 @@ span[data-gallery-role=sort] {
 }
 .eis-sif-dialog-section-header {
     margin: 10px 0 0; clear: both;
-    border-bottom: 1px solid #3f3cb5;
-    color: #4746c1;
+    border-bottom: 1px solid var(--eis-primary-7);
+    color: var(--eis-primary-7);
 }
 .eis-sif-notice-content h4 {
-    border-bottom: 1px solid #3f3cb5;
-    color: #4746c1;
+    border-bottom: 1px solid var(--eis-primary-7);
+    color: var(--eis-primary-7);
 }
 .eis-sif-notice-content em {
     color: #f57c00; font-weight: bold; font-style: normal;
@@ -434,10 +452,10 @@ span[data-gallery-role=sort] {
     color: #1976d2; text-decoration: none;
 }
 .eis-sif-code-hb {
-    color: #4746c1;
+    color: var(--eis-primary-7);
 }
 .eis-sif-code-hi {
-    color: #4746c1; font-weight: bold;
+    color: var(--eis-primary-7); font-weight: bold;
 }
 .eis-sif-code-card-1 {
     height: 50px;
@@ -493,7 +511,7 @@ span[data-gallery-role=sort] {
 .eis-sif-tag.series-1, .eis-sif-tag.unit-1 { background: #00bcd4; }
 .eis-sif-tag.series-3, .eis-sif-tag.unit-2 { background: #4caf50; }
 .eis-sif-tag.series-7, .eis-sif-tag.unit-6 { background: #f44336; }
-.eis-sif-tag.article-1 { background: #8086e0; }
+.eis-sif-tag.article-1 { background: var(--eis-primary-3); }
 .eis-sif-tag.article-2 { background: #ba68c8; }
 .eis-sif-tag.article-3 { background: #4fc3f7; }
 .eis-sif-tag.article-4 { background: #e57373; }
@@ -502,7 +520,7 @@ span[data-gallery-role=sort] {
 .eis-sif-tag[data-g2-dif="4"] {background:#f53436;}
 .eis-sif-tag[data-g2-dif="5"] {background:#db31e8;}
 
-.eis-sif-text.category-0 { color: #4d4fcc; }
+.eis-sif-text.category-0 { color: var(--eis-primary-5); }
 .eis-sif-text.category-1 { color: #f0446a; }
 .eis-sif-text.category-2 { color: #008dd6; }
 .eis-sif-text.category-3 { color: #f4a135; }
@@ -628,11 +646,11 @@ span[data-gallery-role=sort] {
 .category-4 .eis-sif-dialog-section-header { border-bottom-color: #9d01a9; color: #b109b0; }
 
 .ui-widget-content {
-    background: #fff; border: 1px solid #2c1c92;
+    background: #fff; border: 1px solid var(--eis-primary-9);
 }
 .ui-widget-header {
-    background: #a5a9e9;
-    color: #3831a8; font-weight: bold;
+    background: var(--eis-primary-2);
+    color: var(--eis-primary-9); font-weight: bold;
 }
 .ui-widget-overlay {
     background: #333;
@@ -642,11 +660,11 @@ span[data-gallery-role=sort] {
     box-shadow: 0 0 5px #666;
 }
 .ui-button, .ui-state-default {
-    background: #c9caf2; border: 1px solid #3f3cb5;
-    color: #2c1c92;
+    background: var(--eis-primary-1); border: 1px solid var(--eis-primary-7);
+    color: var(--eis-primary-9);
 }
 .ui-state-default a {
-    color: #2c1c92;
+    color: var(--eis-primary-9);
 }
 .ui-state-active {
     background: #ffe082; border: 1px solid #ffa000;
@@ -697,10 +715,10 @@ span[data-gallery-role=sort] {
 
 .ui-dialog {
     position: fixed; padding: 0;
-    border: 3px solid #2c1c92;
+    border: 3px solid var(--eis-primary-9);
 }
 .ui-dialog-titlebar {
-    border-bottom: 1px solid #2c1c92; border-radius: 0;
+    border-bottom: 1px solid var(--eis-primary-9); border-radius: 0;
 }
 .ui-dialog-titlebar .ui-button {
     background: transparent !important; border: none;
@@ -737,7 +755,7 @@ span[data-gallery-role=sort] {
     border-width: 3px; border-bottom: none;
 }
 .ui-tabs .ui-tabs-panel {
-    background: #fff; border: 2px solid #2c1c92;
+    background: #fff; border: 2px solid var(--eis-primary-9);
 }
 
 .ui-tooltip {
@@ -746,11 +764,11 @@ span[data-gallery-role=sort] {
 }
 .ui-tooltip h5 {
     margin: 3px 0;
-    color: #2c1c92; font-size: 16px;
+    color: var(--eis-primary-9); font-size: 16px;
 }
 .ui-tooltip h6 {
     margin: 3px 0;
-    color: #2c1c92; font-size: 14px;
+    color: var(--eis-primary-9); font-size: 14px;
 }
 .ui-tooltip p {
     margin: 3px 0;

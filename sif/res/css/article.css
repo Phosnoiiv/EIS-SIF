@@ -1,11 +1,11 @@
 article {
     margin: 20px 0; padding: 10px 15px;
-    background: #fff; border: 2px solid #2c1c92; border-radius: 10px; box-shadow: 2px 2px 5px #999;
+    background: #fff; border: 2px solid var(--eis-primary-9); border-radius: 10px; box-shadow: 2px 2px 5px #999;
 }
 article h3 {
     margin: 20px 0 10px;
-    border-bottom: 1px solid #3f3cb5;
-    color: #3f3cb5; font-size: 22px;
+    border-bottom: 1px solid var(--eis-primary-7);
+    color: var(--eis-primary-7); font-size: 22px;
 }
 article h3+.note {
     margin: -10px 0 10px;
@@ -13,13 +13,13 @@ article h3+.note {
 }
 article h4 {
     margin: 20px 0 10px;
-    color: #4746c1; font-size: 18px;
+    color: var(--eis-primary-7); font-size: 18px;
 }
 article a {
-    color: #4746c1;
+    color: var(--eis-primary-5);
 }
 article a:hover {
-    color: #8086e0; text-decoration: none;
+    color: var(--eis-primary-3); text-decoration: none;
 }
 article em {
     color: #f57c00; font-weight: bold; font-style: normal;

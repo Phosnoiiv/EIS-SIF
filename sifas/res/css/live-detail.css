@@ -3,8 +3,8 @@ h2 {
     text-align: center;
 }
 h3 {
-    border-bottom: 1px solid #a04d0c;
-    color: #a04d0c; font-size: 20px !important;
+    border-bottom: 1px solid var(--eis-primary-7);
+    color: var(--eis-primary-7); font-size: 20px !important;
 }
 .song-link{
     position: relative; width: 250px; height: 35px; margin: 5px 10px 20px;
@@ -129,14 +129,14 @@ h3 {
 }
 .mission .item-amount {
     position: absolute; width: 100%; bottom: -3px;
-    color: #a04d0c; font-weight: bold; font-size: 13px; text-align: center;
+    color: var(--eis-primary-7); font-weight: bold; font-size: 13px; text-align: center;
 }
 .mission .item-amount::before {
     content: "×";
 }
 .mission-campaign {
     border-bottom: 1px dashed #aaa;
-    color: #a65a0f; font-weight: bold; font-size: 14px;
+    color: var(--eis-primary-7); font-weight: bold; font-size: 14px;
 }
 .mission-time {
     clear: left; margin: 0;
@@ -202,7 +202,7 @@ h3 {
 }
 .map-link-power {
     position:absolute; bottom:-12px; padding:0 5px;
-    background:#e0ccb3; border-radius:8px; color:#994007;
+    background:var(--eis-primary-1); border-radius:8px; color:var(--eis-primary-7);
     font-size:12px;
 }
 .map-link .map-deck-icon {
@@ -215,7 +215,7 @@ h3 {
     width: 100%;
 }
 .map-detail-info th {
-    color: #a65a0f;
+    color: var(--eis-primary-7);
 }
 .map-detail-info td {
     text-align: center; vertical-align: top;
@@ -282,7 +282,7 @@ h3 {
 }
 .map-note-tag.count {
     right: 5px;
-    background: #bc8c52;
+    background: var(--eis-primary-3);
 }
 .map-note-tag.count::before {
     content: "×";
@@ -354,14 +354,14 @@ h3 {
 }
 #map-drops .item-amount {
     position: absolute; width: 100%; bottom: -3px;
-    color: #a04d0c; font-weight: bold; font-size: 13px; text-align: center;
+    color: var(--eis-primary-7); font-weight: bold; font-size: 13px; text-align: center;
 }
 #map-drops .item-amount::before {
     content: "×";
 }
 .map-deck-icon {
     margin-left: 5px;
-    color: #a04d0c;
+    color: var(--eis-primary-7);
 }
 
 .eis-sif-gallery-item {
@@ -369,7 +369,7 @@ h3 {
     font-size: 15px; cursor: pointer;
 }
 
-.eis-sif-tag.map-default {background:#bc8c52;}
+.eis-sif-tag.map-default {background:var(--eis-primary-3);}
 .eis-sif-tag.route-1, .eis-sif-tag.route-10 { background: #0288d1; }
 .eis-sif-tag.route-3 { background: #c2185b; }
 .eis-sif-tag.event-1 { background: #ab47bc; }
