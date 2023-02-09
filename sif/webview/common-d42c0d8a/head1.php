@@ -14,6 +14,7 @@ while ($dbNotice = $dbNotices->fetchArray(SQLITE3_ASSOC)) {
         $dbNotice['title'],
         $dbNotice['content'],
         $dbNotice['pin'],
+        $dbNotice['tab'] ?? 0,
     ];
 }
 $sql = "SELECT * FROM s_notice_fixed WHERE time_publish<+datetime('now','localtime') AND (time_expire IS NULL OR time_expire>=datetime('now','localtime'))";

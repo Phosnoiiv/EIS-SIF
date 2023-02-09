@@ -1,0 +1,34 @@
+#skin-8-title-add {
+    position:absolute; left:5%; top:10px;
+    font-size:24px;
+}
+
+body[data-id="home"] {background:#e6f8e5;}
+body[data-id="home"] #eis-sif-footer {background:#c3ecc0;border-color:#00c10f;}
+body[data-id="home"] #eis-sif-footer a {color:#00c10f;}
+body[data-id="home"] #eis-sif-footer a:hover {color:#00b300;}
+body[data-id="home"] .eis-sif-section {border-color:#009e00;}
+body[data-id="home"] .eis-sif-section>h4 {border-bottom-color:#009e00;color:#00b100;}
+body[data-id="home"] .eis-sif-section-noborder h4 {border-bottom-color:#009e00;color:#009e00;}
+body[data-id="home"] .eis-sif-pagebar .pages .ui-state-disabled {background:#3bcb45;border:1px solid #3bcb45;color:#fff;}
+body[data-id="home"] .eis-sif-button-group .active {background:#3bcb45;border-color:#3bcb45;color:#fff;}
+
+body[data-id="home"] .ui-button, body[data-id="home"] .ui-state-default {background:#c3ecc0;border-color:#009e00;color:#006d00;}
+
+body[data-id="home"] #top {background:#009e00;}
+body[data-id="home"] section.buttons a:not(.sifas) {background:#c3ecc0;border-color:#009e00;color:#006d00;}
+body[data-id="home"] section.buttons a[href]:not(.sifas):hover {background:#ffdfb1;border-color:#f87800;color:#e94b02;}
+body[data-id="home"] section.buttons a .update {background:#009e00;}
+body[data-id="home"] section.buttons a:not(.sifas) .note {border-top-color:#009e00;}
+body[data-id="home"] .section-toolbar a {color:#00b100;}
+body[data-id="home"] .section-toolbar a:hover {color:#69d56a;}
+body[data-id="home"] .buttons-container {background:linear-gradient(#fff 0%,#fff 40%,#e6f8e5 100%);}
+body[data-id="home"] .reminder-name {color:#00b100;}
+body[data-id="home"] .article-item svg {color:#00b100;}
+body[data-id="home"] .article-link {color:#00b100;}
+body[data-id="home"] .article-link:hover {color:#69d56a;}
+body[data-id="home"] .notice-clickable {color:#00b100;}
+body[data-id="home"] .notice-clickable:hover {color:#69d56a;}
+body[data-id="home"] #home-banner-links>span {color:#008d00;}
+body[data-id="home"] #home-banner-links a {color:#008d00;}
+body[data-id="home"] .home-banner-link-text:hover {color:#69d56a;}

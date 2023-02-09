@@ -96,6 +96,16 @@ $buttonCurrentEvent = '<span class="eis-jq-button" onclick="showCurrentEvents()"
 <p>请输入您当前持有的各类加成数值的社员总数。</p>
 <div id="yell-stores" class="eis-sif-form"></div>
 </section>
+<section class="eis-sif-section">
+<h4><i class="fas fa-heart"></i> 偏好配置</h4>
+<p class="eis-sif-note event-specific" data-event2=1 data-event6=1>※ 此活动类型暂无此功能。</p>
+<div class="eis-sif-form">
+<div id="adjust-prefer-score-s-block" class="eis-sif-form-block">
+<p><label for="adjust-prefer-score-s">得分 S</label><input id="adjust-prefer-score-s" type="checkbox"/></p>
+<p class="eis-sif-note">※ 选中后，计算器只会给出得分 S 的控分方案。可能导致需要消费更多 LP。</p>
+</div>
+</div>
+</section>
 <p class="eis-sif-button-line"><span class="eis-jq-button" onclick="calculateAdjust()"><i class="fas fa-calculator"></i> 计算！</span></p>
 <section id="result-section-adjust" class="eis-sif-section eis-sif-hidden">
 <h4><i class="fas fa-flag"></i> 计算结果</h4>

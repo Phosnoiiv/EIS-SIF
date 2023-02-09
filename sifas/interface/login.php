@@ -4,7 +4,7 @@ use EIS\Lab\SIF;
 require_once dirname(__DIR__) . '/core/init.php';
 
 $server = SIF\Basic::checkArg($_GET['s'] ?? false, range(1, 3));
-$year = SIF\Basic::checkArg($_GET['y'] ?? false, range(2019, 2022));
+$year = SIF\Basic::checkArg($_GET['y'] ?? false, range(2019, 2023));
 $month = SIF\Basic::checkArg($_GET['m'] ?? false, range(1, 12));
 include ROOT_SIFAS_CACHE . '/login.php';
 

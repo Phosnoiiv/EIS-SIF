@@ -102,8 +102,12 @@ function changeType() {
     $.each(eventConfig.y, function(yKey, y) {
         qFormSlider("lucky-" + yKey, luckyBonusNames[yKey], [{v:y[1], t:"推荐值", s:true}, {v:y[0], t:"最低值"}, {v:-1, t:"自定义"}], y[0], 0.001).appendTo("#config-lucky");
     });
+    $("#adjust-prefer-score-s-block").hide();
     if (eventConfig.a) {
         $("#tabs-main").tabs("enable", 1);
+        if (0 <= [2,3].indexOf(eventConfig.a)) {
+            $("#adjust-prefer-score-s-block").show();
+        }
     } else {
         $("#tabs-main").tabs("option", {disabled:[1], active:0});
     }
@@ -299,10 +303,15 @@ function addPlans(group, pt, desc, priority) {
     });
 }
 function addBonusPlans(bonusSeries, bonusPlans, funDesc, basePt, basePriority, additionalPriorities) {
+    var isPreferScoreS = $("#adjust-prefer-score-s:checked").length;
     $.each(bonusPlans, function(bonusPlanIndex, bonusPlan) {
-        var desc = "", pt = basePt, priority = basePriority;
+        var desc = "", pt = basePt, priority = basePriority, preferred = true;
         $.each(bonusSeries, function(bIndex, bonusSeriesID) {
             var bonusSeriesConfig = bonusSeriesConfigs[bonusSeriesID];
+            if (isPreferScoreS && bonusSeriesConfig.n == "得分" && bonusSeriesConfig.b[bonusPlan[bIndex]][0] != "S") {
+                preferred = false;
+                return;
+            }
             pt *= bonusSeriesConfig.b[bonusPlan[bIndex]][1];
             desc += bonusSeriesConfig.n + "【" + bonusSeriesConfig.b[bonusPlan[bIndex]][0] + "】，";
             if (additionalPriorities.s && bonusSeriesID == 1) {
@@ -312,6 +321,7 @@ function addBonusPlans(bonusSeries, bonusPlans, funDesc, basePt, basePriority, a
                 priority *= additionalPriorities.c[bonusPlan[bIndex]];
             }
         });
+        if (!preferred) return;
         addPlans(0, pt, funDesc(desc.substring(0, desc.length-1)), priority);
     });
 }

@@ -69,14 +69,18 @@ echo HTML::js('home');
 <?=Cache::read('matomo/articles.js')?>
 <?php
 $sql = "SELECT * FROM s_banner_home WHERE ".DB::ltSQLTimeIn('time_open','time_close')." ORDER BY `priority` DESC,id ASC";
-$col = [['s','img'],['i','buttons',0]];
+$col = [['s','img'],['i','buttons',0],['i','decoration',0]];
 $cBanners = DB::ltSelect(DB_EIS_MAIN, $sql, $col, '');
 $rButtonGroupIDs = array_column($cBanners, 1);
 $sql = 'SELECT * FROM s_banner_home_button WHERE buttons IN (' . implode(',',$rButtonGroupIDs?:[0]) . ')';
 $col = [['i','type'],['s','link'],['i','notice'],['s','icon'],['s','name']];
 $cBannerButtons = DB::ltSelect(DB_EIS_MAIN, $sql, $col, 'buttons', ['m'=>true]);
-array_walk($cBanners, function(&$a) use ($cBannerButtons) {
+$sql = "SELECT * FROM s_banner_home_decoration";
+$col = [['i','type'],['t','time1',3],['t','time2',3],['i','int1'],['i','int2'],['s','str1'],['s','str2']];
+$cBannerDecorations = DB::ltSelect(DB_EIS_MAIN, $sql, $col, 'id');
+array_walk($cBanners, function(&$a) use ($cBannerButtons, $cBannerDecorations) {
     $a[1] = $cBannerButtons[$a[1]]??[];
+    $a[2] = $cBannerDecorations[$a[2]]??[];
 });
 echo HTML::json('banners', $cBanners);
 
@@ -101,15 +105,15 @@ foreach (Basic::getAvailableMods() as $mod) {
 <div id="eis-sif-container">
 <div id="sections-main">
 <section class="eis-sif-section section-paged">
-<h4><i class="fas fa-bell"></i> 备忘录</h4>
-<ul id="reminders"></ul>
-<div class="eis-sif-pagebar" data-control="#reminders" data-size=5></div>
+<h4><i class="fas fa-heart"></i> 大感谢祭</h4>
+<ul class="notices fa-ul" data-notice-tab="1"></ul>
+<div class="eis-sif-pagebar" data-control=".notices[data-notice-tab='1']" data-size=5></div>
 </section>
 <section class="eis-sif-section section-paged">
 <h4><i class="fas fa-bullhorn"></i> 告知</h4>
 <div class="section-toolbar"><a href="<?=Basic::getPageURL(24)?>" target="_blank"><i class="fas fa-history"></i> 过去的告知</a></div>
-<ul id="notices" class="fa-ul"></ul>
-<div class="eis-sif-pagebar" data-control="#notices" data-size=5></div>
+<ul class="notices fa-ul" data-notice-tab="0"></ul>
+<div class="eis-sif-pagebar" data-control=".notices[data-notice-tab='0']" data-size=5></div>
 </section>
 <section class="eis-sif-section section-paged">
 <h4><i class="fas fa-file"></i> 文章</h4>
@@ -165,27 +169,6 @@ foreach (Basic::getAvailableMods() as $mod) {
 <?=createButton(19, [1], '6.11 版本以后', 'posters.js', ['title'=>'招募画像'])?>
 </div>
 <p class="eis-sif-note">※ 一部分图库位于资料页面中，参见“SIFAS 特殊登录奖励”。</p>
-</section>
-<section class="eis-sif-section">
-<h3>日语版 μ's 歌曲的 MASTER 谱面再登场日程</h3>
-<?php
-foreach ($master_rerun_groups as $groups) {
-    foreach ($groups as $name => $group) {
-        echo '<div class="live-container">' . "\n";
-        echo '<h4>' . $name . '</h4>' . "\n";
-        foreach ($master_rerun_schedule[$group] ?? [] as $master) {
-            echo '<div class="live attribute-' . $master['attribute'];
-            echo $master['is_swing'] ? ' swing' : '';
-            echo '">' . "\n";
-            echo '<div class="track-name">' . $master['jp_name'] . '</div>' . "\n";
-            echo '<div class="note">' . $master['level'] . '★' . $master['note_total'] . '</div>' . "\n";
-            echo '</div>' . "\n";
-        }
-        echo '</div>' . "\n";
-    }
-}
-?>
-<p class="eis-sif-note">※ 每周日 23:00 自动更新。每日轮换的 MASTER 谱面不在此处列出；Aqours 歌曲的 MASTER 谱面不在此处列出。</p>
 </section>
 <?php
 require ROOT_SIF_WEB . '/common-d42c0d8a/foot.php';

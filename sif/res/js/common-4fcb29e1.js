@@ -99,6 +99,10 @@ function enableCountdown() {
         })
         $(".eis-sif-countup").each(function() {
             var timeDiff = Date.now() / 1000 - $(this).attr("data-time");
+            if ($(this).attr("data-countup-day-ceil")) {
+                $(this).text(Math.ceil(timeDiff / 86400));
+                return;
+            }
             $(this).text(timeDiff.toPeriod(true));
         });
     }, 1000);

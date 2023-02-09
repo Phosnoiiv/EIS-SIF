@@ -55,7 +55,7 @@ function refreshNotices() {
         var notice1 = notices[id1], notice2 = notices[id2];
         return (id1 > FIXED ? 0 : 1) - (id2 > FIXED ? 0 : 1) || notice2[4] - notice1[4] || (readNoticeIDs.indexOf(id1) < 0 ? 0 : 1) - (readNoticeIDs.indexOf(id2) < 0 ? 0 : 1) || notice2[1] - notice1[1] || id1 - id2;
     });
-    $("#notices").empty();
+    $(".notices").empty();
     for (var i = 0; i < noticeIDs.length; i++) {
         var noticeID = noticeIDs[i], notice = notices[noticeID], isFixed = noticeID > FIXED;
         var $li = $("<li>").addClass("notice" + (isFixed ? " fixed" : readNoticeIDs.indexOf(noticeID) < 0 ? " new" : "")).append(
@@ -66,7 +66,7 @@ function refreshNotices() {
         if (typeof hookHomeNoticeItem === 'function') {
             $li = hookHomeNoticeItem(noticeID, $li);
         }
-        $("#notices").append($li);
+        $(".notices[data-notice-tab='"+notice[5]+"']").append($li);
     }
     refreshPageBar(null, true);
 }
@@ -82,10 +82,17 @@ function switchBanner() {
         }
     };
     var index = $(".home-banner-dot.active").index();
-    var banner = banners[index], buttons = banner[1];
+    var banner = banners[index], buttons = banner[1], decoration = banner[2];
     $("#home-banner").empty().append($('<img src="/sif/res/img/u/banner/'+banner[0]+'.jpg">'));
     if (buttons.length) {
         iLink("#home-banner>img", buttons[0][0], buttons[0][1], buttons[0][2]);
+    }
+    switch (decoration[0]) {
+        case 1:
+            $('<span id="home-banner-decoration-count-large" class="eis-sif-countup" data-countup-day-ceil="1">')
+                .attr("data-time", decoration[1]).text("--").attr("style", "color:" + decoration[5])
+                .appendTo("#home-banner");
+            break;
     }
     $("#home-banner-links").empty();
     $.each(buttons, function(buttonIndex, button) {

@@ -206,7 +206,7 @@ section.disabled p {
 .alert .eis-sif-countdown {
     color: #e64a19; font-weight: bold;
 }
-#notices {
+.notices {
     padding-bottom: 1px;
 }
 .notice {
@@ -269,6 +269,10 @@ section.disabled p {
 }
 #home-banner-arrow-right {
     right: 3px;
+}
+#home-banner-decoration-count-large {
+    position: absolute; top: 25px; left: 20%; width: 60%;
+    font-size: 40px; font-weight: bold; text-align: center;
 }
 #home-banner-links {
     margin: 0 17px; padding: 0 5px;
