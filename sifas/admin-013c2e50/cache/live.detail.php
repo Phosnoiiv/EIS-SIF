@@ -271,9 +271,13 @@ while ($dbMap = $dbMaps->fetchArray(SQLITE3_ASSOC)) {
         $extendData['k'] = [];
         foreach ($deckData['reports'] as $reportTime => $report) {
             $result = ['timestamp' => $reportTime];
-            foreach ($report['cardCounts'] as $cardId => $count) {
+            foreach ($report['frontCardCounts'] as $cardId => $count) {
+                if ($count < $report['userCount'] / 5) break; // Assuming already sorted in descending order
+                $result['frontCardCounts'][] = [$tCards[$cardId][0], $count];
+            }
+            foreach ($report['backCardCounts'] as $cardId => $count) {
                 if ($count < $report['userCount'] / 2) break; // Assuming already sorted in descending order
-                $result['cardCounts'][] = [$tCards[$cardId][0], $count];
+                $result['backCardCounts'][] = [$tCards[$cardId][0], $count];
             }
             $result += $report;
             array_unshift($extendData['k'], $result);

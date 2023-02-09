@@ -15,6 +15,7 @@ $sql = "SELECT * FROM saz_voltage_deck WHERE id>$cacheDeckSazProcessed";
 $col = [['s','filename']];
 $dFiles = DB::ltSelect(DB_EIS_CACHE, $sql, $col, 'id');
 const PATH_1 = 'voltageRanking/getVoltageRanking', PATH_2 = 'voltageRanking/getVoltageRankingDeck';
+const ACCESSORY_FRONT = array(302731, 302734, 302736, 302832, 302834);
 foreach ($dFiles as $fileId => $dFile) {
     $reader = new SazReader($dFile[0], [PATH_1, PATH_2]);
     foreach ($reader->get(PATH_1) as $ranking) {
@@ -30,23 +31,45 @@ foreach ($dFiles as $fileId => $dFile) {
             $request = $deck->decodeJsonRequest()[0];
             if ($request['live_difficulty_id'] != $difficId) continue;
             $response = $deck->decodeJsonResponse()[3];
+            foreach ($response['deck_detail']['deck']['parties'] as $party) {
+                $isFront = false;
+                foreach ($party['accessories'] as $accessory) {
+                    if (in_array($accessory['accessory_master_id'], ACCESSORY_FRONT)) {
+                        $isFront = true;
+                        break;
+                    }
+                }
+                foreach ($party['card_ids'] as $cardId) {
+                    $tBatchUserData[$request['user_id']][$isFront ? 'frontCards' : 'backCards'][] = $cardId;
+                }
+            }
             foreach ($response['deck_detail']['deck']['cards'] as $card) {
                 $cardId = $card['card_master_id'];
                 $tBatchUserData[$request['user_id']]['cards'][] = $cardId;
             }
         }
-        $report = ['cardCounts' => [], 'userCount' => 0];
+        $report = ['frontCardCounts' => [], 'backCardCounts' => [], 'frontUserCount' => 0, 'backUserCount' => 0, 'userCount' => 0];
         foreach ($cells as $cell) {
             $userId = $cell['voltage_ranking_user']['user_id'];
             if (isset($tBatchUserData[$userId])) {
                 $sData['userLastSeen'][$userId] = $tBatchUserData[$userId] + ['voltage' => $cell['voltage_point']];
             } else if (($sData['userLastSeen'][$userId]['voltage'] ?? 0) != $cell['voltage_point']) continue;
-            foreach ($sData['userLastSeen'][$userId]['cards'] as $cardId) {
-                Util::arrayIncrement($report['cardCounts'], $cardId);
+            if (!empty($sData['userLastSeen'][$userId]['frontCards'])) {
+                $report['frontUserCount']++;
+                foreach ($sData['userLastSeen'][$userId]['frontCards'] as $cardId) {
+                    Util::arrayIncrement($report['frontCardCounts'], $cardId);
+                }
+            }
+            if (!empty($sData['userLastSeen'][$userId]['backCards'])) {
+                $report['backUserCount']++;
+                foreach ($sData['userLastSeen'][$userId]['backCards'] as $cardId) {
+                    Util::arrayIncrement($report['backCardCounts'], $cardId);
+                }
             }
             $report['userCount']++;
         }
-        arsort($report['cardCounts']);
+        arsort($report['frontCardCounts']);
+        arsort($report['backCardCounts']);
         $sData['reports'][floor($rankingResponse[0] / 1000)] = $report;
         Cache::writeJson("decks/$difficId.json", $sData);
         unset($tBatchUserData);

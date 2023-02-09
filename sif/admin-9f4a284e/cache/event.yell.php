@@ -3,7 +3,7 @@ namespace EIS\Lab\SIF;
 require_once __DIR__.'/../../core/init.php';
 
 $sql = "SELECT * FROM event_yell ORDER BY id DESC";
-$col = [['i','event_type'],['i','event_id'],['s','units'],['i','is_current']];
+$col = [['i','event_type'],['i','event_id'],['s','units'],['i','is_current'],['s','items']];
 $dYells = DB::mySelect($sql, $col, '');
 foreach ($dYells as $dYell) {
     if ($dYell[0] > 0) {
@@ -23,7 +23,8 @@ foreach ($dYells as $dYell) {
         'type' => $dYell[0],
         'id' => $dYell[1],
         'date' => date('Y/m', $tDate),
-        'units' => array_map('intval', explode(',', $dYell[2])),
+        'units' => empty($dYell[2]) ? null : array_map('intval', explode(',', $dYell[2])),
+        'items' => empty($dYell[4]) ? null : explode(',', $dYell[4]),
         'is_current' => $dYell[3] ? true : null,
     ], fn($x) => $x !== null);
     if (count($tYells[$tCategory] ?? []) >= 2) {
