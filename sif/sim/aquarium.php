@@ -9,7 +9,7 @@ $playJS = ['play/aquarium'];
 
 require ROOT_SIF_WEB . '/common-d42c0d8a/play-head.php';
 ?>
-<div id="play-main">
+<div id="play-main" class="<?=$CPC[4]??''?>">
 <div id="board"></div>
 <div id="panel">
 <section class="eis-sif-subsection">

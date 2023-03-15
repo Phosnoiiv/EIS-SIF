@@ -13,6 +13,7 @@ foreach ($configPairs as $configPair) {
     $strings = DB::mySelect("SELECT * FROM play_config_string WHERE $fltConfig ORDER BY id ASC", [['s','value']], 'id', ['z'=>true,'s'=>true]);
     $jsons = DB::mySelect("SELECT * FROM play_config_json WHERE $fltConfig ORDER BY id ASC", [['s','json']], 'id', ['z'=>true,'s'=>true]);
     array_walk($jsons, function(&$value, $key) {
+        if (empty($value)) return;
         $value = json_decode($value);
     });
     $columns = [['i','type'],['i','key'],['i','amount'],['i','game']];

@@ -67,3 +67,7 @@
 #button-history-popularity-reward {
     margin: 0 0 0 10px !important;
 }
+
+.style-stamp-2 .stamp-img img {
+    width: 80%;
+}

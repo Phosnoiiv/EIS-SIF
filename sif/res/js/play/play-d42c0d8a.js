@@ -157,8 +157,8 @@ function playExchangeShow(consumeItems, obtainItems) {
     });
     $('<i class="fas fa-long-arrow-alt-right">').appendTo("#play-dialog-exchange-img");
     $.each(obtainItems, function(itemIndex, itemArray) {
-        gItem(itemArray[0], itemArray[1], 3, 0, [], gConfig).appendTo("#play-dialog-exchange-img");
-        gItemDiff(itemArray[0], itemArray[1], 3, {px:itemArray[3]==2?"sifas/":""}, gConfig, playGetPocketItem(itemArray[0], itemArray[1]), itemArray[2], 0, "play-dialog-exchange-dynamic").appendTo("#play-dialog-exchange-diff");
+        gItem(itemArray[0], itemArray[1], 3, 0, {px:itemArray[3]==2?"sifas/":""}, gConfig).appendTo("#play-dialog-exchange-img");
+        gItemDiff(itemArray[0], itemArray[1], 3, {gx:itemArray[3], px:itemArray[3]==2?"sifas/":""}, gConfig, playGetPocketItem(itemArray[0], itemArray[1]), itemArray[2], 0, "play-dialog-exchange-dynamic").appendTo("#play-dialog-exchange-diff");
     });
     $("#play-dialog-exchange-amount").val(1);
     playExchangeInput();
@@ -194,7 +194,7 @@ function playExchangeFinish() {
         var item = $(this).find(".eis-sif-item"), type = $(item).attr("data-type"), key = $(item).attr("data-key"), game = $(item).attr("data-game");
         var rate = $(this).find(".eis-sif-item-diff-after").attr("data-rate");
         if ($(this).hasClass("obtain")) {
-            addList.push([type, key, rate*amount]);
+            addList.push([type, key, rate*amount, game]);
         } else {
             playSubtractItems([[type, key, rate*amount, game]]);
         }

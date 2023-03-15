@@ -12,7 +12,7 @@ function p1StartDisp() {
     $("#map").empty().append(
         '<img id="map-bg" src="/sif/res/img/u/stuff/play/bg/'+CS[1]+'.jpg">',
         '<img id="map-player">',
-        '<img id="map-seal" src="/vio/sif/'+gItemImage(CT[3][0][0],CT[3][0][1],3,{s:true},gConfig)+'.png">',
+        '<img id="map-seal" src="/vio/'+(CT[3][0][3]==2?"sifas":"sif")+"/"+gItemImage(CT[3][0][0],CT[3][0][1],3,{s:true},gConfig)+'.png">',
     ).attr("data-size",playData.p1jc.length);
     $.each(playData.p1jc, function(cellIndex, cellType) {
         qImg("campaign/stuff/richman/c"+cellType).addClass("cell cell-"+cellType).attr("data-index",cellIndex).appendTo("#map");
@@ -170,7 +170,7 @@ function o1QuestDialogGeneral(category, message) {
 }
 
 $(document).ready(function() {
-    $(".icon-item").attr("src", "/vio/sif/"+gItemImage(CT[1][0][0],CT[1][0][1],3,{s:true},gConfig)+".png");
+    $(".icon-item").attr("src", "/vio/"+(CT[1][0][3]==2?"sifas":"sif")+"/"+gItemImage(CT[1][0][0],CT[1][0][1],3,{s:true},gConfig)+".png");
 });
 
 var pConfig = {
