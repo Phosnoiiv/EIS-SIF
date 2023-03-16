@@ -10,6 +10,7 @@
 !/config-*/pages.php
 !/config-*/version.php
 !/config-*/datapacks.php
+!/config-*/home.buttons.php
 
 /vendor
 /res/img/u

@@ -17,6 +17,15 @@
     --eis-primary-7: #a04d0c;
     --eis-primary-9: #8e2901;
 }
+.eis-theme-prilo {
+    --eis-primary-0: #e6f4ee;
+    --eis-primary-1: #c2e5d6;
+    --eis-primary-2: #9bd4bc;
+    --eis-primary-3: #72c4a3;
+    --eis-primary-5: #1fac7c;
+    --eis-primary-7: #158b63;
+    --eis-primary-9: #085a3f;
+}
 body {
     margin: 0;
     background: var(--eis-primary-0);
@@ -301,6 +310,15 @@ span[data-gallery-role=sort] {
     margin:0; padding:1px 5px;
     background:#80cbc4; border-color:#00796b;
     color:#004d40; font-size:13px;
+}
+.eis-sif-banner-container {
+    display:flex; flex-wrap:wrap; padding:0 20px;
+}
+.eis-sif-banner-container>* {
+    margin:3px;
+}
+.eis-sif-banner {
+    width:250px; vertical-align:bottom;
 }
 .eis-sif-item {
     position: relative;

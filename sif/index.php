@@ -14,6 +14,7 @@ $master_rerun_groups = [
 ];
 include ROOT_SIF_CACHE . '/reminders.php';
 include ROOT_SIF_CACHE . '/master.rerun.php';
+require_once ROOT_SIF_CONFIG . '/home.buttons.php';
 
 function createButton($pageID, $servers = [], $note = '', $file = '', $options = []) {
     global $config, $pages;
@@ -22,7 +23,7 @@ function createButton($pageID, $servers = [], $note = '', $file = '', $options =
     }
     $page = $pages[$pageID];
     $isAS = $page['game'] == 2;
-    $button = '<a' . ($isAS ? ' class="sifas"' : '') . ' href="' . Basic::getPageURL($pageID) . '" target="_blank">';
+    $button = '<a href="' . Basic::getPageURL($pageID) . '" target="_blank">';
     if (!empty($file)) {
         if (is_array($file)) {
             $fileTime = max(array_map(fn($x)=>V2::getDataTime($x),$file));
@@ -44,6 +45,21 @@ function createButton($pageID, $servers = [], $note = '', $file = '', $options =
     }
     $button .= "</a>\n";
     return $button;
+}
+function loadButtons(int $regionId): void {
+    global $homeButtons, $homeButtonRegions;
+    foreach ($homeButtonRegions[$regionId] as $buttonId) {
+        $buttonConfig = $homeButtons[$buttonId];
+        echo createButton(
+            $buttonConfig['page'],
+            $buttonConfig['servers'] ?? [],
+            $buttonConfig['desc'] ?? '',
+            $buttonConfig['cache'] ?? '',
+            [
+                'title' => $buttonConfig['name'] ?? null,
+            ],
+        );
+    }
 }
 function checkUpdateStatus($updateTime) {
     $time = time();
@@ -84,7 +100,10 @@ array_walk($cBanners, function(&$a) use ($cBannerButtons, $cBannerDecorations) {
 });
 echo HTML::json('banners', $cBanners);
 
-$sql = "SELECT * FROM s_notice_auto WHERE id IN (SELECT notice FROM s_banner_home_button WHERE buttons IN (SELECT buttons FROM s_banner_home WHERE ".DB::ltSQLTimeIn('time_open','time_close')."))";
+$flt = DB::ltSQLTimeIn('time_open','time_close');
+$sql = "SELECT * FROM s_notice_auto
+        WHERE id IN (SELECT notice FROM s_banner_home_button WHERE buttons IN (SELECT buttons FROM s_banner_home WHERE $flt))
+        OR id IN (SELECT `target` FROM s_banner WHERE `type`=2 AND $flt)";
 $columns = [['s','icon'],['t','time_record',3],['s','title'],['s','content']];
 $cAutoNotices = DB::ltSelect(DB_EIS_MAIN, $sql, $columns, 'id');
 echo HTML::json('autoNotices', $cAutoNotices);
@@ -123,15 +142,15 @@ foreach (Basic::getAvailableMods() as $mod) {
 <ul id="articles"></ul>
 <div class="eis-sif-pagebar" data-control="#articles" data-size=5></div>
 </section>
-<section class="eis-sif-section buttons">
+<section class="eis-sif-section disabled">
 <h4><i class="fas fa-newspaper"></i> 动态</h4>
-<?=createButton(32, [1], '庆典活动（SM、MF 等，2022/04 至今）<br>Live ♪ Arena（2020/11 至今）', 'event-yell.json')?>
-<?=createButton(14, [1,3], '仅限查卡器无文字的课题', 'goals.js')?>
+<p>此版块暂无内容</p>
+<p class="eis-sif-note">※ 原先位于此处的页面移至下方 SIF 分区内</p>
 </section>
-<section class="eis-sif-section buttons">
+<section class="eis-sif-section disabled">
 <h4><i class="fas fa-tools"></i> 工具</h4>
-<?=createButton(21, [], 'Icon Collection、SM、MF、CF、友情大合战', '', ['title'=>'活动 pt 计算器（含控分计算）'])?>
-<?=createButton(27, [], '', '', ['title'=>'通常饰品制作概率计算器'])?>
+<p>此版块暂无内容</p>
+<p class="eis-sif-note">※ 原先位于此处的页面移至下方 SIF 分区内</p>
 </section>
 <section class="section-main-noborder">
 <div id="home-banner-container">
@@ -143,32 +162,40 @@ foreach (Basic::getAvailableMods() as $mod) {
 <div id="home-banner-dots"></div>
 </section>
 </div>
-<section class="eis-sif-section-noborder buttons">
-<h4><i class="fas fa-database fa-lg"></i> 资料</h4>
-<div class="buttons-container">
-<?=createButton(2, [1,3,2], '2018 年 9 月至今', 'login.js')?>
-<?=createButton(7, [4,5], '附背景', 'login.js')?>
-<?=createButton(29, [4,6], '', [290101])?>
-<?=createButton(20, [4,5], '', 'live-detail.js')?>
-<?=createButton(31, [1,2,3])?>
-<?=createButton(13, [1,2,3], '', 'event.rc.js')?>
-<?=createButton(23, [4,5,6], '', 'goals.js')?>
-<?=createButton(10, [1,3,2], '2020 年 1 月至今', 'trades.js')?>
-<?=createButton(11, [4], '', 'trades.js')?>
-<?=createButton(6, [2], '以第 20 次为例', 'event.mf.mission.js', ['title'=>'Medley Festival 任务'])?>
-<?=createButton(15, [4,5,6], '不含音频', 'voices.js')?>
-<?=createButton(9, [1,2,3], '2018/08～2020/02', 'box.stepups.js', ['title'=>'阶梯招募列表'])?>
-<?=createButton(3, [1,2,3], '2018/08～2020/02', 'box.stepup.js', ['title'=>'阶梯招募单级'])?>
-<?=createButton(8, [1,2,3], '', 'stories.js', ['title'=>'特别剧情开放情况'])?>
+<section class="eis-theme-sifas eis-sif-section-noborder buttons">
+<h4><i class="fas fa-gamepad fa-lg"></i> SIFAS</h4>
+<div class="buttons-container buttons-container-outside">
+<?php loadButtons(3); ?>
+</div>
+<div class="eis-sif-fold buttons-container-fold">
+<h6>其它 SIFAS 相关页面</h6>
+<div>
+<p class="eis-sif-note">※ 以下页面可能已断更。</p>
+<div class="buttons-container buttons-container-inside">
+<?php loadButtons(4); ?>
+</div>
+</div>
 </div>
 </section>
+<section class="eis-theme-prilo eis-sif-section-noborder">
+<h4><i class="fas fa-clinic-medical fa-lg"></i> eis Project P（仮）</h4>
+<p class="eis-sif-note">※ 规划中版块，暂无内容</p>
+<?php HTML::printBanners(2); ?>
+</section>
 <section class="eis-sif-section-noborder buttons">
-<h4><i class="fas fa-images fa-lg"></i> 图库</h4>
-<div class="buttons-container">
-<?=createButton(16, [1,3,2], '2019 年 2 月至今', 'covers.js', ['title'=>'封面背景'])?>
-<?=createButton(19, [1], '6.11 版本以后', 'posters.js', ['title'=>'招募画像'])?>
+<h4><i class="fas fa-gamepad fa-lg"></i> SIF</h4>
+<div class="buttons-container buttons-container-outside">
+<?php loadButtons(1); ?>
 </div>
-<p class="eis-sif-note">※ 一部分图库位于资料页面中，参见“SIFAS 特殊登录奖励”。</p>
+<div class="eis-sif-fold buttons-container-fold">
+<h6>其它 SIF 相关页面</h6>
+<div>
+<p class="eis-sif-note">※ 以下页面可能已断更。</p>
+<div class="buttons-container buttons-container-inside">
+<?php loadButtons(2); ?>
+</div>
+</div>
+</div>
 </section>
 <?php
 require ROOT_SIF_WEB . '/common-d42c0d8a/foot.php';

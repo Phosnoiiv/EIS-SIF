@@ -37,6 +37,10 @@ function defineRoot(string $define, string $target): void {
 defineRoot('ROOT_SIF_ADMIN', 'admin');
 defineRoot('ROOT_SIF_CONFIG', 'config');
 
+// The constants should have been defined well. The following is used to bypass IDE warnings.
+if (!defined('ROOT_SIF_CONFIG'))
+    define('ROOT_SIF_CONFIG', ROOT_SIF_SRC . '/config-');
+
 require __DIR__.'/../vendor/autoload.php';
 
 require_once ROOT_SIF_CONFIG . '/resources.php';

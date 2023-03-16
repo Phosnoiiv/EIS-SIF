@@ -74,4 +74,22 @@ class HTML extends HTMLBase {
     static function serverIcon($server) {
         return [null, self::SERVER_ICON_JP, self::SERVER_ICON_WW, self::SERVER_ICON_CN][$server];
     }
+
+    public static function printBanners(int $location): void {
+        echo '<div class="eis-sif-banner-container">', "\n";
+        foreach (Basic::getBanners($location) as $banner) {
+            switch ($banner[1]) {
+                case 0:
+                    echo '<img class="eis-sif-banner" src="/sif/res/img/u/banner/', $banner[0], '"/>', "\n";
+                    break;
+                case 1:
+                    echo '<a href="', Basic::getPageURL($banner[2]), '" target="_blank"><img class="eis-sif-banner" src="/sif/res/img/u/banner/', $banner[0], '"/></a>', "\n";
+                    break;
+                case 2:
+                    echo '<img class="eis-sif-banner" src="/sif/res/img/u/banner/', $banner[0], '" onclick="readNotice(', $banner[2], ');refreshNotices()"/>', "\n";
+                    break;
+            }
+        }
+        echo "</div>\n";
+    }
 }

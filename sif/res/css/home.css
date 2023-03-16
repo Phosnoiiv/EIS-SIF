@@ -137,11 +137,20 @@ section.disabled p {
     color: var(--eis-primary-3);
 }
 .buttons-container {
-    display: flex; margin-top: -15px; padding: 10px 10px 10px 30px; flex-wrap: wrap;
+    display: flex; margin-top: -15px; flex-wrap: wrap; align-items: flex-start;
+}
+.buttons-container-outside {
+    padding: 10px 10px 10px 30px;
     background: linear-gradient(#fff 0%, #fff 40%, var(--eis-primary-0) 100%);
+}
+.buttons-container-inside {
+    padding: 10px 0;
 }
 .buttons-container a {
     width: 250px; margin: 5px 10px;
+}
+.buttons-container-fold {
+    margin: 0 30px;
 }
 .note {
     color: #666;
