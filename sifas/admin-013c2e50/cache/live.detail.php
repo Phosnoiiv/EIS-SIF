@@ -93,7 +93,7 @@ foreach ($dbRewards as $dbReward) {
 
 $sql = 'SELECT m_mission.*,md.message AS m_desc FROM m_mission
     LEFT JOIN m.m_dictionary AS md ON substr(description,3)=md.id
-    WHERE (mission_clear_condition_type IN (13,14) AND mission_clear_condition_param1 IS NOT NULL OR mission_clear_condition_type IN (15))
+    WHERE (mission_clear_condition_type IN (13,14) AND mission_clear_condition_param1 IS NOT NULL OR mission_clear_condition_type IN (15) AND mission_clear_condition_param2 IS NOT NULL)
     AND m_mission.id NOT IN (SELECT id FROM c.mission WHERE jp=0)
 ';
 $dbMissions = DB::lt_query('jp/masterdata.db', $sql);
@@ -539,7 +539,7 @@ foreach ($detailSongs as $id => $detail) {
         if (empty($id))
             return [];
         global $cacheDropGroups;
-        return json_decode($cacheDropGroups[$id]);
+        return json_decode($cacheDropGroups[$id] ?? '{}');
     }, $dictDrops[$id]->getAll());
     usort($detail['maps'][3], function($m1, $m2) {
         if (($r = ($m1[0][2] == 0) - ($m2[0][2] == 0)) != 0) return $r;
