@@ -58,7 +58,7 @@ echo HTML::css('common-d42c0d8a');
 if ($useSIFStyle ?? false) {
     echo HTML::css('common-9fec4fcf');
 }
-if (!empty($styleThemeCss = Basic::getStyleThemeCss())) {
+if (!empty($styleThemeCss = Basic::getStyleThemeCss($pageID ?? 1))) {
     echo '<style>', $styleThemeCss, "</style>\n";
 }
 ?>

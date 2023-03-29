@@ -32,7 +32,7 @@ echo SIF\HTML::resourceCSS(SIF\RESOURCE_JQUERYUI_CSS);
 V2::includeV2FrontCss();
 echo SIF\HTML::css('common-d42c0d8a');
 echo HTML::css('common-b63adcdf');
-if (!empty($styleThemeCss = SIF\Basic::getStyleThemeCss())) {
+if (!empty($styleThemeCss = SIF\Basic::getStyleThemeCss($pageID ?? 1))) {
     echo '<style>', $styleThemeCss, "</style>\n";
 }
 ?>

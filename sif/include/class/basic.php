@@ -95,20 +95,31 @@ class Basic {
     }
 
     private static ?array $style = null;
+    private static array $pageStyle = [];
     private static function readStyle(): void {
         if (isset(self::$style)) return;
         $sql = "SELECT * FROM s_style_schedule WHERE ".DB::ltSQLTimeIn('time_open','time_close');
         $col = [['i','theme'],['s','home_subtitle']];
         $dStyles = DB::ltSelect(DB_EIS_MAIN, $sql, $col, '');
         self::$style = empty($dStyles) ? null : $dStyles[0];
+        $sql = "SELECT * FROM s_style_page WHERE ".DB::ltSQLTimeIn('time_open','time_close');
+        $col = [['s','pages'],['i','theme']];
+        $dPageStyles = DB::ltSelect(DB_EIS_MAIN, $sql, $col, '');
+        foreach ($dPageStyles as $dPageStyle) {
+            $tStyle = array_slice($dPageStyle, 1);
+            foreach (explode(',', $dPageStyle[0]) as $pageId) {
+                self::$pageStyle[$pageId] = $tStyle;
+            }
+        }
     }
     private static function composeStyleThemeCss(array $colors): string {
         return implode('', array_map(fn($color, $shade) => "--eis-primary-$shade:$color;", $colors, [0,1,2,3,5,7,9]));
     }
-    public static function getStyleThemeCss(): string {
+    public static function getStyleThemeCss(int $pageId): string {
         self::readStyle();
-        if (empty(self::$style[0])) return '';
-        $sql = "SELECT * FROM s_theme WHERE id=".self::$style[0];
+        $styleId = self::$pageStyle[$pageId][0] ?? self::$style[0] ?? null;
+        if (empty($styleId)) return '';
+        $sql = "SELECT * FROM s_theme WHERE id=$styleId";
         $col = [
             ['s','sif0'  ],['s','sif1'  ],['s','sif2'  ],['s','sif3'  ],['s','sif5'  ],['s','sif7'  ],['s','sif9'  ],
             ['s','sifas0'],['s','sifas1'],['s','sifas2'],['s','sifas3'],['s','sifas5'],['s','sifas7'],['s','sifas9'],
