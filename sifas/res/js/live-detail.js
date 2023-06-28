@@ -317,6 +317,7 @@ function showMap(songID, mapType, mapIndex) {
                 noteIDs.push(i);
             });
         }
+        const effect = effects[note[6]];
         $("<div>").addClass("map-note" + (note[3] != 2 ? (effects[note[6]][0] ? " buff" : note[3]==1?" debuff-auto":" debuff") : "")).append(
             $("<h6>").append(
                 qASImg("gimmick/" + gimmicks[r2.exec(strings[note[2]])[1]]),
@@ -324,7 +325,7 @@ function showMap(songID, mapType, mapIndex) {
             ),
             $("<h6>").html(aNoteName(settingLang, note[6], note[7])),
             $("<p>").html(strings[note[4]].replace(/\n/g, "<br>")),
-            $("<p>").html(aNoteDesc(settingLang, note[6], note[7], note[8], note[9], note[5], note[3])),
+            $("<p>").html(aNoteDesc(settingLang, note[6], note[7], note[8], note[9], note[5], note[3], {hideTarget:effect[1]})),
             noteIDs.length ? $("<p>").text(noteIDs.join(", ") + (untrusted||waveEndsLinked?" (?)":"")) : "",
             !effects[note[6]][0] && note[3]==1 ? $('<p class="map-note-debuff-auto-hint">').text("仅在成功时触发此负面效果。可考虑关闭 AUTO 游玩本歌曲。") : "",
             $("<div>").addClass("map-note-tag count").text(note[1].length),
@@ -345,6 +346,7 @@ function showMap(songID, mapType, mapIndex) {
             waveData = [linkedWave[4], linkedWave[5], linkedWave[6], linkedWave[7]]; useLinked = true;
         }
         var questionable = untrusted || useLinked ? " (?)" : "";
+        const effect = effects[wave[8]];
         var iconString = targets83[wave[3]] && targets83[wave[3]][1-effects[wave[8]][0]];
         $('<div class="map-wave" data-wave-mission='+G2C.waveMissionC[wave[12]]+'>').append(
             $('<div class="map-wave-mission">').append(
@@ -364,7 +366,7 @@ function showMap(songID, mapType, mapIndex) {
             ) : null,
             $('<div class="map-wave-detail">').append(
                 buffIcons[wave[8]] ? ("ui/buff/"+buffIcons[wave[8]]).toJQImg(1,2).addClass("map-wave-buff") : null,
-                $('<span data-flip=wave data-flip-val=0>').html(aWaveDesc(settingLang,wave[8],wave[9],wave[10],wave[11],wave[3],wave[1])),
+                $('<span data-flip=wave data-flip-val=0>').html(aWaveDesc(settingLang,wave[8],wave[9],wave[10],wave[11],wave[3],wave[1],{hideTarget:effect[1],calcType:wave[14]})),
                 $('<span data-flip=wave data-flip-val=1>').html(strings[wave[2]].replace(/\n+$/,"").replace(/\n/g,"<br>")),
             ),
         ).appendTo("#map-waves");

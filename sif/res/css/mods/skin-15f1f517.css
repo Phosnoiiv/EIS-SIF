@@ -1,0 +1,22 @@
+body[data-id="home"] {
+    background:url("/sif/res/img/u/stuff/skin/as_stage_1003801.jpg") center fixed; background-size:cover;
+}
+
+body[data-id="home"] .eis-sif-section {background:#fffb;}
+body[data-id="home"] .eis-sif-section-noborder h4 {
+    padding:2px 5px;
+    background:linear-gradient(90deg,#fffb 0px,#fffb 200px,#fff0 250px);
+}
+
+body[data-id="home"] .ui-accordion-header:not(.ui-state-active) {background:#fff6;}
+
+body[data-id="home"] #top {background:#f0752866;}
+body[data-id="home"] .buttons-container-outside {background:linear-gradient(#fff3 0%,#fff3 40%,#fff0 100%);}
+@keyframes skin-11-home-1 {
+    0%   { color: #ef6c00; }
+    20%  { color: #fff0; }
+    40%  { color: #ef6c00; }
+    100% { color: #ef6c00; }
+}
+body[data-id="home"] .notice.new svg {animation: 3s ease infinite skin-11-home-1;}
+body[data-id="home"] .notice.new .notice-clickable {color:#ef6c00;}

@@ -182,9 +182,9 @@ $columns = [['i','effect_type']];
 $rSkills = DB::ltSelect(DB_GAME_JP_MASTER, $sql, $columns, 'id');
 
 $sql = 'SELECT * FROM word_effect';
-$columns = [['i','is_buff'],['i','is_base']];
+$columns = [['i','is_buff'],['i','is_base'],['i','is_global'],['i','is_ambiguous']];
 $rEffects = DB::mySelect($sql, $columns, 'type');
-$clientEffects = array_merge([null], array_map(fn($a)=>array_splice($a,0,1), $rEffects));
+$clientEffects = array_merge([null], array_map(fn($a)=>[$a[0],$a[2]], $rEffects));
 
 $dbTargets = DB::my_query('SELECT * FROM word_target WHERE icons IS NOT NULL');
 while ($dbTarget = $dbTargets->fetch_assoc()) {
@@ -388,6 +388,7 @@ while ($dbNote = $dbNotes->fetchArray(SQLITE3_ASSOC)) {
 }
 $sql = 'SELECT t.live_difficulty_id,t.wave_id,state,skill_target_master_id1,
     effect1.effect_type AS type1,effect1.effect_value AS value1,effect1.finish_type AS finish1,effect1.finish_value AS finishv1,
+    effect1.calc_type AS calc1,
     kn.message AS k_name,kzn.message AS kz_name,kd.message AS k_desc,kzd.message AS kz_desc
     FROM (SELECT * FROM m_live_note_wave_gimmick_group UNION SELECT * FROM r.m_live_note_wave_gimmick_group) AS t
     LEFT JOIN m_skill ON skill_id=m_skill.id
@@ -404,7 +405,7 @@ while ($dbWave = $dbWaves->fetchArray(SQLITE3_ASSOC)) {
     $ref = $refMaps[$dbWave['live_difficulty_id']];
     $tExtract = SIFAS::extractWaveMission($dbWave['k_name']);
     $extendData = $extendDataManager->get($mapID)?->waves[$dbWave['wave_id'] - 1] ?? [];
-    $detailSongs[$ref[0]]['maps'][$ref[1]][$ref[2]][25][] = [
+    $detailSongs[$ref[0]]['maps'][$ref[1]][$ref[2]][25][] = array_merge([
         $dictStrings[$ref[0]]->set($dbWave['k_name']),
         $dbWave['state'],
         $dictStrings[$ref[0]]->set($dbWave['k_desc']),
@@ -418,8 +419,8 @@ while ($dbWave = $dbWaves->fetchArray(SQLITE3_ASSOC)) {
         $dbWave['finish1'],
         $dbWave['finishv1'],
         $tExtract[0],
-        $tExtract[1],
-    ];
+        $extendData['goal'] ?? $tExtract[1],
+    ], $rEffects[$dbWave['type1']][3] ? [$dbWave['calc1']] : []);
     foreach (Constants::EIS_SONG_DIF_NOTEWORTHY as $d) {
         if (!array_key_exists($mapID, ${"mMap$d"})) continue;
         $songID = ${"mMap$d"}[$mapID];

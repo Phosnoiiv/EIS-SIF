@@ -14,6 +14,7 @@ class LiveExtendData {
     /**
      * Array of Appeal Chance data. Each element should contain the following keys:
      * 'start', 'finish', 'voltage', 'damage'.
+     * Optional keys: 'goal'
      */
     public array $waves;
 }

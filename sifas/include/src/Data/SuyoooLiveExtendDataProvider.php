@@ -17,6 +17,7 @@ final class SuyoooLiveExtendDataProvider implements LiveExtendDataProviderInterf
             'finish' => $x['range_note_ids'][1] + 1,
             'voltage' => $x['reward_voltage'],
             'damage' => $x['penalty_damage'],
+            'goal' => in_array($x['mission_type'], [16]) ? $x['mission_value'] / 100 : $x['mission_value'],
         ], $data['appeal_chances']);
         return $return;
     }

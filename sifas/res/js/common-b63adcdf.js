@@ -67,9 +67,9 @@ function gItemImage(type, key, server, options, config) {
     }
 }
 
-function aEffect(category, lang, type, value) {
+function aEffect(category, lang, type, value, calcType) {
     try {
-        var r = wordEffects[type][lang+4*category-5].replace("#", value).replace("%", value / 100 + "%");
+        var r = wordEffects[type][lang+4*category-5].replace("%", value/100+"%").replace("#", calcType==2 ? value/100+"%" : value);
     } catch (error) {
         throw "读取技能效果错误（参数：" + category + "," + lang + "," + type + "," + value + "）";
     }
@@ -85,17 +85,17 @@ var aDescConditionPrefixes = ["条件：", "Condition: ", "条件：", "條件�
 var aDescTimePrefixes = ["時間：", "Time: ", "时间：", "時間："];
 var aDescTargetPrefixes = ["対象：", "Affects: ", "对象：", "適用對象："];
 var aDescWavePrefixes = ["【特殊効果】", "[Special Effect] ", "【特殊效果】", "【特殊效果】"];
-function aNoteDesc(lang, type, value, finishType, finishValue, target, gimmickType) {
+function aNoteDesc(lang, type, value, finishType, finishValue, target, gimmickType, options) {
     var r = wordFinishes[finishType][0][lang-1].replace("#", finishValue).replace("^", aEffect(2, lang, type, value));
     r += "<br>" + aDescConditionPrefixes[lang-1] + wordNotes[gimmickType][lang-1];
-    if (target != 58) r += "<br>" + aDescTargetPrefixes[lang-1] + wordTargets[target][lang-1];
+    if (!options.hideTarget && target != 58) r += "<br>" + aDescTargetPrefixes[lang-1] + wordTargets[target][lang-1];
     return r;
 }
-function aWaveDesc(lang, type, value, finishType, finishValue, target, waveType) {
+function aWaveDesc(lang, type, value, finishType, finishValue, target, waveType, options) {
     if (waveType == 255)
         return aDescWavePrefixes[lang-1] + aEffect(3, lang, 1, 0);
-    var r = aDescWavePrefixes[lang-1] + aEffect(3, lang, type, value);
+    var r = aDescWavePrefixes[lang-1] + aEffect(3, lang, type, value, options.calcType);
     r += "<br>" + aDescTimePrefixes[lang-1] + wordFinishes[finishType][waveType][lang-1].replace("#", finishValue);
-    if (target != 58) r += "<br>" + aDescTargetPrefixes[lang-1] + wordTargets[target][lang-1];
+    if (!options.hideTarget && target != 58) r += "<br>" + aDescTargetPrefixes[lang-1] + wordTargets[target][lang-1];
     return r;
 }
