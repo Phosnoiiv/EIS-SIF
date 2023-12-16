@@ -9,7 +9,7 @@ $relatedPage = [
     'name' => 'SIFAS 特殊登录奖励',
 ];
 $barContentsAppend = [
-    '<span class="ui-icon ui-icon-calendar"></span>月份：<input id="month" type="month" min="2018-09" max="' . date('Y-m') . '" value="' . date('Y-m',strtotime('-1 month')) . '" onchange="produce()"/>',
+    '<span class="ui-icon ui-icon-calendar"></span>月份：<input id="month" type="month" min="2018-09" max="2023-03" value="2022-01" onchange="produce()"/>',
     '<span class="ui-icon ui-icon-comment"></span>服务器：<select id="server" onchange="produce()"><option value="1">日语版</option><option value="3" selected>简体字版</option><option value="2">国际版</option></select>',
 ];
 

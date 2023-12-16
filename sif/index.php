@@ -124,7 +124,7 @@ foreach (Basic::getAvailableMods() as $mod) {
 <div id="eis-sif-container">
 <div id="sections-main">
 <section class="eis-sif-section section-paged">
-<h4><i class="fas fa-heart"></i> 大感谢祭</h4>
+<h4><i class="fas fa-history fa-flip-horizontal"></i> Towards Future</h4>
 <ul class="notices fa-ul" data-notice-tab="1"></ul>
 <div class="eis-sif-pagebar" data-control=".notices[data-notice-tab='1']" data-size=5></div>
 </section>

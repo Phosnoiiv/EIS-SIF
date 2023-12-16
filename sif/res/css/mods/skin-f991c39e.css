@@ -99,7 +99,7 @@ body.eis-sifas {background:#f9ebee;}
 
 .eis-sifas .ui-widget-content {border-color:#9f2e2b;}
 .eis-sifas .ui-widget-header {background:#db9d9e;color:#ad3836;}
-.eis-sifas .ui-button, .eis-sifas .ui-state-default {background:#f2ced3;border-color:#b93f3d;color:#9f2e2b;}
+.eis-sifas .ui-button:not(.active), .eis-sifas .ui-state-default {background:#f2ced3;border-color:#b93f3d;color:#9f2e2b;}
 .eis-sifas .ui-state-default a {color:#9f2e2b;}
 .eis-sifas .ui-state-active {background:#e5c1d7;border-color:#9c476f;color:#643654;}
 .eis-sifas .ui-state-active a {color:#643654;}

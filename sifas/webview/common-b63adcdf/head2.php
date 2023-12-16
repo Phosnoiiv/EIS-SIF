@@ -39,7 +39,7 @@ foreach ($instantPageNotices as $notice) {
 }
 $barContents = [];
 if (isset($latestFile)) {
-    $barContents[] = '<i class="fas fa-clock"></i> 本页面数据更新于 ' . date('m/d H:i', filemtime($latestFile));
+    $barContents[] = '<i class="fas fa-clock"></i> 本页面数据更新于 ' . date('Y/m/d H:i', filemtime($latestFile));
 }
 if (!empty($barContentsAppend)) {
     $barContents = array_merge($barContents, $barContentsAppend);
